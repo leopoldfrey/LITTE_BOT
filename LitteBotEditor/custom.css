@@ -1,0 +1,127 @@
+table {
+  font-size: 0.8rem;
+}
+
+thead {
+  position: sticky;
+  top: 0px;
+  background-color: white;
+  height: 90px;
+}
+th {
+  text-align: center;
+}
+
+tr:nth-child(2n) {
+    background: #f9f9f9;
+}
+
+.sentenceRow {
+  cursor: pointer;
+}
+
+.sentenceRow::selection {
+  background-color: none;
+}
+
+
+.selected {
+  background-color: #c1d8e6 !important;
+}
+
+.selected > .sentenceElem {
+  color: black;
+  font-size: 1.1rem;
+
+}
+
+.selected > .check {
+  border-left: 0.1px solid white;
+  border-right: 0.1px solid white;
+}
+
+.small {
+  font-size: 0.7rem;
+  width: 60px;
+}
+
+.check {
+  vertical-align: middle;
+  text-align: center;
+}
+
+.btn-group {
+  position: sticky;
+  top: 17px;
+  z-index: 20;
+}
+
+.check {
+  font-size: 1rem;
+  border-left: 0.1px solid lightgray;
+  border-right: 0.1px solid lightgray;
+  width: 60px;
+}
+
+.progress {
+  width: 100vw;
+  position: sticky;
+  left: 0px;
+  top: -8px;
+  border-radius: 0rem;
+  display: none;
+  z-index: 1
+}
+
+.progress-bar {
+  transition: width 0.1s ease;
+}
+
+#info {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-left: 12px;
+    border: 1px solid black;
+    padding: 6px 10px 6px 10px;
+    border-radius: 0.25rem;
+    position: sticky;
+    top: 17px;
+    z-index: 20;
+    text-align: center;
+    width: 200px;
+}
+
+.form-control {
+  /* font-size: 0.9rem; */
+  height: 5rem;
+  width: 100%;
+}
+
+.form-control2 {
+  /* font-size: 0.9rem; */
+  height: 15rem;
+  width: 100%;
+}
+
+ul {
+  padding-left: 1em;
+}
+
+ul li {
+   margin-left: 0px;
+   padding-left: 0em;
+   margin-bottom: 0.3em;
+}
+
+.selbut {
+  color: #fff;
+  background-color: #212529;
+  border-color: #212529;
+}
+
+label {
+  font-size: 0.8em;
+  font-weight: bold;
+  display: block;
+}

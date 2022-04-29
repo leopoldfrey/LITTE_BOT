@@ -1,0 +1,348 @@
+#!/usr/bin/env python3
+import json, pickle, random, logging
+from typing import Union
+from pyosc import Client, Server
+from botLog import BotLog
+
+import gradio as gr
+import numpy as np
+import tensorflow as tf
+import tensorflow_hub as hub
+import tensorflow_text
+import torch
+import transformers
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+dialog_path = "../data/"
+def_questions_common = "dom_juan_common"
+def_questions_seduction = "dom_juan_seduction"
+def_questions_provocation = "dom_juan_provocation"
+def_questions_fuite = "dom_juan_fuite"
+
+def_tokenizer = "../model/emil2000/dialogpt-for-french-language"
+def_model = "../model/Chatbot-Moliere-V4"
+def_module = "../model/universal-sentence-encoder-multilingual-large_3"
+
+PASSEPARTOUT = 0
+INTRO = 1
+SEDUCTION = 2
+PROVOCATION = 3
+FUITE = 4
+
+COLOR_INTRO = 32
+COLOR_SEDUCTION = 33
+COLOR_PROVOCATION = 35
+COLOR_FUITE = 36
+
+color = [COLOR_INTRO, COLOR_INTRO, COLOR_SEDUCTION, COLOR_PROVOCATION, COLOR_FUITE, COLOR_INTRO ]
+
+name = ["Off", "Introduction", "Séduction", "Provocation", "Fuite", "Epilogue"]
+
+def print_formatColor_table():
+    """
+    prints table of formatColorted text formatColor options
+    """
+    for style in range(8):
+        for fg in range(30,38):
+            s1 = ''
+            for bg in range(40,48):
+                formatColor = ';'.join([str(style), str(fg), str(bg)])
+                s1 += '\x1b[%sm %s \x1b[0m' % (formatColor, formatColor.replace(";",","))
+            print(s1)
+        print('\n')
+
+def formatColor(style, fg, bg, s):
+    f = ';'.join([str(style), str(fg), str(bg)])
+    return '\x1b[%sm%s\x1b[0m' % (f, s)
+
+class LitteBot:
+    def __init__(self):
+        tf.compat.v1.logging.set_verbosity(40) # ERROR
+
+        self.botmode = 1
+        self.botresponses = []
+        self.history = [[], []]
+        self.lastresponse = ""
+
+        self.log = BotLog()
+
+        print()
+        print(formatColor(6,37,40,"Starting Chatbot"))
+        print()
+
+        """Initializes the bot."""
+        print("Loading module "+def_module)
+        self.module_url = ( def_module )
+        self.model_embeddings = hub.load(self.module_url)
+        self.model_url = def_model
+        self.tokenizer_url = def_tokenizer
+
+        self.loadQuestionsAndEmbeddings()
+        self.model, self.tokenizer = self.load_model()
+
+        self.css = """ .footer {display:none !important} """
+
+        self.osc_server = Server('localhost', 14001, self.callback)
+        self.osc_client = Client('localhost', 14000)
+        self.video_client = Client('localhost', 14003)
+
+        print(formatColor(0,37,40,"Chatbot ready"))
+        print()
+
+    def loadQuestionsAndEmbeddings(self):
+        print("Loading questions")# "+def_questions)
+        self.dom_juan = self.load_questions_from_json()
+        self.dom_juan_questions = self.load_questions_keys()
+        print("Building embeddings")
+        self.dom_juan_questions_embeddings = self.build_embeddings()
+
+    def callback(self, address, *args):
+        #print("OSC IN ", address, args[0])
+        if(address == '/getresponse'):
+            self.getResponse(args[0])
+        elif(address == '/setbotmode'):
+            self.setBotMode(args[0])
+        elif(address == '/newConversation'):
+            self.newConversation()
+        elif(address == '/reload'):
+            self.loadQuestionsAndEmbeddings()
+        elif(address == '/logbot'):
+            print(formatColor(0,color[self.botmode],40, "bot: "+args[0]))
+            self.log.logBot(str(self.botmode), args[0])
+        else:
+            print("callback : "+str(address))
+            for x in range(0,len(args)):
+                print("     " + str(args[x]))
+
+    def setBotMode(self, mode):
+        self.botmode = mode
+        if self.botmode == 0:
+            print("     "+formatColor(1,color[PASSEPARTOUT],40,"Bot Mode Passe-partout"))
+        elif self.botmode == 1:
+            print("     "+formatColor(1,color[INTRO],40,"Bot Mode Introduction"))
+        elif self.botmode == 2:
+            print("     "+formatColor(1,color[SEDUCTION],40,"Bot Mode Seduction"))
+        elif self.botmode == 3:
+            print("     "+formatColor(1,color[PROVOCATION],40,"Bot Mode Provocation"))
+        elif self.botmode == 4:
+            print("     "+formatColor(1,color[FUITE],40,"Bot Mode Fuite"))
+
+    def getResponse(self, q):
+        # print("> GET RESPONSE TO", q)
+        self.log.logMe(q)
+        print("user: "+q)
+        response = self.predict(q, self.history)
+        # i = 0
+        # while self.lastresponse in self.botresponses and i < 10:
+        #     self.predict(q, self.history)
+        #     # print("\t"+formatColor(0,color[self.botmode],40,"(repetitive response, new : "+ response+")"))
+        #     i = i + 1
+        print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
+        self.botresponses.append(self.lastresponse)
+        # print("HISTORY", len(self.history[0]),len(self.history[1]))
+        # print(self.history[0])
+        self.log.logBot(str(self.botmode), self.lastresponse)
+        return self.lastresponse
+
+    def getAllResponses(self):
+        return self.botresponses
+
+    def newConversation(self):
+        self.botmode = 1
+        self.history = [[], []]
+        self.log.start()
+        self.botresponses.clear()
+
+    def embed(self, input: Union[str, list, dict]) -> tf.Tensor:
+        """Embed a string or list or dictionary of strings.
+
+        Args:
+            input (Union[str, list, dict]): input string
+
+        Returns:
+            tf.python.framework.ops.EagerTensor: Embedding of the input string
+        """
+        return self.model_embeddings(input)
+
+    def load_model(
+        self,
+    ) -> Union[
+        transformers.models.gpt2.modeling_gpt2.GPT2LMHeadModel,
+        transformers.models.gpt2.tokenization_gpt2_fast.GPT2TokenizerFast,
+    ]:
+        """Loads the model and tokenizer.
+
+        Returns:
+            Union[transformers.models.gpt2.modeling_gpt2.GPT2LMHeadModel,transformers.models.gpt2.tokenization_gpt2_fast.GPT2TokenizerFast]: Model and tokenizer
+        """
+        print("Loading model "+self.model_url)
+        model = AutoModelForCausalLM.from_pretrained(self.model_url)
+        print("Loading tokenizer "+self.tokenizer_url)
+        tokenizer = AutoTokenizer.from_pretrained(self.tokenizer_url)
+        return model, tokenizer
+
+    def load_questions_from_json(self) -> dict:
+        """Loads the questions from a json file.
+
+        Returns:
+            dict: Dictionary of questions
+        """
+        dom_juan = []
+        print("Loading ", dialog_path+def_questions_common+".json")
+        with open(dialog_path+def_questions_common+".json") as dj_common:
+            dom_juan_common = json.load(dj_common)
+            print("Loading ", dialog_path+def_questions_seduction+".json")
+            with open(dialog_path+def_questions_seduction+".json") as dj:
+                dom_juan_seduction = {**json.load(dj), **dom_juan_common}
+            print("Loading ", dialog_path+def_questions_provocation+".json")
+            with open(dialog_path+def_questions_provocation+".json") as dj:
+                dom_juan_provocation = {**json.load(dj), **dom_juan_common}
+            print("Loading ", dialog_path+def_questions_fuite+".json")
+            with open(dialog_path+def_questions_fuite+".json") as dj:
+                dom_juan_fuite = {**json.load(dj), **dom_juan_common}
+        dom_juan.append(dom_juan_common)
+        dom_juan.append(dom_juan_common)
+        dom_juan.append(dom_juan_seduction)
+        dom_juan.append(dom_juan_provocation)
+        dom_juan.append(dom_juan_fuite)
+        return dom_juan
+
+    def load_questions_keys(self):
+        dom_juan_questions = []
+        dom_juan_questions.append(list(self.dom_juan[0].keys()))
+        dom_juan_questions.append(list(self.dom_juan[1].keys()))
+        dom_juan_questions.append(list(self.dom_juan[2].keys()))
+        dom_juan_questions.append(list(self.dom_juan[3].keys()))
+        dom_juan_questions.append(list(self.dom_juan[4].keys()))
+        return dom_juan_questions
+
+    def build_embeddings(self):
+        embeddings = []
+        embeddings.append(self.embed(self.dom_juan_questions[0]))
+        embeddings.append(self.embed(self.dom_juan_questions[1]))
+        embeddings.append(self.embed(self.dom_juan_questions[2]))
+        embeddings.append(self.embed(self.dom_juan_questions[3]))
+        embeddings.append(self.embed(self.dom_juan_questions[4]))
+        return embeddings
+
+    def predict(self, user_input: str, history: list) -> list:
+        """Predict the next message.
+
+        Args:
+            user_input (str): User input
+            history (list): History of the conversation
+
+        Returns:
+            list: Answer and history of the conversation
+        """
+        history = history or [[], []]
+
+        new_question = user_input
+        # if "au revoir" in new_question.lower():
+        #     history = [[], []]
+        # else:
+        new_question_embedding = self.embed(new_question)
+
+        mode_response = self.dom_juan[self.botmode]
+        mode_questions = self.dom_juan_questions[self.botmode]
+        mode_embeddings = self.dom_juan_questions_embeddings[self.botmode]
+
+        all_questions_embedding = np.concatenate(
+            (new_question_embedding, mode_embeddings), axis=0
+        )
+        corr = np.inner(all_questions_embedding, all_questions_embedding)[0][1:]
+        max_score = max(corr)
+
+        self.video_client.send("/nlpScore", float(max_score))
+        if max_score >= 0.6:
+            # print("> PREDICT", new_question, "(score", max_score, ")")
+            index = np.where(corr == max_score)[0][0]
+            res = mode_response[mode_questions[index]]
+            if type(res) == list:
+                self.lastresponse = random.choice(res)
+                response = [user_input, self.lastresponse]
+            else:
+                self.lastresponse = res
+                response = [user_input, res]
+            history[0].append(tuple(response))
+        else:
+            # print("> PREDICT NLP", new_question, "(score", max_score, ")")
+            response, history[1] = self.predict_nlp(user_input, history[1])
+            history[0] += response
+
+        self.history = history
+        # print (">> RESPONSE", self.lastresponse)
+        self.osc_client.send('/lastresponse',self.lastresponse)
+
+        return history[0], history
+
+    def predict_nlp(self, user_input: str, history: list = None) -> list:
+        """Predict the next message using NLP.
+
+        Args:
+            user_input (str): User input
+            history (list, optional): History of the conversation. Defaults to None.
+
+        Returns:
+            list: Answer and history of the conversation
+        """
+        if history is None:
+            history = []
+        new_user_input_ids = self.tokenizer.encode(
+            user_input + self.tokenizer.eos_token, return_tensors="pt"
+        )
+
+        # print(">> new_user_input_ids", new_user_input_ids)
+        bot_input_ids = torch.cat(
+            [torch.LongTensor(history), new_user_input_ids], dim=-1
+        )
+
+        # print(">> bot_input_ids", bot_input_ids)
+        history = self.model.generate(
+            bot_input_ids,
+            max_length=4096,
+            pad_token_id=self.tokenizer.eos_token_id,
+            no_repeat_ngram_size=3,
+            do_sample=False,
+            top_k=10,
+            top_p=1,
+            temperature=0,
+        )
+
+        response = self.tokenizer.decode(history[0]).split("<|endoftext|>")
+        if "" in response:
+            response.remove("")
+        self.lastresponse = response[-1]
+        # print(">> response", response)
+        res = [
+            (response[i], response[i + 1])
+            for i, msg in enumerate(response)
+            if i % 2 == 0
+        ]
+        return res, history
+
+    def gradio_interface(self) -> gr.interface.Interface:
+        """Returns the gradio interface.
+
+        Returns:
+            gr.interface.Interface: Interface
+        """
+        return gr.Interface(
+            fn=self.predict,
+            theme="default",
+            inputs=[
+                gr.inputs.Textbox(
+                    placeholder="Bonjour !", label="Parlez avec Dom Juan:"
+                ),
+                "state",
+            ],
+            outputs=["chatbot", "state"],
+            title="LITTE_BOT",
+            allow_flagging="never",
+            css=self.css,
+        )
+
+if __name__ == "__main__":
+    litte_bot = LitteBot()
+    interface = litte_bot.gradio_interface()
+    interface.launch(server_name="0.0.0.0", server_port=7890)

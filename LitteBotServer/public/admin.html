@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <title>Litte_Bot_Admin</title>
+</head>
+<body>
+  <div id='topbar'>LITTE_BOT_ADMIN<br/>
+    <label for="max_interactions">Nombre maximum d'interactions</label>
+    <input type="number" id="max_interactions" name="max_interactions" min="1" max="100"><br/>
+    <label for="max_silence">Silence maximum avant relance (en secondes)</label>
+    <input type="number" id="max_silence" name="max_silence" min="1" max="120"><br/>
+    <label for="max_section">Durée maximum d'une partie (en secondes)</label>
+    <input type="number" id="max_section" name="max_section" min="1" max="360"><br/>
+    <button id="save_params" onclick='saveConfig()'>Sauvegarder les paramètres</button>
+    <button id="reload" onclick='reloadBrain()'>Recharger les données</button>
+  </div>
+  <div id='speech'>
+  </div>
+  <div id='info'>
+    <div id="status1" onclick='stepUp()'></div>
+    <div id="status2" onclick='pause()'>Off</div>
+    <div id="timer" onclick='reset()' style='display: unset'>0:00</div>
+  </div>
+  <script>
+  // INIT VARS
+  var timer = null;
+  var name = "user";
+  var $silent = false;
+  var $sp = $('#speech');
+  var p;
+
+  $(".speech_you").attr('data-content', name+" : ")
+
+  $stat1 = $("#status1");
+  $stat2 = $("#status2");
+  $timer = $("#timer");
+
+  // INIT WEBSOCKET
+  let socket = new WebSocket("ws://localhost:9001");
+
+  socket.onopen = function(e) {
+    console.log("[open] Connection established");
+    socket.send(JSON.stringify({'command':'connect'}));
+    socket.send(JSON.stringify({'command':'getConfig'}));
+  };
+
+  socket.onmessage = function(event) {
+    // console.log(`[message] Data received from server: ${event.data}`);
+    data = JSON.parse(event.data);
+    if(data.command == "message") {
+      console.log("[ws]", data);
+    } else if(data.command == "bot" || data.command == "_bot") {
+      console.log("BOT", data.value);
+      p = $('<p class="speech_bot"></p>');
+      $(p).text(data.value);
+      $sp.append(p);
+      $(p).get(0).scrollIntoView();
+    } else if(data.command == "_user") {
+      console.log("USER", data.value);
+      p = $('<p class="speech_you"></p>');
+      $(p).text(data.value);
+      $sp.append(p);
+      $(".speech_you").attr('data-content', name+" : ")
+      $(p).get(0).scrollIntoView();
+    } else if(data.command == "clear") {
+      $sp.empty();
+    } else if(data.command == "timers") {
+      $timer.html("Interactions : "+data.interactions+"<br/>Global : "+convertTime(data.global)+"<br/>Section : "+convertTime(data.section)+"<br/>Interaction : "+convertTime(data.current));
+    } else if(data.command == "step") {
+      switch (data.value) {
+        case 0:
+          $stat1.text("0. Off");
+          $timer.hide();
+          break;
+        case 1:
+          $stat1.text("1. Introduction");
+          $timer.show();
+          break;
+        case 2:
+          $stat1.text("2. Séduction");
+          $timer.show();
+          break;
+        case 3:
+          $stat1.text("3. Provocation");
+          $timer.show();
+          break;
+        case 4:
+          $stat1.text("4. Fuite");
+          $timer.show();
+          break;
+        case 5:
+          $stat1.text("5. Épilogue");
+          $timer.show();
+          break;
+        default:
+          $stat1.text("0. Off");
+          $timer.show();
+          break;
+      }
+    } else if(data.command == "username") {
+      if(data.value != "")
+        name = data.value;
+        $(".speech_you").attr('data-content', name+" : ");
+    } else if(data.command == "silent") {
+      $silent = data.value;
+      if($silent) {
+        $stat2.text('Pause');
+        $stat2.removeClass('ready');
+        $stat2.addClass('pause');
+      } else {
+        $stat2.text('Ready');
+        $stat2.removeClass('pause');
+        $stat2.addClass('ready');
+      }
+    } else if(data.command == "params") {
+      $("#max_interactions").val(data.max_interactions);
+      $("#max_silence").val(data.max_silence);
+      $("#max_section").val(data.max_section);
+    } else {
+      console.log("[ws]", data);
+    }
+  };
+
+  socket.onclose = function(event) {
+    console.log('[close] Connection closed');
+  };
+
+  socket.onerror = function(error) {
+    console.log(`[error] ${error.message}`);
+  };
+
+  function pause() {
+    socket.send(JSON.stringify({'command':'pause'}));
+  }
+
+  function reset() {
+    socket.send(JSON.stringify({'command':'reset'}));
+  }
+
+  function stop() {
+    socket.send(JSON.stringify({'command':'stop'}));
+  }
+
+  function stepUp() {
+    socket.send(JSON.stringify({'command':'stepUp'}));
+  }
+
+  $stat2.text('Pause');
+  $stat2.removeClass('error');
+  $stat2.removeClass('ready');
+  $stat2.addClass('pause');
+
+  function convertTime(t) {
+    s = Math.floor(t);
+    ss = s % 60;
+    m = Math.floor(s / 60);
+    // console.log(m, ss);
+    return zeroPad(m, 2)+":"+zeroPad(ss, 2);
+  }
+
+  function zeroPad(num, places) {
+    var zero = places - num.toString().length + 1;
+    return Array(+(zero > 0 && zero)).join("0") + num;
+  }
+
+  function saveConfig() {
+    socket.send(JSON.stringify({'command':'saveConfig', 'max_interactions':$("#max_interactions").val(), 'max_silence':$("#max_silence").val(), 'max_section':$("#max_section").val()}));
+  }
+
+  function reloadBrain() {
+    socket.send(JSON.stringify({'command':'reload'}));
+  }
+
+  </script>
+</body>
+</html>

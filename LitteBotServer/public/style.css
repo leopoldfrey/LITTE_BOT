@@ -1,0 +1,131 @@
+html
+{
+  scroll-behavior:smooth
+}
+
+body
+{
+  font-family:helvetica;
+  background-color: white;
+  color: black;
+  padding: 0px;
+  margin: 0px;
+}
+
+p
+{
+  padding:0;
+  margin:0;
+  font-size:1rem;
+  line-height:1;
+}
+
+#speech {
+  padding: 20px 30px 20px 30px;
+  margin-bottom: 200px;
+}
+
+.speech_you, .speech_bot {
+  margin: 5px;
+}
+
+.speech_you {
+  color: black;
+}
+
+.speech_bot {
+  color: gray;
+}
+
+.speech_you::before, .speech_bot::before {
+  font-style: italic;
+  text-transform: uppercase;
+}
+
+.speech_you::before {
+  content: attr(data-content);
+}
+
+.speech_bot::before {
+  content: 'bot : ';
+}
+
+
+#info {
+  position: fixed;
+  bottom: 0px;
+  background-color: black;
+  width: 100%;
+  padding: 20px 30px 20px 30px;
+  margin: 0px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0s all;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+#status1, #status2, #timer {
+  flex-basis: 33.3333%;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+
+#timer {
+  font-size: 0.8rem;
+}
+
+#status1 {
+  color: white;
+  text-align: left;
+  font-weight: bold;
+}
+
+#status2 {
+  text-align: center;
+}
+
+#timer {
+  color: white;
+  text-align: right;
+  padding-right: 50px;
+}
+
+#topbar {
+  position: sticky;
+  top: 0px;
+  background-color: black;
+  width: 100%;
+  padding: 20px 30px 20px 30px;
+  margin: 0px;
+  font-size: 1rem;
+  /*height: 100px;*/
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+
+.ready {
+  color: lightgreen;
+  font-weight: bold;
+}
+
+.pause {
+  color: orange;
+  font-weight: bold;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}
+
+label {
+  font-size: 0.8rem;
+  text-transform: lowercase;
+}
+input {
+  font-size: 0.8rem;
+}

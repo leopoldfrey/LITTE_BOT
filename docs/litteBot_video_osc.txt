@@ -1,0 +1,26 @@
+LA VIDEO RECOIT SUR LE PORT 14003
+
+/bot            string        (phrase du bot)
+/botspeak       0/1           (1 quand le bot parle 0 quand il a terminé)
+/user           string        (phrase de l'utilisateur)
+/section        int           (changement de section 0. OFF 1. INTRO 2. SEDUCTION 3. PROVOCATION 4. FUITE 5. EPILOGUE)
+/globalTime     int           (temps global depuis le début de la session en secondes)
+/sectionTime    int           (temps global depuis le début de la section en secondes)
+/currentTime    int           (temps depuis la dernière interaction en secondes)
+/interactions   int           (nombres d'interactions de la section)
+/stop           1             (fin de session)
+/nlpScore       float [0..1]  (score de similarité)
+
+SCORE DE SIMILARITÉ
+il compare la phrase en entrée avec la base de donnée (la partie déterministe du chatbot)
+en gros plus il trouve une phrase proche dans la base de donnée plus on est proche de 1
+au dessus de 0.6 il va piocher dans la base de donnée, c'est une phrase qu'on aura écrite
+en dessous il va générer une phrase à partir du modèle entrainé sur molière
+en gros au dessus de 0.6 il a plutôt bien compris et il répond vite
+en dessous il va répondre plus lentement (parfois plusieurs secondes)
+et c'est probable qu'il réponde un peu à côté de la plaque
+
+
+LA VIDEO ENVOIE AU CHATBOT SUR LE PORT 14002
+
+? détection de visage ? top départ ?
