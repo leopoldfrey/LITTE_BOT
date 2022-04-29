@@ -23,7 +23,7 @@ def_tokenizer = "../model/emil2000/dialogpt-for-french-language"
 def_model = "../model/Chatbot-Moliere-V4"
 def_module = "../model/universal-sentence-encoder-multilingual-large_3"
 
-PASSEPARTOUT = 0
+OFF = 0
 INTRO = 1
 SEDUCTION = 2
 PROVOCATION = 3
@@ -33,8 +33,9 @@ COLOR_INTRO = 32
 COLOR_SEDUCTION = 33
 COLOR_PROVOCATION = 35
 COLOR_FUITE = 36
+COLOR_OFF = 37
 
-color = [COLOR_INTRO, COLOR_INTRO, COLOR_SEDUCTION, COLOR_PROVOCATION, COLOR_FUITE, COLOR_INTRO ]
+color = [COLOR_OFF, COLOR_INTRO, COLOR_SEDUCTION, COLOR_PROVOCATION, COLOR_FUITE, COLOR_OFF ]
 
 name = ["Off", "Introduction", "Séduction", "Provocation", "Fuite", "Epilogue"]
 
@@ -86,6 +87,7 @@ class LitteBot:
         self.osc_client = Client('localhost', 14000)
         self.video_client = Client('localhost', 14003)
 
+        print()
         print(formatColor(0,37,40,"Chatbot ready"))
         print()
 
@@ -110,14 +112,14 @@ class LitteBot:
             print(formatColor(0,color[self.botmode],40, "bot: "+args[0]))
             self.log.logBot(str(self.botmode), args[0])
         else:
-            print("callback : "+str(address))
+            print("OSC IN : "+str(address))
             for x in range(0,len(args)):
                 print("     " + str(args[x]))
 
     def setBotMode(self, mode):
         self.botmode = mode
         if self.botmode == 0:
-            print("     "+formatColor(1,color[PASSEPARTOUT],40,"Bot Mode Passe-partout"))
+            print("     "+formatColor(1,color[OFF],40,"Bot Mode Passe-partout"))
         elif self.botmode == 1:
             print("     "+formatColor(1,color[INTRO],40,"Bot Mode Introduction"))
         elif self.botmode == 2:
@@ -128,7 +130,6 @@ class LitteBot:
             print("     "+formatColor(1,color[FUITE],40,"Bot Mode Fuite"))
 
     def getResponse(self, q):
-        # print("> GET RESPONSE TO", q)
         self.log.logMe(q)
         print("user: "+q)
         response = self.predict(q, self.history)
@@ -139,8 +140,6 @@ class LitteBot:
         #     i = i + 1
         print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
         self.botresponses.append(self.lastresponse)
-        # print("HISTORY", len(self.history[0]),len(self.history[1]))
-        # print(self.history[0])
         self.log.logBot(str(self.botmode), self.lastresponse)
         return self.lastresponse
 
@@ -238,9 +237,6 @@ class LitteBot:
         history = history or [[], []]
 
         new_question = user_input
-        # if "au revoir" in new_question.lower():
-        #     history = [[], []]
-        # else:
         new_question_embedding = self.embed(new_question)
 
         mode_response = self.dom_juan[self.botmode]
@@ -255,23 +251,23 @@ class LitteBot:
 
         self.video_client.send("/nlpScore", float(max_score))
         if max_score >= 0.6:
-            # print("> PREDICT", new_question, "(score", max_score, ")")
             index = np.where(corr == max_score)[0][0]
             res = mode_response[mode_questions[index]]
             if type(res) == list:
                 self.lastresponse = random.choice(res)
-                response = [user_input, self.lastresponse]
             else:
                 self.lastresponse = res
-                response = [user_input, res]
+            response = [user_input, self.lastresponse]
             history[0].append(tuple(response))
         else:
-            # print("> PREDICT NLP", new_question, "(score", max_score, ")")
             response, history[1] = self.predict_nlp(user_input, history[1])
-            history[0] += response
+            self.lastresponse = list(response[-1])[-1]
+            history[0].append(tuple([user_input,self.lastresponse]))
 
         self.history = history
-        # print (">> RESPONSE", self.lastresponse)
+        # print("RESPONSE", self.lastresponse)
+        # print ("history[0] size", len(self.history[0]))
+        # print ("history[0]", self.history[0])
         self.osc_client.send('/lastresponse',self.lastresponse)
 
         return history[0], history
@@ -292,12 +288,10 @@ class LitteBot:
             user_input + self.tokenizer.eos_token, return_tensors="pt"
         )
 
-        # print(">> new_user_input_ids", new_user_input_ids)
         bot_input_ids = torch.cat(
             [torch.LongTensor(history), new_user_input_ids], dim=-1
         )
 
-        # print(">> bot_input_ids", bot_input_ids)
         history = self.model.generate(
             bot_input_ids,
             max_length=4096,
@@ -312,13 +306,13 @@ class LitteBot:
         response = self.tokenizer.decode(history[0]).split("<|endoftext|>")
         if "" in response:
             response.remove("")
-        self.lastresponse = response[-1]
-        # print(">> response", response)
-        res = [
-            (response[i], response[i + 1])
-            for i, msg in enumerate(response)
-            if i % 2 == 0
-        ]
+        res=[]
+        for i, msg in enumerate(response):
+            if i%2==0:
+                res.append((response[i],response[i+1]))
+            else:
+                continue
+
         return res, history
 
     def gradio_interface(self) -> gr.interface.Interface:
@@ -344,5 +338,5 @@ class LitteBot:
 
 if __name__ == "__main__":
     litte_bot = LitteBot()
-    interface = litte_bot.gradio_interface()
-    interface.launch(server_name="0.0.0.0", server_port=7890)
+    # interface = litte_bot.gradio_interface()
+    # interface.launch(server_name="0.0.0.0", server_port=7890)
