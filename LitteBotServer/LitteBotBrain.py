@@ -6,6 +6,10 @@ from botLog import BotLog
 
 import gradio as gr
 import numpy as np
+
+# import os
+# os.environ["CUDA_VISIBLE_DEVICES"]="1"
+
 import tensorflow as tf
 import tensorflow_hub as hub
 import tensorflow_text
