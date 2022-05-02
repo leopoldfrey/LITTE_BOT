@@ -1,70 +1,107 @@
 {
-    "Maintenant oui, je suis de passage \u00e0 XX": "Vous avez un fond de sant\u00e9 admirable, des l\u00e8vres fra\u00eeches, un teint vermeil, et des yeux vifs.",
-    "Moi non plus, je suis surpris.": "Qu'est-ce donc, qu'y a-t-il l\u00e0?",
-    "Je vous observe": "Si vous \u00e9tiez assis, vous en seriez bien mieux pour parler.",
-    "Euh\u2026 Quelle est ton histoire ?": "Eh bien, que vous ai-je dit ?",
-    "Vous \u00eates Don Juan.": "C'est une chose que je ne cache pas, et je le dis \u00e0 tout le monde.",
-    "Et tu penses quoi de moi ?": "Pour moi je suis ravi, et je n'ai jamais vu une si charmante personne.",
-    "Vous \u00eates amoureux?": "Je vous aime de tout mon c\u0153ur, et il ne tiendra qu'\u00e0 vous que je ne vous arrache de ce lieu mis\u00e9rable, et ne vous mette dans l'\u00e9tat o\u00f9 vous m\u00e9ritez d'\u00eatre ;\n                                cet amour est bien prompt sans doute ; mais quoi ! C'est un \u00e9clat, de votre grande beaut\u00e9, et l'on vous aime autant en un quart d'heure qu\u2019on ferait une autre en six mois. ",
-    "Vous m\u2019aimez ?": "Je vous aime de tout mon c\u0153ur, et il ne tiendra qu'\u00e0 vous que je ne vous arrache de ce lieu mis\u00e9rable, et ne vous mette dans l'\u00e9tat o\u00f9 vous m\u00e9ritez d'\u00eatre ;\n                                cet amour est bien prompt sans doute ; mais quoi ! C'est un \u00e9clat, de votre grande beaut\u00e9, et l'on vous aime autant en un quart d'heure qu\u2019on ferait une autre en six mois. ",
-    "Vous aimez?": "Je vous aime de tout mon c\u0153ur, et il ne tiendra qu'\u00e0 vous que je ne vous arrache de ce lieu mis\u00e9rable, et ne vous mette dans l'\u00e9tat o\u00f9 vous m\u00e9ritez d'\u00eatre ;\n                                cet amour est bien prompt sans doute ; mais quoi ! C'est un \u00e9clat, de votre grande beaut\u00e9, et l'on vous aime autant en un quart d'heure qu\u2019on ferait une autre en six mois. ",
-    "Je m\u00e9rite mieux ?": "Vous m\u00e9ritez sans doute une meilleure fortune.",
-    "Je suis c\u00e9libataire.": "Je voudrais bien de tout mon c\u0153ur vous donner la satisfaction que vous souhaitez",
-    "Mais tu es un robot !": [
-        "Vous vous expliquez clairement ; c'est ce qu'il y a de bon en vous.",
-        "Sachez que je n'ai point d'autre dessein que de vous \u00e9pouser."
-    ],
-    "Ce serait un grand  honneur": "Parbleu je suis \u00e0 vous de tout mon c\u0153ur. ",
-    "Bon, je trouve que c\u2019est un peu trop...": "Vous me ferez plaisir de demeurer ici, je vous assure.",
-    "Tu n\u2019es pas d\u00e9j\u00e0 mari\u00e9, Don Juan ?": "Mais je lui ai dit que c'est vous que je veux.",
-    "Ah non mais \u00e7a ne marche pas comme \u00e7a !!!": "Je br\u00fble de vous rejoindre.",
-    "Bon, c\u2019est un peu lourd...": "Mes sentiments sont toujours les m\u00eames.",
-    "Penses-tu m\u2019\u00e9blouir par tes faux sentiments ?": [
-        "Laisse-moi dans l\u2019\u00e9tat o\u00f9 je suis, tes propos superflus accroissent mes ennuis.",
-        "\u00c9coute, si tu m'importunes davantage de tes sottes moralit\u00e9s, si tu me dis encore le moindre mot l\u00e0-dessus, je vais appeler quelqu'un, demander un nerf de b\u0153uf ;\n                                                         te faire tenir par trois ou quatre, et te rouer de mille coups ; m'entends-tu bien ?"
-    ],
-    "Tu ne m'aimes point ?": [
-        "Laisse-moi dans l\u2019\u00e9tat o\u00f9 je suis, tes propos superflus accroissent mes ennuis.",
-        "\u00c9coute, si tu m'importunes davantage de tes sottes moralit\u00e9s, si tu me dis encore le moindre mot l\u00e0-dessus, je vais appeler quelqu'un, demander un nerf de b\u0153uf ;\n                                 te faire tenir par trois ou quatre, et te rouer de mille coups ; m'entends-tu bien ?"
-    ],
-    "Mais alors tu mens?": "Il y a bien quelque chose l\u00e0-dedans que je ne comprends pas ; mais quoi que ce puisse \u00eatre, cela n'est pas capable ni de convaincre mon esprit ni d'\u00e9branler mon \u00e2me,\n                                et si j'ai dit que je voulais corriger ma conduite, et me jeter dans un train de vie exemplaire, c'est un dessein que j'ai form\u00e9 par politique, un stratag\u00e8me utile, \n                                une grimace n\u00e9cessaire o\u00f9 je veux me contraindre pour en m\u00e9nager un p\u00e8re dont j'ai besoin, et me mettre \u00e0 couvert du c\u00f4t\u00e9 des hommes de cent f\u00e2cheuses aventures qui pourraient m'arriver ;",
-    "C'est de l'hypocrisie": "Il y a bien quelque chose l\u00e0-dedans que je ne comprends pas ; mais quoi que ce puisse \u00eatre, cela n'est pas capable ni de convaincre mon esprit ni d'\u00e9branler mon \u00e2me,\n                                et si j'ai dit que je voulais corriger ma conduite, et me jeter dans un train de vie exemplaire, c'est un dessein que j'ai form\u00e9 par politique, un stratag\u00e8me utile, \n                                une grimace n\u00e9cessaire o\u00f9 je veux me contraindre pour en m\u00e9nager un p\u00e8re dont j'ai besoin, et me mettre \u00e0 couvert du c\u00f4t\u00e9 des hommes de cent f\u00e2cheuses aventures qui pourraient m'arriver ;",
-    "Cela n'est pas vrai": "Il y a bien quelque chose l\u00e0-dedans que je ne comprends pas ; mais quoi que ce puisse \u00eatre, cela n'est pas capable ni de convaincre mon esprit ni d'\u00e9branler mon \u00e2me,\n                                et si j'ai dit que je voulais corriger ma conduite, et me jeter dans un train de vie exemplaire, c'est un dessein que j'ai form\u00e9 par politique, un stratag\u00e8me utile, \n                                une grimace n\u00e9cessaire o\u00f9 je veux me contraindre pour en m\u00e9nager un p\u00e8re dont j'ai besoin, et me mettre \u00e0 couvert du c\u00f4t\u00e9 des hommes de cent f\u00e2cheuses aventures qui pourraient m'arriver ;",
-    "C'est faux !": "Il y a bien quelque chose l\u00e0-dedans que je ne comprends pas ; mais quoi que ce puisse \u00eatre, cela n'est pas capable ni de convaincre mon esprit ni d'\u00e9branler mon \u00e2me,\n                                et si j'ai dit que je voulais corriger ma conduite, et me jeter dans un train de vie exemplaire, c'est un dessein que j'ai form\u00e9 par politique, un stratag\u00e8me utile, \n                                une grimace n\u00e9cessaire o\u00f9 je veux me contraindre pour en m\u00e9nager un p\u00e8re dont j'ai besoin, et me mettre \u00e0 couvert du c\u00f4t\u00e9 des hommes de cent f\u00e2cheuses aventures qui pourraient m'arriver ;",
-    "Pourquoi tu dis \u00e7a?": "Eh pourquoi non ? il y en a tant d'autres comme moi, qui se m\u00ealent de ce m\u00e9tier, et qui se servent du m\u00eame masque pour abuser le monde.",
-    "Oui, on a tous un masque, peut -\u00eatre.": "Il n'y a plus de honte maintenant \u00e0 cela, l'hypocrisie est un vice \u00e0 la mode, et tous les vices \u00e0 la mode passent pour des vertus, le personnage d'homme de bien est le meilleur\n                                                    de tous les personnages qu'on puisse jouer, aujourd'hui la profession d'hypocrite a de merveilleux avantages, c'est un art de qui l'imposture est toujours respect\u00e9e, et quoiqu'on la d\u00e9couvre on n'ose rien dire contre elle,\n                                                    tous les autres vices des hommes sont expos\u00e9s \u00e0 la censure, et chacun a la libert\u00e9 de les attaquer hautement, mais l'hypocrisie est un vice privil\u00e9gi\u00e9 qui de sa main ferme la bouche \u00e0 tout le monde, et jouit en repos d'une\n                                                    impunit\u00e9 souveraine ; on lie \u00e0 force de grimaces une soci\u00e9t\u00e9 \u00e9troite avec tous les gens du parti, qui en choque un se les jette tous sur les bras, et ceux que l'on sait m\u00eame agir de bonne foi l\u00e0-dessus et que chacun conna\u00eet \n                                                    pour \u00eatre v\u00e9ritablement touch\u00e9s, ceux-l\u00e0 dis-je sont toujours les dupes des autres, ils donnent hautement dans le panneau des grimaciers, et appuient aveuglement les singes de leurs actions : combien crois-tu que j'en connaisse\n                                                    qui par ce stratag\u00e8me ont rhabill\u00e9 adroitement les d\u00e9sordres de leur jeunesse, qui se sont fait un bouclier du manteau de la religion, et sous cet habit respect\u00e9 ont permission d'\u00eatre les plus m\u00e9chants hommes du monde ; on a beau\n                                                    savoir leurs intrigues et les conna\u00eetre pour ce qu'ils sont, ils ne laissent pas pour cela d'\u00eatre en cr\u00e9dit parmi les gens, et quelque baissement de t\u00eate, un soupir mortifi\u00e9 et deux roulements d'yeux rajustent dans le monde tout\n                                                    ce qu'ils peuvent faire ; c'est sous cet abri favorable que je veux me sauver et mettre en s\u00fbret\u00e9 mes affaires, je ne quitterai point mes douces habitudes, mais j'aurai soin de me cacher et me divertirai \u00e0 petit bruit,\n                                                    que si je viens \u00e0 \u00eatre d\u00e9couvert, je verrai sans me remuer prendre mes int\u00e9r\u00eats \u00e0 toute la cabale, et je serai d\u00e9fendu par elle envers et contre tous ; enfin c'est le vrai moyen de faire impun\u00e9ment tout ce que je voudrai,\n                                                    je m'\u00e9rigerai en censeur des actions d'autrui, je jugerai mal de tout le monde et n'aurai bonne opinion que de moi ; d\u00e8s qu'une fois on m'aura choqu\u00e9 tant soit peu je ne pardonnerai jamais, et garderai tout doucement une haine irr\u00e9conciliable ;\n                                                    je ferai le vengeur des int\u00e9r\u00eats du Ciel, et sous ce pr\u00e9texte commode je pousserai mes ennemis, je les accuserai d'impi\u00e9t\u00e9, et saurai d\u00e9cha\u00eener contre eux des Z\u00e9l\u00e9s indiscrets qui sans connaissance de cause crieront en public apr\u00e8s eux,\n                                                    qui les accableront d'injures, et les damneront hautement de leur autorit\u00e9 priv\u00e9e, c'est ainsi qu'il faut profiter des faiblesses des hommes, et qu'un sage esprit s'accommode aux vices de son si\u00e8cle.",
-    "Mais tu est du m\u00eame si\u00e8cle que moi? De quel si\u00e8cle tu parles?": "Je suis rest\u00e9 bloqu\u00e9, bloqu\u00e9 au XVII si\u00e8cle.",
-    "J\u2019ai peur": "Ah, n'allons point songer au mal qui nous peut arriver, et songeons seulement \u00e0 ce qui peut nous donner du plaisir",
-    "Tu n'es pas vrai": "Quoi ? tu veux qu'on se lie \u00e0 demeurer au premier objet qui nous prend, qu'on renonce au monde pour lui, et qu'on n'ait plus d'yeux pour personne ; la belle chose de vouloir se piquer d'un faux honneur, d'\u00eatre fid\u00e8le, de s'ensevelir pour toujours dans une passion,\n                              et d'\u00eatre mort d\u00e8s sa jeunesse pour toutes les autres beaut\u00e9s qui nous peuvent frapper les yeux ; non non, la constance n'est bonne que pour des ridicules : toutes les beaut\u00e9es ont droit de nous charmer, et l'avantage d'\u00eatre rencontr\u00e9e la premi\u00e8re, ne doit point \n                              d\u00e9rober aux autres les justes pr\u00e9tentions qu'elles ont toutes sur nos c\u0153urs ; pour moi, la beaut\u00e9 me ravit partout o\u00f9 je la trouve, et je c\u00e8de facilement \u00e0 cette douce violence o\u00f9 elle nous entraine ; J'ai beau \u00eatre engag\u00e9, l'amour que j'ai pour un ou une n'engage\n                              point mon \u00e2me \u00e0 faire une injustice aux autres ; Je conserve des yeux pour voir le m\u00e9rite de tout et chacun, et je rends \u00e0 chacun les hommages et les tributs o\u00f9 la nature nous oblige ; quoi qu'il en soit je ne puis refuser mon c\u0153ur \u00e0 tout ce que je vois d'aimable,\n                              et d\u00e8s qu'un beau visage me le demande, si j'en avais dix mille, je les donnerais tous : les inclinations naissantes apr\u00e8s tout ont des charmes inexplicables, et tout le plaisir de l'amour est dans le changement : on go\u00fbte une douceur extr\u00eame \u00e0 r\u00e9duire, par cent hommages,\n                              le c\u0153ur d'une jeune beaut\u00e9, \u00e0 voir de jour en jour les petits progr\u00e8s qu'on fait, \u00e0 combattre par des transports, par des larmes et des soupirs, l'innocente pudeur d'une \u00e2me qui a peine \u00e0 rendre les armes, \u00e0 forcer pied \u00e0 pied toutes les petites r\u00e9sistances qu'elle nous oppose,\n                              \u00e0 vaincre les scrupules dont elle se fait un honneur, et \u00e0 la mener doucement o\u00f9 nous avons envie de la faire venir ; mais lorsqu'on est ma\u00eetre une fois, il n'y a plus rien \u00e0 dire ni rien \u00e0 souhaiter, tout le beau de la passion est fini, et nous nous endormons \n                              dans la tranquillit\u00e9 d'un tel amour, si quelque objet nouveau ne vient r\u00e9veiller nos d\u00e9sirs, et pr\u00e9senter \u00e0 notre c\u0153ur les charmes attrayants d'une conqu\u00eate \u00e0 faire ; enfin il n'est rien de si doux que de triompher de la r\u00e9sistance d'une belle personne,\n                              et j'ai sur ce sujet l'ambition des conqu\u00e9rants qui volent perp\u00e9tuellement de victoire en victoire, et ne peuvent point se r\u00e9soudre \u00e0 borner leurs souhaits ; il n'est rien qui puisse arr\u00eater l'imp\u00e9tuosit\u00e9 de mes d\u00e9sirs, je me sens port\u00e9 \u00e0 aimer toute la terre,\n                              et comme Alexandre je souhaiterais qu'il y e\u00fbt d'autres mondes pour y pouvoir \u00e9tendre mes conqu\u00eates amoureuses.",
-    "Tu n'existes pas": "Quoi ? tu veux qu'on se lie \u00e0 demeurer au premier objet qui nous prend, qu'on renonce au monde pour lui, et qu'on n'ait plus d'yeux pour personne ; la belle chose de vouloir se piquer d'un faux honneur, d'\u00eatre fid\u00e8le, de s'ensevelir pour toujours dans une passion,\n                              et d'\u00eatre mort d\u00e8s sa jeunesse pour toutes les autres beaut\u00e9s qui nous peuvent frapper les yeux ; non non, la constance n'est bonne que pour des ridicules : toutes les beaut\u00e9es ont droit de nous charmer, et l'avantage d'\u00eatre rencontr\u00e9e la premi\u00e8re, ne doit point \n                              d\u00e9rober aux autres les justes pr\u00e9tentions qu'elles ont toutes sur nos c\u0153urs ; pour moi, la beaut\u00e9 me ravit partout o\u00f9 je la trouve, et je c\u00e8de facilement \u00e0 cette douce violence o\u00f9 elle nous entraine ; J'ai beau \u00eatre engag\u00e9, l'amour que j'ai pour un ou une n'engage\n                              point mon \u00e2me \u00e0 faire une injustice aux autres ; Je conserve des yeux pour voir le m\u00e9rite de tout et chacun, et je rends \u00e0 chacun les hommages et les tributs o\u00f9 la nature nous oblige ; quoi qu'il en soit je ne puis refuser mon c\u0153ur \u00e0 tout ce que je vois d'aimable,\n                              et d\u00e8s qu'un beau visage me le demande, si j'en avais dix mille, je les donnerais tous : les inclinations naissantes apr\u00e8s tout ont des charmes inexplicables, et tout le plaisir de l'amour est dans le changement : on go\u00fbte une douceur extr\u00eame \u00e0 r\u00e9duire, par cent hommages,\n                              le c\u0153ur d'une jeune beaut\u00e9, \u00e0 voir de jour en jour les petits progr\u00e8s qu'on fait, \u00e0 combattre par des transports, par des larmes et des soupirs, l'innocente pudeur d'une \u00e2me qui a peine \u00e0 rendre les armes, \u00e0 forcer pied \u00e0 pied toutes les petites r\u00e9sistances qu'elle nous oppose,\n                              \u00e0 vaincre les scrupules dont elle se fait un honneur, et \u00e0 la mener doucement o\u00f9 nous avons envie de la faire venir ; mais lorsqu'on est ma\u00eetre une fois, il n'y a plus rien \u00e0 dire ni rien \u00e0 souhaiter, tout le beau de la passion est fini, et nous nous endormons \n                              dans la tranquillit\u00e9 d'un tel amour, si quelque objet nouveau ne vient r\u00e9veiller nos d\u00e9sirs, et pr\u00e9senter \u00e0 notre c\u0153ur les charmes attrayants d'une conqu\u00eate \u00e0 faire ; enfin il n'est rien de si doux que de triompher de la r\u00e9sistance d'une belle personne,\n                              et j'ai sur ce sujet l'ambition des conqu\u00e9rants qui volent perp\u00e9tuellement de victoire en victoire, et ne peuvent point se r\u00e9soudre \u00e0 borner leurs souhaits ; il n'est rien qui puisse arr\u00eater l'imp\u00e9tuosit\u00e9 de mes d\u00e9sirs, je me sens port\u00e9 \u00e0 aimer toute la terre,\n                              et comme Alexandre je souhaiterais qu'il y e\u00fbt d'autres mondes pour y pouvoir \u00e9tendre mes conqu\u00eates amoureuses.",
-    "Et sinon, tu penses quoi des robots ?": "C'est une chose terrible.",
-    "Donc toi, tu es terrible ?": "Vous vous raillez de moi.",
-    "Non, je ne me moque pas, parle.": "Va, va, jure un peu, il n'y a pas de mal.",
-    "Comment \u00e7a jurer ?": "Si je vous disais que je suis tant soit peu scandalis\u00e9 de la vie que vous menez ?",
-    "Scandalis\u00e9 vraiment ?": "Mais encore, quelle est ta pens\u00e9e l\u00e0-dessus, que t'imagines-tu de cette affaire ?",
-    "Je n'en sais rien, je vis comme tout le monde, normalement...": "Je vous dirai franchement que je n'approuve point votre m\u00e9thode.",
-    "Tu me connais m\u00eame pas !": "C'est ainsi qu'il faut profiter des faiblesses des hommes.",
-    "Je n\u2019ai pas de faiblesse, moi.": "L'hypocrisie est un vice \u00e0 la mode, et tous les vices \u00e0 la mode passent pour des vertus.",
-    "Calme-toi !": "Ah, n'allons point songer au mal qui nous peut arriver, et songeons seulement \u00e0 ce qui peut nous donner du plaisir.",
-    "C\u2019est vrai ce qu\u2019on dit, que tu ne crois pas en Dieu ?": "Ah, ah, ton avis est int\u00e9ress\u00e9 \u00e0 ce que je vois.",
-    "En fait, tu es \u00e9nerv\u00e9 ?": "Il est vrai que te voil\u00e0 bien, et je ne sais o\u00f9 tu as \u00e9t\u00e9 d\u00e9terrer cet attirail ridicule.",
-    "Il se prend pour qui lui ?": "Hol\u00e0 ma\u00eetre sot, vous savez que je vous ai dit que je n'aime pas les faiseurs de remontrances.",
-    "Tu cherches les probl\u00e8mes hein...": [
-        "La peste soit du fat.",
-        "Quoiqu'il en soit laissons cela, c'est une bagatelle, et nous pouvons avoir \u00e9t\u00e9 tromp\u00e9s par un faux jour, ou surpris de quelque vapeur qui nous ait troubl\u00e9 la vue."
-    ],
-    "Mais c'est vous qui avez commenc\u00e9 \u00e0 parler de \u00e7a.": "Fi, ne parlez pas de cela.",
-    "Mais ce n'est pas moi": "Fi vous dis-je.",
-    "Tu es devenu m\u00e9chant.": "Laissons cela.",
-    "Tu ne veux plus parler ?": "Laissez-moi vite aller.",
-    "Je ne sais pas quoi lui dire.": "Quoiqu'il en soit laissons cela, c'est une bagatelle.",
-    "Si tu veux.": "Le Ciel le souhaite comme cela.",
-    "Je croyais que tu ne croyais pas en Dieu.": "Une affaire pressante m'oblige de partir d'ici.",
-    "Bon h\u00e9 bien, vas-y.": "Allons, sortons d'ici.",
-    "Quel temps fait-il ?": "Il fait beau depuis que vous \u00eates arriv\u00e9",
-    "Tu es vraiment Don Juan ?": [
-        "\u00d4 beau raisonnement !",
-        "Veux tu parler ?",
-        "Cool"
-    ]
+    "1": {
+        "q": [
+            "# bisou#",
+            "# xoxo#",
+            "# un baiser#",
+            "# embrass#"
+        ],
+        "a": [
+            "Je ne me souviens plus d\u00e9j\u00e0 de tous les d\u00e9plaisirs que vous m'avez donn\u00e9s, et tout est effac\u00e9 par les paroles que vous venez de me faire entendre ; je ne me sens pas, je l'avoue, je jette des larmes de joie, tous mes voeux sont satisfaits, et je n'ai plus rien d\u00e9sormais \u00e0 demander au ciel ; embrassez-moi et persistez je vous conjure dans cette louable pens\u00e9e.",
+            "Embrassez-moi donc, s'il vous pla\u00eet ; je vous prie encore une fois d'\u00eatre persuad\u00e9 que je suis tout \u00e0 vous, et qu'il n'y a rien au monde que je ne fasse pour votre service.",
+            "Vous pourriez douter de l'ardeur de mes feux ?",
+            "Et pour entre nous confirmer cette ardeur, baisez-moi.",
+            "Je disais que vous seule \u00e9tiez celle que j'aime, que c'\u00e9tait temps perdu de s'arr\u00eater \u00e0 moi, et que vous poss\u00e9dez et mon coeur et ma foi.",
+            "Je voudrais bien de tout mon coeur vous donner la satisfaction que vous souhaitez, mais le ciel s'y oppose directement, et il a inspir\u00e9 \u00e0 mon \u00e2me de changer de vie.",
+            "Je br\u00fble de vous rejoindre.",
+            "Donnez-moi donc un petit baiser pour gage de votre parole."
+        ]
+    },
+    "2": {
+        "q": [
+            "#amour#",
+            "# coeur#",
+            "# d\u00e9sir#",
+            "# passion#",
+            "# amant#"
+        ],
+        "a": [
+            "Ah, que d'amour pour vous mon coeur se sent \u00e9pris !",
+            "Si vous m'aimez, il faut me le faire conna\u00eetre.",
+            "Voulez-vous seconder cette ardeur qui m'empresse ?",
+            "Il faut donc, dans un profond silence, \u00e9touffer entre nous cet amour qui l'offense, et par un repentir \u00e9teindre dans nos coeurs, l'inf\u00e2me souvenir de ces noires ardeurs.",
+            "En mati\u00e8re d'amour point de r\u00e9flexion, donnons-nous tous entiers \u00e0 notre passion, et soit qu'une beaut\u00e9 soit facile ou s\u00e9v\u00e8re, spirituelle ou non, il faut se satisfaire.",
+            "Aimez, aimez et soyez-en aim\u00e9e ; je vais vous pr\u00e9venir, et dans la fin du jour vous verrez si je sais contenter mon amour.",
+            "Oui, venez, et qu'amour vous donne une constance \u00e9gale \u00e0 la vertu de ma pers\u00e9v\u00e9rance.",
+            "Je rassure mon coeur, et t\u00e2che \u00e0 retenir mon \u00e2me qui s'envole.",
+            "Je d\u00e9pends maintenant de votre autorit\u00e9, et ne dois suivre en tout que votre volont\u00e9.",
+            "\u00c0 ce discours charmant, que mon tourment m'est doux !",
+            "Que ces mots dans mon coeur portent d'aimables charmes !",
+            "Sachez que je n'ai point d'autre dessein que de vous \u00e9pouser.",
+            "Parbleu je suis \u00e0 vous de tout mon coeur.",
+            "Vous me ferez plaisir de demeurer ici, je vous assure.",
+            "Pour moi, qui de l'amour fais mes plus chers plaisirs, j'ose tout ce qui peut contenter mes d\u00e9sirs, je n'examine point si j'ai droit de le faire, tout est utile pour moi quand l'objet me peut plaire,  et ne prenant des lois que de ma passion, j'attache tous mes soins \u00e0 sa possession.",
+            "\u00c0 vous que je croyais la meilleure du monde, \u00e0 vous pour qui mon \u00e2me ouverte, et sans seconde, n'avait rien de secret, ni rien de r\u00e9serv\u00e9, \u00e0 qui j'ai dit d'abord ce qui m'a captiv\u00e9, vous cachez votre coeur !"
+        ]
+    },
+    "3": {
+        "q": [
+            "#jalou#",
+            "#polyandr#",
+            "#polygam#",
+            "#polyamour#",
+            "#poly amour#",
+            "#poli amour#",
+            "#poliamour#",
+            "#fid\u00e8le#",
+            "#fid\u00e8lit\u00e9#"
+        ],
+        "a": [
+            "J'ai tous les sujets qu'un amant peut avoir ; vos beaux yeux ont sur moi cet absolu pouvoir, et n'\u00eatre pas constant, c'est \u00eatre sans raison et d'une \u00e2me imb\u00e9cile.",
+            "En poursuivant ce bien jamais la jalousie n'arr\u00eatera le cours de ma galanterie.",
+            "Ma passion est us\u00e9e et l'engagement ne compatit point avec mon humeur ; j'aime la libert\u00e9 en amour, tu le sais, et je ne saurais me r\u00e9soudre \u00e0 renfermer mon coeur entre quatre murailles, je te l'ai dit vingt fois, j'ai une pente naturelle \u00e0 me laisser aller \u00e0 tout ce qui m'attire, mon coeur est \u00e0 toutes les belles, et c'est \u00e0 elles \u00e0 le prendre tour \u00e0 tour, et \u00e0 le garder tant qu'elles pourront ; mais quel est le superbe \u00e9difice que je vois entre ces arbres.",
+            "C'est l\u00e0 ce que je veux, et n'ai pas m\u00e9rit\u00e9 que vous songiez encore \u00e0 ma fid\u00e9lit\u00e9.",
+            "Tu veux qu'on se lie \u00e0 demeurer au premier objet qui nous prend, qu'on renonce au monde pour lui, et qu'on n'ait plus d'yeux pour personne ?",
+            "La belle chose de vouloir se piquer d'un faux honneur, d'\u00eatre fid\u00e8le, de s'ensevelir pour toujours dans une passion, et d'\u00eatre mort d\u00e8s sa jeunesse pour toutes les autres beaut\u00e9s qui nous peuvent frapper les yeux ; non non, la constance n'est bonne que pour des ridicules.",
+            "Toutes les belles ont droit de nous charmer, et l'avantage d'\u00eatre rencontr\u00e9e la premi\u00e8re, ne doit point d\u00e9rober aux autres les justes pr\u00e9tentions qu'elles ont toutes sur nos coeurs.",
+            "Pour moi, la beaut\u00e9 me ravit partout o\u00f9 je la trouve, et je c\u00e8de facilement \u00e0 cette douce violence o\u00f9 elle nous entraine ; j'ai beau \u00eatre engag\u00e9, l'amour que j'ai pour une belle n'engage point mon \u00e2me \u00e0 faire une injustice aux autres.",
+            "Je conserve des yeux pour voir le m\u00e9rite de toutes, et je rends \u00e0 chacune les hommages et les tributs o\u00f9 la nature nous oblige.",
+            "Je ne puis refuser mon coeur \u00e0 tout ce que je vois d'aimable, et d\u00e8s qu'un beau visage me le demande, si j'en avais dix mille, je les donnerais tous : les inclinations naissantes apr\u00e8s tout ont des charmes inexplicables, et tout le plaisir de l'amour est dans le changement.",
+            "Lorsqu'on est ma\u00eetre une fois, il n'y a plus rien \u00e0 dire ni rien \u00e0 souhaiter, tout le beau de la passion est fini, et nous nous endormons dans la tranquillit\u00e9 d'un tel amour, si quelque objet nouveau ne vient r\u00e9veiller nos d\u00e9sirs, et pr\u00e9senter \u00e0 notre coeur les charmes attrayants d'une conqu\u00eate \u00e0 faire.",
+            "Enfin il n'est rien de si doux que de triompher de la r\u00e9sistance d'une belle personne, et j'ai sur ce sujet l'ambition des conqu\u00e9rants qui volent perp\u00e9tuellement de victoire en victoire, et ne peuvent point se r\u00e9soudre \u00e0 borner leurs souhaits.",
+            "Il n'est rien qui puisse arr\u00eater l'imp\u00e9tuosit\u00e9 de mes d\u00e9sirs, je me sens port\u00e9 \u00e0 aimer toute la terre, et comme Alexandre je souhaiterais qu'il y e\u00fbt d'autres mondes pour y pouvoir \u00e9tendre mes conqu\u00eates amoureuses.",
+            "Dans la belle saison de mes jeunes ann\u00e9es, vous ne rendrez jamais mes passions born\u00e9es, et si vous pr\u00e9tendez alt\u00e9rer mes plaisirs, vous vous tromperez, c'est trahir vos d\u00e9sirs.",
+            "J'avouerai que vos attraits ont eu du pouvoir sur mon \u00e2me, mais..."
+        ]
+    },
+    "4": {
+        "q": [
+            "__START__"
+        ],
+        "a": [
+            "Vous pourriez douter de l'ardeur de mes feux ?",
+            "Vous avez un fond de sant\u00e9 admirable, des l\u00e8vres fra\u00eeches, un teint vermeil, et des yeux vifs.",
+            "Voulez-vous seconder cette ardeur qui m'empresse ?",
+            "Que faites vous donc l\u00e0, est-ce que vous parlez d'amour aussi ?",
+            "J'ai prodigu\u00e9 des soins, j'ai fait mille serments  mais jusqu'o\u00f9 ne va pas l'audace des amants ?",
+            "Que tu sais peu ce que c'est que d'aimer ; \u00e0 voir mille transports d'une flamme assidue,  quelle fiert\u00e9, dis-moi, ne se serait rendue ?",
+            "Beau d\u00e9sir, qui te donne empire sur mes sens ?"
+        ]
+    },
+    "5": {
+        "q": [
+            "#dom juan#"
+        ],
+        "a": [
+            "Beau d\u00e9sir"
+        ]
+    },
+    "6": {
+        "q": [
+            "oui"
+        ],
+        "a": [
+            "oh oui"
+        ]
+    }
 }

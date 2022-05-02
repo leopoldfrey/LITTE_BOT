@@ -190,24 +190,81 @@ class LitteBot:
         Returns:
             dict: Dictionary of questions
         """
+        self.filter = []
         dom_juan = []
         print("Loading ", dialog_path+def_questions_common+".json")
         with open(dialog_path+def_questions_common+".json") as dj_common:
-            dom_juan_common = json.load(dj_common)
+            tmp = json.load(dj_common)
+            dom_juan_common = {}
+            filter_common = {}
+            for i in tmp:
+                for qq in tmp[i]['q']:
+                    # print(qq, tmp[i]['a'])
+                    qq = qq.lower()
+                    if qq.__contains__('#'):
+                        #print("WILDCARD", qq, tmp[i]['a'])
+                        filter_common[qq] = tmp[i]['a']
+                    else:
+                        dom_juan_common[qq] = tmp[i]['a']
             print("Loading ", dialog_path+def_questions_seduction+".json")
             with open(dialog_path+def_questions_seduction+".json") as dj:
-                dom_juan_seduction = {**json.load(dj), **dom_juan_common}
+                tmp = json.load(dj)
+                tmp_seduction = {}
+                tmp_filter = {}
+                for i in tmp:
+                    for qq in tmp[i]['q']:
+                        # print(qq, tmp[i]['a'])
+                        qq = qq.lower()
+                        if qq.__contains__('#'):
+                            #print("WILDCARD", qq, tmp[i]['a'])
+                            tmp_filter[qq] = tmp[i]['a']
+                        else:
+                            tmp_seduction[qq] = tmp[i]['a']
+                dom_juan_seduction = {**dom_juan_common, **tmp_seduction}
+                filter_seduction = {**filter_common, **tmp_filter}
             print("Loading ", dialog_path+def_questions_provocation+".json")
             with open(dialog_path+def_questions_provocation+".json") as dj:
-                dom_juan_provocation = {**json.load(dj), **dom_juan_common}
+                tmp = json.load(dj)
+                tmp_provocation = {}
+                tmp_filter = {}
+                for i in tmp:
+                    for qq in tmp[i]['q']:
+                        # print(qq, tmp[i]['a'])
+                        qq = qq.lower()
+                        if qq.__contains__('#'):
+                            #print("WILDCARD", qq, tmp[i]['a'])
+                            tmp_filter[qq] = tmp[i]['a']
+                        else:
+                            tmp_provocation[qq] = tmp[i]['a']
+                dom_juan_provocation = {**tmp_provocation, **dom_juan_common}
+                filter_provocation = {**tmp_filter, **filter_common}
             print("Loading ", dialog_path+def_questions_fuite+".json")
             with open(dialog_path+def_questions_fuite+".json") as dj:
-                dom_juan_fuite = {**json.load(dj), **dom_juan_common}
+                tmp = json.load(dj)
+                tmp_fuite = {}
+                tmp_filter = {}
+                for i in tmp:
+                    for qq in tmp[i]['q']:
+                        # print(qq, tmp[i]['a'])
+                        qq = qq.lower()
+                        if qq.__contains__('#'):
+                            #print("WILDCARD", qq, tmp[i]['a'])
+                            tmp_filter[qq] = tmp[i]['a']
+                        else:
+                            tmp_fuite[qq] = tmp[i]['a']
+                dom_juan_fuite = {**tmp_fuite, **dom_juan_common}
+                filter_fuite = {**tmp_filter, **filter_common}
         dom_juan.append(dom_juan_common)
         dom_juan.append(dom_juan_common)
         dom_juan.append(dom_juan_seduction)
         dom_juan.append(dom_juan_provocation)
         dom_juan.append(dom_juan_fuite)
+
+        self.filter.append(filter_common)
+        self.filter.append(filter_common)
+        self.filter.append(filter_seduction)
+        self.filter.append(filter_provocation)
+        self.filter.append(filter_fuite)
         return dom_juan
 
     def load_questions_keys(self):
@@ -240,33 +297,48 @@ class LitteBot:
         """
         history = history or [[], []]
 
-        new_question = user_input
-        new_question_embedding = self.embed(new_question)
-
+        mode_filter = self.filter[self.botmode]
         mode_response = self.dom_juan[self.botmode]
         mode_questions = self.dom_juan_questions[self.botmode]
         mode_embeddings = self.dom_juan_questions_embeddings[self.botmode]
 
-        all_questions_embedding = np.concatenate(
-            (new_question_embedding, mode_embeddings), axis=0
-        )
-        corr = np.inner(all_questions_embedding, all_questions_embedding)[0][1:]
-        max_score = max(corr)
+        new_question = user_input.lower()
+        new_question_embedding = self.embed(new_question)
 
-        self.video_client.send("/nlpScore", float(max_score))
-        if max_score >= 0.6:
-            index = np.where(corr == max_score)[0][0]
-            res = mode_response[mode_questions[index]]
-            if type(res) == list:
-                self.lastresponse = random.choice(res)
+        found = False
+        for filt in mode_filter.keys():
+            f = filt.replace("#","")
+            if new_question.__contains__(f):
+                #print("FILTER OK", filt, mode_filter[filt])
+                res = mode_filter[filt]
+                if type(res) == list:
+                    self.lastresponse = random.choice(res)
+                else:
+                    self.lastresponse = res
+                history[0].append(tuple([user_input,self.lastresponse]))
+                found = True
+
+        if not found:
+            all_questions_embedding = np.concatenate(
+                (new_question_embedding, mode_embeddings), axis=0
+            )
+            corr = np.inner(all_questions_embedding, all_questions_embedding)[0][1:]
+            max_score = max(corr)
+
+            self.video_client.send("/nlpScore", float(max_score))
+            if max_score >= 0.6:
+                index = np.where(corr == max_score)[0][0]
+                res = mode_response[mode_questions[index]]
+                if type(res) == list:
+                    self.lastresponse = random.choice(res)
+                else:
+                    self.lastresponse = res
+                response = [user_input, self.lastresponse]
+                history[0].append(tuple(response))
             else:
-                self.lastresponse = res
-            response = [user_input, self.lastresponse]
-            history[0].append(tuple(response))
-        else:
-            response, history[1] = self.predict_nlp(user_input, history[1])
-            self.lastresponse = list(response[-1])[-1]
-            history[0].append(tuple([user_input,self.lastresponse]))
+                response, history[1] = self.predict_nlp(new_question, history[1])
+                self.lastresponse = list(response[-1])[-1]
+                history[0].append(tuple([user_input,self.lastresponse]))
 
         self.history = history
         # print("RESPONSE", self.lastresponse)
@@ -342,5 +414,6 @@ class LitteBot:
 
 if __name__ == "__main__":
     litte_bot = LitteBot()
-    # interface = litte_bot.gradio_interface()
-    # interface.launch(server_name="0.0.0.0", server_port=7890)
+    gr.close_all()
+    interface = litte_bot.gradio_interface()
+    interface.launch(server_name="0.0.0.0", server_port=7892)

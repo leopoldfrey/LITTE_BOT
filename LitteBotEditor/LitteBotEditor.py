@@ -103,13 +103,25 @@ class LitteBotEditor():
     def mod(self):
         for k in request.forms:
             j = json.loads(k)
-            oldQ = html.unescape(j['oldQ'])
-            q = html.unescape(j['q'])
-            a = [html.unescape(l) for l in j['a'].split('_SEPARATOR_') if l.strip()]
-            if(oldQ != ""):
-                self.data[q] = self.data[oldQ]
-                del self.data[oldQ]
-            self.data[q] = a
+            idx = html.unescape(j['idx'])
+
+            if j['q'].__contains__("_SEPARATOR_"):
+                q = [html.unescape(l) for l in j['q'].split('_SEPARATOR_') if l.strip()]
+            else:
+                q = html.unescape(j['q'])
+
+            if j['a'].__contains__("_SEPARATOR_"):
+                a = [html.unescape(l) for l in j['a'].split('_SEPARATOR_') if l.strip()]
+            else:
+                a = html.unescape(j['a'])
+
+            if idx in self.data:
+                self.data[idx]['q'] = q
+                self.data[idx]['a'] = a
+            else:
+                self.data[idx] = {'q':[], 'a':[]}
+                self.data[idx]['q'] = q
+                self.data[idx]['a'] = a
 
             self.save()
 
@@ -117,9 +129,9 @@ class LitteBotEditor():
 
     def deleteId(self):
         for k in request.forms:
-            q = html.unescape(json.loads(k)['q'])
+            idx = html.unescape(json.loads(k)['idx'])
             #print("TODO del", q)
-            del self.data[q]
+            del self.data[idx]
             self.save()
         return { "msg": "Suppression effectuée"}
 

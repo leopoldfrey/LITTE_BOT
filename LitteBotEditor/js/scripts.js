@@ -106,27 +106,40 @@ function fillSentences(data) {
       break;
   }
 
-  Object.keys(sentencesData).forEach((q, i) => {
-    answers = sentencesData[q];
-    ii = i + 1
-    txt = ""
-    if(typeof answers == "object")
+  Object.keys(sentencesData).forEach((idx) => {
+
+    q = sentencesData[idx]['q'];
+    a = sentencesData[idx]['a'];
+    questions = ""
+    if(typeof q == "object")
     {
-      // console.log(ii, item, sentence, typeof sentence);
-      txt = "<ul>";
-      answers.forEach((s, j) => {
-        // console.log(j, s);
-        txt += "<li>" + s + "</li>";
+      questions = "<ul>";
+      q.forEach((s, j) => {
+        questions += "<li>" + s + "</li>";
       });
-      txt += "</ul>";
+      questions += "</ul>";
     } else {
-      txt = answers;
+      questions = q;
     }
 
+    answers = ""
+    if(typeof a == "object")
+    {
+      answers = "<ul>";
+      a.forEach((s, j) => {
+        answers += "<li>" + s + "</li>";
+      });
+      answers += "</ul>";
+    } else {
+      answers = a;
+    }
+
+    // console.log(idx, questions, answers);
+
     $sentences.append(
-      "<tr class='sentenceRow'><th class='sentenceNum' scope='row'>" + ii + "</th>" +
-      "<td class='sentenceElem sentenceEdit' id='sentence"+ii+"'>" + q + "</td>"+
-      "<td class='sentenceElem sentenceEdit2' id='answer"+ii+"'>" + txt + "</td>"+
+      "<tr class='sentenceRow'><th class='sentenceNum' scope='row'>" + idx + "</th>" +
+      "<td class='sentenceElem sentenceEdit' id='sentence"+idx+"'>" + questions + "</td>"+
+      "<td class='sentenceElem sentenceEdit2' id='answer"+idx+"'>" + answers + "</td>"+
       "</tr>");
   });
 
@@ -141,6 +154,7 @@ function fillSentences(data) {
   currRow = $('.sentenceRow').first();
   currRow.addClass("selected");
   $('.sentenceRow').click(function() {
+    // console.log("CLICK");
     sel($(this));
   });
 }
@@ -183,11 +197,6 @@ $(window).on('load', function() {
     cat = "common";
   // console.log("cat", cat);
   load();
-});
-
-$('#jsonfile-input').on('change', function(){
-  //console.log("UPLOAD JSON FILE", $('#jsonfile-input').val())
-  uploadFile($('#jsonfile-input').val(), $('#jsonfile-input').prop('files')[0]);
 });
 
 $("#commun").click(function(){
@@ -271,6 +280,16 @@ $("#plus").click(function(){
   currRow = $('.sentenceRow').last();
   currRow.addClass("selected");
   currRow.get(0).scrollIntoView();
+  currRow.click(function() {
+    sel($(this));
+  });
+  $('#sentence'+idx).dblclick(function() {
+    edit();
+  });
+  $('#answer'+idx).dblclick(function() {
+    edit();
+  });
+
   setTimeout(function(){
     edit();
   }, 300);
@@ -278,13 +297,12 @@ $("#plus").click(function(){
 
 $("#del").click(function(){
   idx = currRow.children(".sentenceNum").html();
-  q = currRow.children(".sentenceEdit").html().replaceAll('\n','');
   // console.log("Delete", idx, q);
   $.ajax({
       url: "/del",
       type: "POST",
       data: JSON.stringify({
-        "q": escape(q)
+        "idx": escape(idx)
       }),
       success: function(response) {
           console.log(response['msg']);
@@ -303,6 +321,7 @@ function edit()
   editing = true;
   var q = currRow.children(".sentenceEdit").html();
   oldQ = q;
+  q = q.replaceAll("\n","").replaceAll("<ul>","").replaceAll("<li>","- ").replaceAll("</ul>","").replaceAll("</li>","\n");
   var a = currRow.children(".sentenceEdit2").html();
   a = a.replaceAll("\n","").replaceAll("<ul>","").replaceAll("<li>","- ").replaceAll("</ul>","").replaceAll("</li>","\n");
   newSentence.val(q);
@@ -313,7 +332,8 @@ function edit()
 
 function validSentence(ev) {
   ev.preventDefault();
-  currRow.children(".sentenceEdit").html(newSentence.val());
+  var q = "<ul>"+newSentence.val().replaceAll("- ", "</li><li>")+"</ul>";
+  currRow.children(".sentenceEdit").html(q);
   var a = "<ul>"+newAnswer.val().replaceAll("- ", "</li><li>")+"</ul>";
   currRow.children(".sentenceEdit2").html(a);
   // console.log("VALID", currRow);
@@ -323,19 +343,18 @@ function validSentence(ev) {
 
 function save() {
   // console.log("SAVE")
-  rowNum = parseInt(currRow.children("th").first().html());
-  q = currRow.children(".sentenceEdit").html().replaceAll('\n','');
+  rowNum = currRow.children("th").first().html();
+  q = currRow.children(".sentenceEdit").html().replaceAll('\n','').replaceAll("<ul>","").replaceAll("</ul>","").replaceAll("<li>","");
+  questions = q.replaceAll("</li>","_SEPARATOR_");
   a = currRow.children(".sentenceEdit2").html().replaceAll("\n","").replaceAll("<ul>","").replaceAll("</ul>","").replaceAll("<li>","");
-  // answers = a.split("</li>").filter(letter => letter !== '');
   answers = a.replaceAll("</li>","_SEPARATOR_");
-  // console.log("NUM", rowNum, q, answers);
+  // console.log("NUM", rowNum, questions, answers);
   $.ajax({
       url: "/mod",
       type: "POST",
       data: JSON.stringify({
-        // "num": rowNum,
-        "oldQ": escape(oldQ),
-        "q": escape(q),
+        "idx": rowNum,
+        "q": escape(questions),
         "a": escape(answers)
       }),
       success: function(response) {
