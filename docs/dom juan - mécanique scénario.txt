@@ -1,0 +1,143 @@
+*** INSTALLATION ***
+
+copier manuellement le répertoire model
+git clone https://github.com/leopoldfrey/LITTE_BOT.git
+
+installation : _install.sh
+
+*** SCENARIO ***
+
+5 scènes/sections :
+
+      - Introduction
+      - Séduction
+      - Provocation
+      - Fuite
+      - Épilogue
+
+Le passage d'une section à l'autre se fait automatiquement après un temps défini (max_section) ou un nombre d'interactions défini (max_interactions)
+Si l'utilisateur n'interagit pas pendant un temps défini (max_silence), le bot relance la conversation (__RELANCE__)
+L'épilogue est séquentiel, l'utilisateur n'intervient pas dans son déroulement.
+
+
+*** MECANIQUE DU BOT ***
+
+Le bot prend en entrée les phrases de l'utilisateur.
+Il utilise également 5 fichiers de conversation (dom_juan_common.json, dom_juan_seduction.json, dom_juan_provocation.json, dom_juan_fuite.json, dom_juan_epilogue.json dans le répertoire data)
+et un modèle entrainé sur Molière (model/Chatbot-Moliere-V4)
+
+Dans chaque fichiers plusieurs lignes, chaque ligne est composée de plusieurs entrées et plusieurs sorties (séparées par des tirets "-").
+
+      Exemple :
+
+        Entrées :
+        - d'où viens-tu ?
+        - où es-tu ?
+
+        Sorties :
+        - Où diable puis-je être ?
+        - Par où faut-il fuir ?
+        - Par où se sauve-t-on ?
+
+      Si l'utilisateur dis une phrase proche d' "où-es-tu" ou "d'où viens-tu", le bot choisit au hasard une des sorties.
+      Si la phrase n'est pas suffisamment proche d'une des phrases en entrée, il passe à la ligne suivante.
+      S'il épuise le fichier entièrement sans trouver de phrase proche, il envoie la phrase dans le modèle entrainé et génère une phrase.
+
+
+*** FILTRES #
+
+La proximité prenant en compte la longueur de la phrase, certaines entrées peuvent être scriptée plus durement avec le filtre #
+
+      Exemple :
+
+        Entrées :
+        - #casanova#
+        Sorties:
+        - Et de tous les côtés des filles abusées, dont les familles sont partout scandalisées ?
+
+      Toutes les phrases contenant le mot casanova passeront dans ce filtre.
+
+Le caractère # doit encadrer la chaine de caractère à chercher.
+On peut donc créer des filtres qui vont prendre en compte des mots de la même racine #embrass# (embrasser, embrassade...) #amour# (amour, amoureux...)
+
+
+*** __START__
+
+Il est possible de reprendre l'initiative de la conversation (l'orienter) en incluant le mot clé __START__ dans une réponse.
+Le bot va alors piocher une phrase dans la catégorie __START__.
+
+      Exemple :
+
+        Entrées :
+        - oui
+        - d'accord
+
+        Sorties :
+        - Certainement. __START__
+
+      Si l'utilisateur dis "oui" ou "d'accord", le bot répondra "Certainement." auquel il ajoutera une phrase piochée dans la catégorie __START__
+
+Chaque section possède une catégorie __START__ différente, c'est ce qui permet que la conversation avance dans une direction ou une autre.
+
+
+*** PRIORITE
+
+Ordre de priorité :
+  - les filtres #mot-clé# sont prioritaires, dans l'ordre du fichier
+  - les fichiers seduction, provocation, fuite sont prioritaires sur le fichier common
+  - le modèle entrainé arrive en dernier recours
+  - le fichier common est valable dans toutes les sections, mais ses entrées peuvent être réécrites dans les autres fichiers (qui sont prioritaires)
+
+
+*** __RELANCE__ (uniquement dans le fichier common)
+
+Phrases utilisées pour relancer la conversation après un silence
+
+
+*** __EPILOGUE__ (uniquement dans le fichier épilogue)
+
+Les phrases sont utilisées dans l'ordre. Elles terminent la conversation
+
+
+*** LOG
+
+Un journal de chaque conversation est enregistré dans le répertoire log
+
+      03/05/2022 10:06:31 _ bot1:  Voilà de quoi rire, et je suis fort à mon aise
+      03/05/2022 10:06:41 _ user:  je vois que tu aimes l'humour
+      03/05/2022 10:07:04 _ bot2: Fort bien
+
+(le numéro derrière bot indique dans quelle section le bot se situe)
+
+
+*** EDITEUR
+
+Pour lancer l'éditeur : _edit.sh
+Les fichiers de conversation sont éditables avec LitteBotEditor (http://localhost:17995)
+Il s'ouvre automatiquement dans google chrome avec la commande précédente.
+
+
+*** DEMARRER
+
+Pour lancer le bot : _start.sh
+Une page web s'ouvre automatiquement dans google chrome avec la commande précédente (http://localhost:8080/).
+Elle permet de suivre la conversation, dans quelle section le bot se trouve, le nombre d'interactions...
+IMPORTANT : Google Chrome est impératif, c'est lui qui fait la reconnaissance vocale, ça ne fonctionnera sous aucun autre navigateur !!!
+
+Une page d'administration permet de modifier quelques variables (http://localhost:8080/admin)
+- nombre maximum d'interactions (max_interactions)
+- silence maximum avant relance en secondes (max_silence)
+- durée maximum d'une partie en secondes (max_section)
+- Sauvegarder les paramètres > sauvegarde les paramètres si dessus dans le fichier "settings.json"
+- Recharger les données > le bot recharge tous les fichiers de conversation
+Elle permet également de suivre la conversation, la section, le nombre d'interactions...
+
+Une page d'affichage de la conversation uniquement est également disponible (http://localhost:8080/viewer)
+
+
+(Remplacer localhost par l'adresse IP ou le nom de la machine (XXXX.local) pour se connecter depuis un autre périphérique)
+
+
+*** ARRÊT
+
+Pour arrêter tous les scripts : _kill.sh

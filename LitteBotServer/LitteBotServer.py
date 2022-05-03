@@ -1,16 +1,11 @@
 #!/usr/bin/env python3
-import bottle, sys, time, json, webbrowser, random
+import bottle, sys, os, time, json, webbrowser, random, signal
 from sys import platform as _platform
 from bottle import static_file
 from gtts_synth import TextToSpeech
 from threading import Thread
 from websocket_server import WebsocketServer
 from pyosc import Client, Server
-
-dialog_path = "../data/"
-def_relance = "dom_juan_relance"
-def_start = "dom_juan_start"
-def_epilogue = "dom_juan_epilogue"
 
 class ThreadGroup(Thread):
     def __init__(self, parent):
@@ -88,6 +83,9 @@ class LitteBotWebSocket(Thread):
     def run(self):
         self.server.run_forever()
 
+    def stop(self):
+        self.server.stop()
+
 class LitteBotServer:
     global is_restart_needed
 
@@ -123,27 +121,6 @@ class LitteBotServer:
         self.tg = ThreadGroup(self)
         self.tg.start()
 
-        print("___INIT SENTENCES___")
-        #chargement des phrases de relance
-        text_file = open(dialog_path+def_relance+".txt", "r")
-        self.relanceSentences = text_file.readlines()
-        print("___PHRASES RELANCE___")
-        self.relanceSentences_copy = self.relanceSentences.copy()
-        text_file.close()
-
-        #chargement des phrases d'intro
-        text_file = open(dialog_path+def_start+".txt", "r")
-        self.startSentences = text_file.readlines()
-        print("___PHRASES START___")
-        self.startSentences_copy = self.startSentences.copy()
-        text_file.close()
-
-        #chargement des phrases d'épilogue
-        text_file = open(dialog_path+def_epilogue+".txt", "r")
-        self.epilogueSentences = text_file.readlines()
-        print("___PHRASES EPILOGUE___")
-        text_file.close()
-
         #chargement du chatbot
         #print("___STARTING CHATBOT___")
         # if(jsonFile != "none" and jsonFile.endswith("json")):
@@ -160,6 +137,17 @@ class LitteBotServer:
         self.osc_client = Client('localhost', 14001)
         self.video_server = Server('localhost', 14002, self.video_callback)
         self.video_client = Client('localhost', 14003)
+
+        print("___PHRASES RELANCE___")
+        self.relanceSentences = []
+        self.osc_client.send('/getRelance',1)
+
+        print("___PHRASES EPILOGUE___")
+        self.epilogueSentences = []
+        self.osc_client.send('/getEpilogue',1)
+
+        print("___INIT BOT___")
+        self.osc_client.send('/newConversation',1)
 
         print("___CONFIGURING SERVER___")
         self.http_server = bottle.Bottle()
@@ -202,6 +190,10 @@ class LitteBotServer:
         #print("OSC IN ", address, args[0])
         if(address == '/lastresponse'):
             self.receiveResponse(args[0])
+        elif(address == '/relance'):
+            self.receiveRelance(args)
+        elif(address == '/epilogue'):
+            self.receiveEpilogue(args)
         else:
             print("callback : "+str(address))
             for x in range(0,len(args)):
@@ -223,6 +215,15 @@ class LitteBotServer:
         tts = TextToSpeech(self.tmp_response)
         tts.start()
         self.tg.addThread(tts)
+
+    def receiveRelance(self, r):
+        self.relanceSentences = list(r)
+        self.relanceSentences_copy = self.relanceSentences.copy()
+        print("RELANCE", len(self.relanceSentences), self.relanceSentences)
+
+    def receiveEpilogue(self, r):
+        self.epilogueSentences = list(r)
+        print("EPILOGUE", len(self.epilogueSentences), self.epilogueSentences)
 
     def result(self):
         result = {'transcript': str(bottle.request.forms.getunicode('transcript')),
@@ -279,27 +280,27 @@ class LitteBotServer:
         self.reset()
         return ""
 
-    def relanceStart(self):
-        # print("RELANCE START")
-        if self.silent :
-            return;
-        self.silent = True
-        self.wsServer.broadcast({'command':'silent','value':self.silent})
-        self.lastInteractionTime = time.time()
-
-        if(len(self.startSentences) == 0):
-            self.startSentences = self.startSentences_copy.copy()
-        idx = random.randrange(len(self.startSentences))
-        s = self.startSentences.pop(idx).strip()
-        # print("START", s)
-
-        self.video_client.send("/botspeak", 1)
-        tts = TextToSpeech(s)
-        tts.start()
-        self.tg.addThread(tts)
-        self.wsServer.broadcast({"command":"bot","value":s})
-        self.osc_client.send("/logbot", s)
-        self.video_client.send("/bot", s)
+    # def relanceStart(self):
+    #     # print("RELANCE START")
+    #     if self.silent :
+    #         return;
+    #     self.silent = True
+    #     self.wsServer.broadcast({'command':'silent','value':self.silent})
+    #     self.lastInteractionTime = time.time()
+    #
+    #     if(len(self.startSentences) == 0):
+    #         self.startSentences = self.startSentences_copy.copy()
+    #     idx = random.randrange(len(self.startSentences))
+    #     s = self.startSentences.pop(idx).strip()
+    #     # print("START", s)
+    #
+    #     self.video_client.send("/botspeak", 1)
+    #     tts = TextToSpeech(s)
+    #     tts.start()
+    #     self.tg.addThread(tts)
+    #     self.wsServer.broadcast({"command":"bot","value":s})
+    #     self.osc_client.send("/logbot", s)
+    #     self.video_client.send("/bot", s)
 
     def relance(self):
         # print("RELANCE")
@@ -330,8 +331,8 @@ class LitteBotServer:
         if(self.currentTime > self.config["max_silence"]):
             if(self.step > 0 and self.step < 5):
                 self.relance()
-            elif(self.step == 0):
-                self.relanceStart()
+            # elif(self.step == 0):
+            #     self.relanceStart()
         if(self.step > 0 and self.step < 5 and self.sectionTime > self.config["max_section"]):
             self.stepUp()
         self.video_client.send("/globalTime", int(self.globalTime))
@@ -410,10 +411,27 @@ class LitteBotServer:
         self.username = name
         self.wsServer.broadcast({'command':'username','value':self.username})
 
+    def kill(self):
+        # print("Stop Http Osc Server")
+        # self.http_server.shutdown()
+        # print("Stop Websocket")
+        # self.wsServer.stop()
+        print("Stop Video Osc Server")
+        self.video_server.stop()
+        print("Stop Brain Osc Server")
+        self.osc_server.stop()
+        os._exit(0)
+
+# def handler(signum, frame):
+#     bot_server.kill()
+#     exit(1)
+#
+# signal.signal(signal.SIGINT, handler)
+
 if __name__ == '__main__':
-    if len(sys.argv) == 1:
-        LitteBotServer();
-    elif len(sys.argv) == 2:
-        LitteBotServer(jsonFile=sys.argv[1])
-    else:
-        print('usage: %s <http-server-port>')
+    try:
+        bot_server = LitteBotServer()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        bot_server.kill()

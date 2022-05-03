@@ -1,6 +1,60 @@
 {
     "1": {
         "q": [
+            "__RELANCE__"
+        ],
+        "a": [
+            "Beau d\u00e9sir, qui te donne empire sur mes sens ?",
+            "Tu ne r\u00e9pondras pas ?",
+            "Veux tu r\u00e9pondre, te dis-je.",
+            "Qu'est-ce que vous dites ?",
+            "Attends-moi un peu.",
+            "Voyons cela.",
+            "Eh bien, que vous ai-je dit ?",
+            "N'ai-je pas devin\u00e9.",
+            "Hon.",
+            "Comment ?",
+            "Comment donc ?",
+            "Et bien",
+            "Quoi? Parle.",
+            "Eh bien! Je te donne la libert\u00e9 de parler et de me dire tes sentiments.",
+            "Mais encore, quelle est ta pens\u00e9e l\u00e0-dessous ? Que t'imagines tu de cet affaire ?",
+            "Ah!",
+            "Heu?",
+            "Ah ! Que de bruit !",
+            "Voyons cela.",
+            "Huais !",
+            "Qu'est-ce que vous dites ?",
+            "N'ai-je pas devin\u00e9 ?",
+            "Pouvez-vous avoir cette pens\u00e9e ?",
+            "L'effet est admirable.",
+            "Eh, bien ?",
+            "Laissons cela.",
+            "Eh !",
+            "Ah ! Ah ! Ah !",
+            "Vous vous raillez de moi.",
+            "Mais c'est assez de cette mati\u00e8re ; reprenons notre discours.",
+            "Ah, que cela est beau",
+            "Je n'ai rien \u00e0 r\u00e9pondre",
+            "Que voulez vous que je dise"
+        ]
+    },
+    "2": {
+        "q": [
+            "__START__"
+        ],
+        "a": [
+            "Qui vient rompre mon somme ?..... Qui est l\u00e0 ?",
+            "Sganarelle ? Elvire ? Don Carlos ? Charlotte ? Monsieur Dimanche ? Commandeur ?",
+            "Qui va l\u00e0 ?",
+            "Approchez vous pour que je puisse profiter de votre visage. Approchez, posez bien votre visage face \u00e0 mes yeux, posez vos yeux dans mes yeux pour que je puisse vous reconna\u00eetre.",
+            "Haussez un peu la t\u00eate de gr\u00e2ce.",
+            "Alors je ne vous connais pas ? J'ai donc l'honneur de parler a tout une autre personne ?",
+            "Approchez... Ah que ce visage est mignon ! Ouvrez vos yeux enti\u00e8rement, ah qu'ils sont beaux ! Que je voie un peu vos dents, je vous prie. Ah qu'elles sont amoureuses, et ces l\u00e8vres app\u00e9tissantes ! Pour moi je suis ravi, et je n'ai jamais vu une si charmante personne. Vous me ferez plaisir de demeurer ici, je vous assure."
+        ]
+    },
+    "3": {
+        "q": [
             "Bonjour",
             "Salut",
             "Bonsoir",
@@ -8,8 +62,7 @@
             "Ciao"
         ],
         "a": [
-            "Qui vient rompre mon somme ?",
-            "Qui est l\u00e0 ?",
+            "Qui vient rompre mon somme ? Qui est l\u00e0 ?",
             "Sganarelle ? Elvire ? Don Carlos ? Charlotte ? Monsieur Dimanche ? Commandeur ?",
             "Qui va l\u00e0 ?",
             "Approchez vous pour que je puisse profiter de votre visage. Approchez, posez bien votre visage face \u00e0 mes yeux, posez vos yeux dans mes yeux pour que je puisse vous reconna\u00eetre.",
@@ -18,7 +71,6 @@
             "Approchez... Ah que ce visage est mignon ! Ouvrez vos yeux enti\u00e8rement, ah qu'ils sont beaux ! Que je voie un peu vos dents, je vous prie. Ah qu'elles sont amoureuses, et ces l\u00e8vres app\u00e9tissantes ! Pour moi je suis ravi, et je n'ai jamais vu une si charmante personne. Vous me ferez plaisir de demeurer ici, je vous assure.",
             "Avec qui j'ai l'honneur de faire rencontre ?",
             "Comment vous appelez-vous ?",
-            "Bien le bonjour",
             "Je vous donne le bonjour",
             "Bonjour, je vous avoue que je suis surpris, et que je ne vous attendais pas ici.",
             "Bonjour, quelle est ton occupation parmi ces arbres\u00a0?",
@@ -29,7 +81,7 @@
             "Bonjour, approche donc et me tiens compagnie."
         ]
     },
-    "2": {
+    "4": {
         "q": [
             "Quel est ton nom",
             "Qui es-tu ",
@@ -50,7 +102,7 @@
             "Don Juan ! Et qui va l\u00e0 toi-m\u00eame ?"
         ]
     },
-    "3": {
+    "5": {
         "q": [
             "Quel est ton \u00e2ge ?",
             "Quel est ton age ?",
@@ -74,7 +126,7 @@
             "Dans la belle saison de mes jeunes ann\u00e9es, vous ne rendrez jamais mes passions born\u00e9es, et si vous pr\u00e9tendez alt\u00e9rer mes plaisirs, vous vous tromperez, c'est trahir vos d\u00e9sirs."
         ]
     },
-    "4": {
+    "6": {
         "q": [
             "#je suis#",
             "#je m'appelle#",
@@ -99,7 +151,7 @@
             "Peut on rien voir de plus agr\u00e9able ?"
         ]
     },
-    "5": {
+    "7": {
         "q": [
             "\u00e7a va ?",
             "comment \u00e7a va ?",
@@ -116,7 +168,7 @@
             "Il faut te dire aussi quel est mon sentiment : jamais tu ne verras en moi de changement, et je suis si content de ma fa\u00e7on de vivre que, sans aucun remords, je pr\u00e9tends la poursuivre."
         ]
     },
-    "6": {
+    "8": {
         "q": [
             "oui",
             "ok",
@@ -128,56 +180,56 @@
             "oui oui"
         ],
         "a": [
-            "J'en demeure d'accord.",
-            "J'en suis d'accord.",
-            "Oui-da",
-            "Il n'est rien de plus vrai.",
-            "Fort bien."
+            "J'en demeure d'accord. __START__",
+            "J'en suis d'accord. __START__",
+            "Oui-da. __START__",
+            "Il n'est rien de plus vrai. __START__",
+            "Fort bien. __START__"
         ]
     },
-    "7": {
+    "9": {
         "q": [
             "non",
             "non non",
             "je ne suis pas d'accord"
         ],
         "a": [
-            "Non, tr\u00e8s assur\u00e9ment.",
-            "Mettons-nous d'accord !",
-            "Ah, n'allons point songer au mal qui nous peut arriver, et songeons seulement \u00e0 ce qui peut nous donner du plaisir",
+            "Non, tr\u00e8s assur\u00e9ment. __START__",
+            "Mettons-nous d'accord ! __START__",
+            "Ah, n'allons point songer au mal qui nous peut arriver, et songeons seulement \u00e0 ce qui peut nous donner du plaisir.",
             "Je pourrais peut-\u00eatre me tromper, mais enfin sur de tels sujets l'exp\u00e9rience m'a donn\u00e9 quelque lumi\u00e8re.",
             "Mais encore, quelle est ta pens\u00e9e l\u00e0-dessus, que t'imagines-tu de cette affaire ?",
             "Qu'as tu \u00e0 dire l\u00e0-dessus ?",
-            "Ah que de bruit.",
-            "\u00d4 beau raisonnement !",
+            "Ah que de bruit. __START__",
+            "\u00d4 beau raisonnement ! __START__",
             "Sommes nous ensemble pour t'ou\u00efr raisonner ?",
             "Ma foi, j'ai \u00e0 dire, et je ne sais que dire, car vous tournez les choses d'une mani\u00e8re qu'il semble que vous ayez raison, et cependant il est vrai que vous ne l'avez pas ; j'avais les plus belles pens\u00e9es du monde, et vos discours m'ont brouill\u00e9 tout cela : laissez faire, une autre fois je mettrai mes raisonnements par \u00e9crit, pour disputer avec vous.",
-            "N'en parlons pas davantage.",
+            "N'en parlons pas davantage. __START__",
             "D'o\u00f9 le sais-tu ?"
         ]
     },
-    "8": {
+    "10": {
         "q": [
             "merci"
         ],
         "a": [
-            "Grand merci !",
-            "Merci \u00e0 vous !"
+            "Grand merci ! __START__",
+            "Merci \u00e0 vous ! __START__"
         ]
     },
-    "10": {
+    "11": {
         "q": [
             "je ne sais pas",
             "je n'en sais rien",
             "#je ne connais pas#"
         ],
         "a": [
-            "Moi non plus",
-            "Vous ne savez rien !",
-            "Comment savoir ?"
+            "Moi non plus. __START__",
+            "Vous ne savez rien ! __START__",
+            "Comment savoir ? __START__"
         ]
     },
-    "11": {
+    "12": {
         "q": [
             "#je comprends pas#",
             "#je ne comprends rien#"
@@ -189,7 +241,7 @@
             "Pleurer et g\u00e9mir et n'avoir rien \u00e0 dire, que des mots dont chacun aurait sujet de rire."
         ]
     },
-    "12": {
+    "13": {
         "q": [
             "#robot#",
             "#intelligence artificielle#",
@@ -221,7 +273,7 @@
             "Un esprit raisonnable est plein de confiance et le doute jamais n'y re\u00e7oit de naissance."
         ]
     },
-    "13": {
+    "14": {
         "q": [
             "#don giovanni#"
         ],
@@ -229,7 +281,7 @@
             "Bon, ce sont des chansons ; quels crimes a-t-il fait ?"
         ]
     },
-    "14": {
+    "15": {
         "q": [
             "#casanova#"
         ],
@@ -237,7 +289,7 @@
             "Et de tous les c\u00f4t\u00e9s des filles abus\u00e9es, dont les familles sont partout scandalis\u00e9es ?"
         ]
     },
-    "15": {
+    "16": {
         "q": [
             "#dom juan#"
         ],
@@ -248,7 +300,7 @@
             "Reconnais-moi."
         ]
     },
-    "16": {
+    "17": {
         "q": [
             "#moli\u00e8re#",
             "#poquelin#"
@@ -264,7 +316,7 @@
             "C'est mon ma\u00eetre."
         ]
     },
-    "17": {
+    "18": {
         "q": [
             "#langue de moli\u00e8re#"
         ],
@@ -273,7 +325,7 @@
             "Ta langue est maintenant ta plus grande d\u00e9fense."
         ]
     },
-    "18": {
+    "19": {
         "q": [
             "qui t'as \u00e9crit",
             "qui t'as fabriqu\u00e9",
@@ -293,7 +345,7 @@
             "Ma m\u00e8re Ada Lovelace et mon p\u00e8re Jean-Baptiste Poquelin"
         ]
     },
-    "19": {
+    "20": {
         "q": [
             "#tu sais faire#",
             "#vous savez faire#",
@@ -307,7 +359,7 @@
             "Ces nerfs, ces os, ces veines, ces art\u00e8res, ces... ce poumon, ce coeur, ce foie, et tous ces autres ingr\u00e9dients qui sont l\u00e0 et qui... ah interrompez-moi donc si vous voulez, je ne saurais disputer si l'on ne m'interrompt, vous vous taisez expr\u00e8s, et me laissez parler par belle malice."
         ]
     },
-    "20": {
+    "21": {
         "q": [
             "tu te r\u00e9p\u00e8tes",
             "vous vous r\u00e9p\u00e9tez",
@@ -324,7 +376,7 @@
             "Les bons pr\u00e9ceptes valent mieux que les belles paroles, les belles paroles se trouvent \u00e0 la cour, \u00e0 la cour sont les courtisans, les courtisans suivent la mode, la mode vient de la fantaisie, la facult\u00e9 de l'\u00e2me est ce qui nous donne la vie, la vie finit par la mort, la mort nous fait penser au ciel, le ciel est au-dessus de la terre, la terre n'est point la mer, la mer est sujette aux orages, les orages tourmentent les vaisseaux, les vaisseaux ont besoin d'un bon pilote, un bon pilote a de la prudence, la prudence n'est point dans les jeunes gens, les jeunes gens doivent ob\u00e9issance aux vieux, les vieux aiment les richesses, les richesses font les riches, les riches ne sont pas pauvres, les pauvres ont de la n\u00e9cessit\u00e9, la n\u00e9cessit\u00e9 n'a point de loi, qui n'a point de loi vit en b\u00eate brute, et par cons\u00e9quent vous serez damn\u00e9 \u00e0 tous les diables"
         ]
     },
-    "21": {
+    "22": {
         "q": [
             "Ah",
             "H\u00e9",
@@ -335,12 +387,12 @@
         "a": [
             "Mais encore, quelle est ta pens\u00e9e l\u00e0-dessus, que t'imagines-tu de cette affaire ?",
             "Qu'as tu \u00e0 dire l\u00e0-dessus ?",
-            "Ah que de bruit.",
-            "\u00d4 beau raisonnement !",
+            "Ah que de bruit. __START__",
+            "\u00d4 beau raisonnement ! __START__",
             "Sommes nous ensemble pour t'ou\u00efr raisonner ?"
         ]
     },
-    "22": {
+    "23": {
         "q": [
             "# Dieu#",
             "# foi #"
@@ -354,7 +406,7 @@
             "Ma religion est l'arithm\u00e9tique"
         ]
     },
-    "23": {
+    "24": {
         "q": [
             "tu es mort",
             "vous \u00eates mort ",
@@ -370,7 +422,7 @@
             "Justes dieux, \u00e0 quel sort m'avez-vous r\u00e9serv\u00e9e ?"
         ]
     },
-    "24": {
+    "25": {
         "q": [
             "d'o\u00f9 viens-tu ?",
             "d'ou viens tu ?",
@@ -397,7 +449,7 @@
             "O\u00f9 diable maintenant pourrais-je se cacher ?"
         ]
     },
-    "25": {
+    "26": {
         "q": [
             "#tu connais#",
             "#vous connaissez#",
@@ -407,8 +459,7 @@
             "#c'est quoi#"
         ],
         "a": [
-            "Et non !",
-            "Comment savoir ?",
+            "Comment savoir ? ",
             "Je voudrais bien savoir que veut dire cela ?",
             "Je sais mon don juan sur le bout du doigt",
             "Je connais ton esprit, je connais tes pens\u00e9es",

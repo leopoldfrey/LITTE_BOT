@@ -54,6 +54,10 @@ function load()
       urlFill = "/getFuite";
       history.pushState({}, null, "index.html?cat=fuite");
       break;
+    case "epilogue":
+      urlFill = "/getEpilogue";
+      history.pushState({}, null, "index.html?cat=epilogue");
+      break;
   }
   $.ajax({
       url: urlFill,
@@ -82,6 +86,7 @@ function fillSentences(data) {
       $("#seduction").removeClass("selbut");
       $("#provocation").removeClass("selbut");
       $("#fuite").removeClass("selbut");
+      $("#epilogue").removeClass("selbut");
       break;
     case "seduction":
       $("#info").html("Séduction ("+len+")");
@@ -89,6 +94,7 @@ function fillSentences(data) {
       $("#seduction").addClass("selbut");
       $("#provocation").removeClass("selbut");
       $("#fuite").removeClass("selbut");
+      $("#epilogue").removeClass("selbut");
       break;
     case "provocation":
       $("#info").html("Provocation ("+len+")");
@@ -96,6 +102,7 @@ function fillSentences(data) {
       $("#seduction").removeClass("selbut");
       $("#provocation").addClass("selbut");
       $("#fuite").removeClass("selbut");
+      $("#epilogue").removeClass("selbut");
       break;
     case "fuite":
       $("#info").html("Fuite ("+len+")");
@@ -103,6 +110,15 @@ function fillSentences(data) {
       $("#seduction").removeClass("selbut");
       $("#provocation").removeClass("selbut");
       $("#fuite").addClass("selbut");
+      $("#epilogue").removeClass("selbut");
+      break;
+    case "epilogue":
+      $("#info").html("Epilogue ("+len+")");
+      $("#commun").removeClass("selbut");
+      $("#seduction").removeClass("selbut");
+      $("#provocation").removeClass("selbut");
+      $("#fuite").removeClass("selbut");
+      $("#epilogue").addClass("selbut");
       break;
   }
 
@@ -267,11 +283,28 @@ $("#fuite").click(function(){
   });
 });
 
+$("#epilogue").click(function(){
+  // console.log("Edit epilogue");
+  cat = "epilogue";
+  history.pushState({}, null, "index.html?cat=epilogue");
+  $.ajax({
+      url: "/getEpilogue",
+      type: "GET",
+      success: function(response) {
+          fillSentences(response);
+          $("html, body").animate({ scrollTop: 0 });
+      },
+      error: function(jqXHR, textStatus, errorMessage) {
+          console.log(errorMessage); // Optional
+      }
+  });
+});
+
 $("#plus").click(function(){
   // console.log("PLUS !", cat);
   currRow.removeClass("selected");
 
-  idx = $('.sentenceRow').length + 1;
+  idx = parseInt($('.sentenceNum').last().html()) + 1;
   $sentences.append(
     "<tr class='sentenceRow'><th class='sentenceNum' scope='row'>" + idx + "</th>" +
     "<td class='sentenceElem sentenceEdit' id='sentence"+idx+"'></td>"+
@@ -297,21 +330,24 @@ $("#plus").click(function(){
 
 $("#del").click(function(){
   idx = currRow.children(".sentenceNum").html();
-  // console.log("Delete", idx, q);
-  $.ajax({
-      url: "/del",
-      type: "POST",
-      data: JSON.stringify({
-        "idx": escape(idx)
-      }),
-      success: function(response) {
-          console.log(response['msg']);
-          load();
-      },
-      error: function(jqXHR, textStatus, errorMessage) {
-          console.log(errorMessage); // Optional
-      }
-  });
+  if(confirm("Supprimer la ligne "+idx) == true)
+  {
+    // console.log("Delete", idx, q);
+    $.ajax({
+        url: "/del",
+        type: "POST",
+        data: JSON.stringify({
+          "idx": escape(idx)
+        }),
+        success: function(response) {
+            console.log(response['msg']);
+            load();
+        },
+        error: function(jqXHR, textStatus, errorMessage) {
+            console.log(errorMessage); // Optional
+        }
+    });
+  }
 });
 
 // MODAL SENTENCE INPUT

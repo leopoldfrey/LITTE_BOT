@@ -1,10 +1,24 @@
 {
     "1": {
         "q": [
-            "# bisou#",
-            "# xoxo#",
+            "__START__"
+        ],
+        "a": [
+            "Vous pourriez douter de l'ardeur de mes feux ?",
+            "Vous avez un fond de sant\u00e9 admirable, des l\u00e8vres fra\u00eeches, un teint vermeil, et des yeux vifs.",
+            "Voulez-vous seconder cette ardeur qui m'empresse ?",
+            "Que faites vous donc l\u00e0, est-ce que vous parlez d'amour aussi ?",
+            "J'ai prodigu\u00e9 des soins, j'ai fait mille serments  mais jusqu'o\u00f9 ne va pas l'audace des amants ?",
+            "Que tu sais peu ce que c'est que d'aimer ; \u00e0 voir mille transports d'une flamme assidue,  quelle fiert\u00e9, dis-moi, ne se serait rendue ?",
+            "Beau d\u00e9sir, qui te donne empire sur mes sens ?"
+        ]
+    },
+    "2": {
+        "q": [
+            "#bisou#",
+            "#xoxo#",
             "# un baiser#",
-            "# embrass#"
+            "#embrass#"
         ],
         "a": [
             "Je ne me souviens plus d\u00e9j\u00e0 de tous les d\u00e9plaisirs que vous m'avez donn\u00e9s, et tout est effac\u00e9 par les paroles que vous venez de me faire entendre ; je ne me sens pas, je l'avoue, je jette des larmes de joie, tous mes voeux sont satisfaits, et je n'ai plus rien d\u00e9sormais \u00e0 demander au ciel ; embrassez-moi et persistez je vous conjure dans cette louable pens\u00e9e.",
@@ -17,7 +31,7 @@
             "Donnez-moi donc un petit baiser pour gage de votre parole."
         ]
     },
-    "2": {
+    "3": {
         "q": [
             "#amour#",
             "# coeur#",
@@ -44,7 +58,7 @@
             "\u00c0 vous que je croyais la meilleure du monde, \u00e0 vous pour qui mon \u00e2me ouverte, et sans seconde, n'avait rien de secret, ni rien de r\u00e9serv\u00e9, \u00e0 qui j'ai dit d'abord ce qui m'a captiv\u00e9, vous cachez votre coeur !"
         ]
     },
-    "3": {
+    "4": {
         "q": [
             "#jalou#",
             "#polyandr#",
@@ -74,20 +88,6 @@
             "J'avouerai que vos attraits ont eu du pouvoir sur mon \u00e2me, mais..."
         ]
     },
-    "4": {
-        "q": [
-            "__START__"
-        ],
-        "a": [
-            "Vous pourriez douter de l'ardeur de mes feux ?",
-            "Vous avez un fond de sant\u00e9 admirable, des l\u00e8vres fra\u00eeches, un teint vermeil, et des yeux vifs.",
-            "Voulez-vous seconder cette ardeur qui m'empresse ?",
-            "Que faites vous donc l\u00e0, est-ce que vous parlez d'amour aussi ?",
-            "J'ai prodigu\u00e9 des soins, j'ai fait mille serments  mais jusqu'o\u00f9 ne va pas l'audace des amants ?",
-            "Que tu sais peu ce que c'est que d'aimer ; \u00e0 voir mille transports d'une flamme assidue,  quelle fiert\u00e9, dis-moi, ne se serait rendue ?",
-            "Beau d\u00e9sir, qui te donne empire sur mes sens ?"
-        ]
-    },
     "5": {
         "q": [
             "#dom juan#"
@@ -98,10 +98,27 @@
     },
     "6": {
         "q": [
-            "oui"
+            "oui",
+            "ok",
+            "d'accord",
+            "dac",
+            "c'est \u00e7a",
+            "certainement",
+            "si",
+            "oui oui"
         ],
         "a": [
-            "oh oui"
+            "__START__"
+        ]
+    },
+    "7": {
+        "q": [
+            "non",
+            "non non",
+            "je ne suis pas d'accord"
+        ],
+        "a": [
+            "__START__"
         ]
     }
 }

@@ -10,6 +10,7 @@ def_questions_common = "dom_juan_common"
 def_questions_seduction = "dom_juan_seduction"
 def_questions_provocation = "dom_juan_provocation"
 def_questions_fuite = "dom_juan_fuite"
+def_questions_epilogue = "dom_juan_epilogue"
 
 
 class LitteBotEditor():
@@ -57,6 +58,7 @@ class LitteBotEditor():
         self.server.route('/getSeduction', method="GET", callback=self.getSeduction)
         self.server.route('/getProvocation', method="GET", callback=self.getProvocation)
         self.server.route('/getFuite', method="GET", callback=self.getFuite)
+        self.server.route('/getEpilogue', method="GET", callback=self.getEpilogue)
 
         self.server.route('/mod', method="POST", callback=self.mod)
         self.server.route('/save', method="POST", callback=self.save)
@@ -92,6 +94,12 @@ class LitteBotEditor():
     def getFuite(self):
         print("getFuite")
         self.filename = dialog_path + def_questions_fuite + ".json"
+        self.load()
+        return self.data
+
+    def getEpilogue(self):
+        print("getEpilogue")
+        self.filename = dialog_path + def_questions_epilogue + ".json"
         self.load()
         return self.data
 
@@ -136,5 +144,9 @@ class LitteBotEditor():
         return { "msg": "Suppression effectuée"}
 
 if __name__ == "__main__":
-    server = LitteBotEditor()
-    server.start()
+    try:
+        server = LitteBotEditor()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        os._exit(0)

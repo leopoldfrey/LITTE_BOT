@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import json, pickle, random, logging
+import json, pickle, random, logging, os, signal
 from typing import Union
 from pyosc import Client, Server
 from botLog import BotLog
@@ -22,6 +22,7 @@ def_questions_common = "dom_juan_common"
 def_questions_seduction = "dom_juan_seduction"
 def_questions_provocation = "dom_juan_provocation"
 def_questions_fuite = "dom_juan_fuite"
+def_questions_epilogue = "dom_juan_epilogue"
 
 def_tokenizer = "../model/emil2000/dialogpt-for-french-language"
 def_model = "../model/Chatbot-Moliere-V4"
@@ -66,6 +67,11 @@ class LitteBot:
 
         self.botmode = 1
         self.botresponses = []
+        self.filter = []
+        self.currentStart = []
+        self.start = []
+        self.relance = []
+        self.epilogue = []
         self.history = [[], []]
         self.lastresponse = ""
 
@@ -95,6 +101,10 @@ class LitteBot:
         print(formatColor(0,37,40,"Chatbot ready"))
         print()
 
+    def kill(self):
+        self.osc_server.stop()
+        os._exit(0)
+
     def loadQuestionsAndEmbeddings(self):
         print("Loading questions")# "+def_questions)
         self.dom_juan = self.load_questions_from_json()
@@ -103,15 +113,21 @@ class LitteBot:
         self.dom_juan_questions_embeddings = self.build_embeddings()
 
     def callback(self, address, *args):
-        #print("OSC IN ", address, args[0])
+        # print("OSC IN ", address, args[0])
         if(address == '/getresponse'):
             self.getResponse(args[0])
         elif(address == '/setbotmode'):
             self.setBotMode(args[0])
         elif(address == '/newConversation'):
             self.newConversation()
+        elif(address == '/getEpilogue'):
+            self.getEpilogue()
+        elif(address == '/getRelance'):
+            self.getRelance()
         elif(address == '/reload'):
             self.loadQuestionsAndEmbeddings()
+            self.getEpilogue()
+            self.getRelance()
         elif(address == '/logbot'):
             print(formatColor(0,color[self.botmode],40, "bot: "+args[0]))
             self.log.logBot(str(self.botmode), args[0])
@@ -122,6 +138,8 @@ class LitteBot:
 
     def setBotMode(self, mode):
         self.botmode = mode
+        if self.botmode != 1:
+            self.currentStart = self.start[self.botmode].copy()
         if self.botmode == 0:
             print("     "+formatColor(1,color[OFF],40,"Bot Mode Passe-partout"))
         elif self.botmode == 1:
@@ -132,6 +150,12 @@ class LitteBot:
             print("     "+formatColor(1,color[PROVOCATION],40,"Bot Mode Provocation"))
         elif self.botmode == 4:
             print("     "+formatColor(1,color[FUITE],40,"Bot Mode Fuite"))
+
+    def getRelance(self):
+        self.osc_client.send('/relance',self.relance)
+
+    def getEpilogue(self):
+        self.osc_client.send('/epilogue',self.epilogue)
 
     def getResponse(self, q):
         self.log.logMe(q)
@@ -151,7 +175,7 @@ class LitteBot:
         return self.botresponses
 
     def newConversation(self):
-        self.botmode = 1
+        self.setBotMode(1)
         self.history = [[], []]
         self.log.start()
         self.botresponses.clear()
@@ -191,35 +215,47 @@ class LitteBot:
             dict: Dictionary of questions
         """
         self.filter = []
+        self.relance = []
+        self.start = []
+        self.epilogue = []
         dom_juan = []
         print("Loading ", dialog_path+def_questions_common+".json")
         with open(dialog_path+def_questions_common+".json") as dj_common:
             tmp = json.load(dj_common)
             dom_juan_common = {}
+            start_common = []
             filter_common = {}
             for i in tmp:
                 for qq in tmp[i]['q']:
                     # print(qq, tmp[i]['a'])
-                    qq = qq.lower()
-                    if qq.__contains__('#'):
+                    qql = qq.lower()
+                    if qq.__contains__("__RELANCE__"):
+                        #print("__RELANCE__", tmp[i]['a'])
+                        self.relance += tmp[i]['a']
+                    elif qq.__contains__("__START__"):
+                        start_common = tmp[i]['a']
+                    elif qql.__contains__('#'):
                         #print("WILDCARD", qq, tmp[i]['a'])
-                        filter_common[qq] = tmp[i]['a']
+                        filter_common[qql] = tmp[i]['a']
                     else:
-                        dom_juan_common[qq] = tmp[i]['a']
+                        dom_juan_common[qql] = tmp[i]['a']
             print("Loading ", dialog_path+def_questions_seduction+".json")
             with open(dialog_path+def_questions_seduction+".json") as dj:
                 tmp = json.load(dj)
                 tmp_seduction = {}
+                start_seduction = []
                 tmp_filter = {}
                 for i in tmp:
                     for qq in tmp[i]['q']:
                         # print(qq, tmp[i]['a'])
-                        qq = qq.lower()
-                        if qq.__contains__('#'):
+                        qql = qq.lower()
+                        if qq.__contains__("__START__"):
+                            start_seduction = tmp[i]['a']
+                        elif qql.__contains__('#'):
                             #print("WILDCARD", qq, tmp[i]['a'])
-                            tmp_filter[qq] = tmp[i]['a']
+                            tmp_filter[qql] = tmp[i]['a']
                         else:
-                            tmp_seduction[qq] = tmp[i]['a']
+                            tmp_seduction[qql] = tmp[i]['a']
                 dom_juan_seduction = {**dom_juan_common, **tmp_seduction}
                 filter_seduction = {**filter_common, **tmp_filter}
             print("Loading ", dialog_path+def_questions_provocation+".json")
@@ -227,15 +263,18 @@ class LitteBot:
                 tmp = json.load(dj)
                 tmp_provocation = {}
                 tmp_filter = {}
+                start_provocation = []
                 for i in tmp:
                     for qq in tmp[i]['q']:
                         # print(qq, tmp[i]['a'])
-                        qq = qq.lower()
-                        if qq.__contains__('#'):
+                        qql = qq.lower()
+                        if qq.__contains__("__START__"):
+                            start_provocation = tmp[i]['a']
+                        elif qql.__contains__('#'):
                             #print("WILDCARD", qq, tmp[i]['a'])
-                            tmp_filter[qq] = tmp[i]['a']
+                            tmp_filter[qql] = tmp[i]['a']
                         else:
-                            tmp_provocation[qq] = tmp[i]['a']
+                            tmp_provocation[qql] = tmp[i]['a']
                 dom_juan_provocation = {**tmp_provocation, **dom_juan_common}
                 filter_provocation = {**tmp_filter, **filter_common}
             print("Loading ", dialog_path+def_questions_fuite+".json")
@@ -243,15 +282,18 @@ class LitteBot:
                 tmp = json.load(dj)
                 tmp_fuite = {}
                 tmp_filter = {}
+                start_fuite = []
                 for i in tmp:
                     for qq in tmp[i]['q']:
                         # print(qq, tmp[i]['a'])
-                        qq = qq.lower()
-                        if qq.__contains__('#'):
+                        qql = qq.lower()
+                        if qq.__contains__("__START__"):
+                            start_fuite = tmp[i]['a']
+                        elif qql.__contains__('#'):
                             #print("WILDCARD", qq, tmp[i]['a'])
-                            tmp_filter[qq] = tmp[i]['a']
+                            tmp_filter[qql] = tmp[i]['a']
                         else:
-                            tmp_fuite[qq] = tmp[i]['a']
+                            tmp_fuite[qql] = tmp[i]['a']
                 dom_juan_fuite = {**tmp_fuite, **dom_juan_common}
                 filter_fuite = {**tmp_filter, **filter_common}
         dom_juan.append(dom_juan_common)
@@ -259,12 +301,37 @@ class LitteBot:
         dom_juan.append(dom_juan_seduction)
         dom_juan.append(dom_juan_provocation)
         dom_juan.append(dom_juan_fuite)
+        dom_juan.append(dom_juan_common)
 
         self.filter.append(filter_common)
         self.filter.append(filter_common)
         self.filter.append(filter_seduction)
         self.filter.append(filter_provocation)
         self.filter.append(filter_fuite)
+        self.filter.append(filter_common)
+
+        self.start.append(start_common)
+        self.start.append(start_common)
+        self.start.append(start_seduction)
+        self.start.append(start_provocation)
+        self.start.append(start_fuite)
+        self.start.append(start_common)
+
+        self.currentStart = self.start[self.botmode].copy()
+
+        print("Loading ", dialog_path+def_questions_epilogue+".json")
+        with open(dialog_path+def_questions_epilogue+".json") as dj:
+            tmp = json.load(dj)
+            for i in tmp:
+                for qq in tmp[i]['q']:
+                    if qq.__contains__("__EPILOGUE__"):
+                        #print("__EPILOGUE__", qq, tmp[i]['a'])
+                        self.epilogue = tmp[i]['a']
+
+        # print("RELANCE", len(self.relance), self.relance)
+        # print("EPILOGUE", len(self.epilogue), self.epilogue)
+        # print("START", len(self.start), self.start)
+
         return dom_juan
 
     def load_questions_keys(self):
@@ -274,6 +341,7 @@ class LitteBot:
         dom_juan_questions.append(list(self.dom_juan[2].keys()))
         dom_juan_questions.append(list(self.dom_juan[3].keys()))
         dom_juan_questions.append(list(self.dom_juan[4].keys()))
+        dom_juan_questions.append(list(self.dom_juan[5].keys()))
         return dom_juan_questions
 
     def build_embeddings(self):
@@ -283,6 +351,7 @@ class LitteBot:
         embeddings.append(self.embed(self.dom_juan_questions[2]))
         embeddings.append(self.embed(self.dom_juan_questions[3]))
         embeddings.append(self.embed(self.dom_juan_questions[4]))
+        embeddings.append(self.embed(self.dom_juan_questions[5]))
         return embeddings
 
     def predict(self, user_input: str, history: list) -> list:
@@ -301,6 +370,7 @@ class LitteBot:
         mode_response = self.dom_juan[self.botmode]
         mode_questions = self.dom_juan_questions[self.botmode]
         mode_embeddings = self.dom_juan_questions_embeddings[self.botmode]
+        # mode_start = self.start[self.botmode]
 
         new_question = user_input.lower()
         new_question_embedding = self.embed(new_question)
@@ -344,6 +414,14 @@ class LitteBot:
         # print("RESPONSE", self.lastresponse)
         # print ("history[0] size", len(self.history[0]))
         # print ("history[0]", self.history[0])
+        if self.lastresponse.__contains__("__START__"):
+            if(len(self.currentStart) == 0):
+                self.currentStart = self.start[self.botmode].copy()
+            idx = random.randrange(len(self.currentStart))
+            start = self.currentStart.pop(idx).strip()
+            # start = random.choice(self.currentStart)
+            self.lastresponse = self.lastresponse.replace("__START__", start)
+
         self.osc_client.send('/lastresponse',self.lastresponse)
 
         return history[0], history
@@ -412,8 +490,13 @@ class LitteBot:
             css=self.css,
         )
 
+def handler(signum, frame):
+    litte_bot.kill()
+
+signal.signal(signal.SIGINT, handler)
+
 if __name__ == "__main__":
     litte_bot = LitteBot()
-    gr.close_all()
-    interface = litte_bot.gradio_interface()
-    interface.launch(server_name="0.0.0.0", server_port=7892)
+    # gr.close_all()
+    # interface = litte_bot.gradio_interface()
+    # interface.launch(server_name="0.0.0.0", server_port=7892)
