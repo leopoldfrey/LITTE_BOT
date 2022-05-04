@@ -2,11 +2,11 @@
 import os, sys
 import google.cloud.texttospeech as tts
 from threading import Thread
-from playsound import playsound
-from pedalboard import Pedalboard, PitchShift, Reverb
+# from playsound import playsound
+from pedalboard import *
 from pedalboard.io import AudioFile
 
-VOICE = "fr-FR-Wavenet-D"
+VOICE = "fr-FR-Wavenet-C"
 
 '''
 fr-FR-Wavenet-E
@@ -25,9 +25,9 @@ API_KEY_PATH = "../model/gtts_api_key.json"
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = API_KEY_PATH
 
 # Make a Pedalboard object, containing multiple plugins:
-board = Pedalboard([PitchShift(semitones=+3), Reverb(room_size=0.02,damping=0.1,wet_level=0.3,dry_level=0.8,width=0.9,freeze_mode=0)])
+board = Pedalboard([PitchShift(semitones=-3),Chorus(),Reverb(room_size=0.02,damping=0.1,wet_level=0.6,dry_level=0.8,width=0.9,freeze_mode=0)])
 
-
+#PitchShift(semitones=+3),
 def list_voices():
     client = tts.TextToSpeechClient()
     voices = client.list_voices()
@@ -68,48 +68,52 @@ class TextToSpeech(Thread):
         with AudioFile('processed-output.wav', 'w', samplerate, effected.shape[0]) as f:
           f.write(effected)
 
-        playsound('processed-output.wav')
+        # playsound('processed-output.wav')
+        os.system("ffplay.exe -nodisp -autoexit -loglevel quiet .\processed-output.wav")
+
 
         # playsound(filename)
 
-class TextToSpeechNoThread():
-    def __init__(self):
-        self.language_code = "-".join(VOICE.split("-")[:2])
-        self.voice_params = tts.VoiceSelectionParams(
-            language_code=self.language_code, name=VOICE
-        )
-        self.audio_config = tts.AudioConfig(audio_encoding=tts.AudioEncoding.LINEAR16)
-        self.client = tts.TextToSpeechClient()
+# class TextToSpeechNoThread():
+#     def __init__(self):
+#         self.language_code = "-".join(VOICE.split("-")[:2])
+#         self.voice_params = tts.VoiceSelectionParams(
+#             language_code=self.language_code, name=VOICE
+#         )
+#         self.audio_config = tts.AudioConfig(audio_encoding=tts.AudioEncoding.LINEAR16)
+#         self.client = tts.TextToSpeechClient()
+#
+#     def synthesize(self, text):
+#         self.text_input = tts.SynthesisInput(text=text)
+#         response = self.client.synthesize_speech(
+#             input=self.text_input, voice=self.voice_params, audio_config=self.audio_config
+#         )
+#         filename = "output.wav"
+#         with open(filename, "wb") as out:
+#             out.write(response.audio_content)
+#
+#         # Read in a whole audio file:
+#         with AudioFile(filename, 'r') as f:
+#           audio = f.read(f.frames)
+#           samplerate = f.samplerate
+#
+#         # Run the audio through this pedalboard!
+#         effected = board(audio, samplerate)
+#
+#         # Write the audio back as a wav file:
+#         with AudioFile('processed-output.wav', 'w', samplerate, effected.shape[0]) as f:
+#           f.write(effected)
+#
+#         os.system("ffplay.exe -nodisp -autoexit -loglevel quiet .\processed-output.wav")
 
-    def synthesize(self, text):
-        self.text_input = tts.SynthesisInput(text=text)
-        response = self.client.synthesize_speech(
-            input=self.text_input, voice=self.voice_params, audio_config=self.audio_config
-        )
-        filename = "output.wav"
-        with open(filename, "wb") as out:
-            out.write(response.audio_content)
-
-        # Read in a whole audio file:
-        with AudioFile(filename, 'r') as f:
-          audio = f.read(f.frames)
-          samplerate = f.samplerate
-
-        # Run the audio through this pedalboard!
-        effected = board(audio, samplerate)
-
-        # Write the audio back as a wav file:
-        with AudioFile('processed-output.wav', 'w', samplerate, effected.shape[0]) as f:
-          f.write(effected)
-
-        playsound('processed-output.wav')
-
-        # playsound(filename)
 
 if __name__ == '__main__':
     # list_voices()
     if len(sys.argv) == 2:
-        thd = TextToSpeech(sys.argv[1]);
-        thd.start();
+        thd = TextToSpeech(sys.argv[1])
+        thd.start()
+        # print(thd.is_alive())
+        # tts = TextToSpeechNoThread()
+        # tts.synthesize(sys.argv[1])
     else:
         print('usage: %s <text-to-synthesize>')

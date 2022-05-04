@@ -10,5 +10,14 @@
             "Voici bien du myst\u00e8re, r\u00e9sous-toi de me suivre et sans tant raisonner.",
             "Tais-toi, ne me viens pas d'aujourd'hui raisonner ; dans ce maudit climat tout me fait frissonner."
         ]
+    },
+    "2": {
+        "q": [
+            "oui",
+            "d'accord"
+        ],
+        "a": [
+            "FUITE !!! __START__"
+        ]
     }
 }

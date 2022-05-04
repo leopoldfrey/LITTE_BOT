@@ -2,6 +2,7 @@
 import os, json, webbrowser, html
 from bottle import post, static_file, template, Bottle, request
 from sys import platform as _platform
+from subprocess import Popen
 
 import threading
 
@@ -25,14 +26,14 @@ class LitteBotEditor():
         # MacOS
         if _platform == "darwin":
             chrome_path = 'open -a /Applications/Google\ Chrome.app %s'
+            webbrowser.get(chrome_path).open(url)
         elif _platform == "win32" or _platform == "win64":
-            chrome_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s'
+            Popen(['C:\Program Files\Google\Chrome\Application\chrome.exe','http://localhost:17995'])
         # Linux
         # chrome_path = '/usr/bin/google-chrome %s'
-        webbrowser.get(chrome_path).open(url)
 
         print("LitteBot Editor starting...")
-        self.host = '0.0.0.0'
+        self.host = '127.0.0.1'
         self.port = int(os.environ.get("PORT", 17995))
         self.server = Bottle()
         self.route()

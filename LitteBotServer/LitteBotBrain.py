@@ -9,6 +9,8 @@ import numpy as np
 
 # import os
 # os.environ["CUDA_VISIBLE_DEVICES"]="1"
+os.add_dll_directory("C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.6/bin")
+os.add_dll_directory("C:/tools/cuda/bin")
 
 import tensorflow as tf
 import tensorflow_hub as hub
@@ -93,9 +95,9 @@ class LitteBot:
 
         self.css = """ .footer {display:none !important} """
 
-        self.osc_server = Server('localhost', 14001, self.callback)
-        self.osc_client = Client('localhost', 14000)
-        self.video_client = Client('localhost', 14003)
+        self.osc_server = Server('127.0.0.1', 14001, self.callback)
+        self.osc_client = Client('127.0.0.1', 14000)
+        self.video_client = Client('127.0.0.1', 14003)
 
         print()
         print(formatColor(0,37,40,"Chatbot ready"))

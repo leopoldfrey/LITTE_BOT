@@ -7,7 +7,7 @@ torch==1.11.0
 websocket_server==0.5.1
 bottle==0.12.17
 google.cloud.texttospeech
-PyObjC
+#PyObjC
 playsound
 jinja2
 pedalboard

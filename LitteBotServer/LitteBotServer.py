@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import bottle, sys, os, time, json, webbrowser, random, signal
+from subprocess import Popen
 from sys import platform as _platform
 from bottle import static_file
 from gtts_synth import TextToSpeech
@@ -19,7 +20,7 @@ class ThreadGroup(Thread):
     def run(self):
         while True:
             for t in self.thread_group[:]:
-                if not t.isAlive():
+                if not t.is_alive(): #isAlive
                     self.parent.video_client.send("/botspeak", 0)
                     # print("END OF SYNTH THREAD")
                     self.thread_group.remove(t)
@@ -34,7 +35,7 @@ class LitteBotWebSocket(Thread):
         Thread.__init__(self)
         self.port=9001
         self.parent = parent
-        self.server = WebsocketServer(self.port)
+        self.server = WebsocketServer(port=self.port)
         self.server.set_fn_new_client(self.new_client)
         self.server.set_fn_client_left(self.client_left)
         self.server.set_fn_message_received(self.message_received)
@@ -121,22 +122,11 @@ class LitteBotServer:
         self.tg = ThreadGroup(self)
         self.tg.start()
 
-        #chargement du chatbot
-        #print("___STARTING CHATBOT___")
-        # if(jsonFile != "none" and jsonFile.endswith("json")):
-        #     print(formatColor(0,37,40,"Prepare Training"))
-        #     deleteDB()
-        #     self.bot = LiteBot()
-        #     self.bot.trainFromJson(jsonFile)
-        # else:
-        #     self.bot = LiteBot()
-        #self.bot = LitteBot()
-
         print("___STARTING OSC___")
-        self.osc_server = Server('localhost', 14000, self.callback)
-        self.osc_client = Client('localhost', 14001)
-        self.video_server = Server('localhost', 14002, self.video_callback)
-        self.video_client = Client('localhost', 14003)
+        self.osc_server = Server('127.0.0.1', 14000, self.callback)
+        self.osc_client = Client('127.0.0.1', 14001)
+        self.video_server = Server('127.0.0.1', 14002, self.video_callback)
+        self.video_client = Client('127.0.0.1', 14003)
 
         print("___PHRASES RELANCE___")
         self.relanceSentences = []
@@ -161,17 +151,17 @@ class LitteBotServer:
         # print('*** Please open chrome at http://127.0.0.1:%d' % self.http_server_port)
         # print()
 
-        #ouverture de google chrome
+        # ouverture de google chrome
         print("___STARTING GOOGLE CHROME___")
         url = 'http://localhost:8080/'
         # MacOS
         if _platform == "darwin":
             chrome_path = 'open -a /Applications/Google\ Chrome.app %s'
+            webbrowser.get(chrome_path).open(url)
         elif _platform == "win32" or _platform == "win64":
-            chrome_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s'
+            Popen(['C:\Program Files\Google\Chrome\Application\chrome.exe','http://localhost:8080'])
         # Linux
         # chrome_path = '/usr/bin/google-chrome %s'
-        webbrowser.get(chrome_path).open(url)
 
         #démarrage du serveur
         print("___STARTING SERVER___")
@@ -187,7 +177,7 @@ class LitteBotServer:
         #         print("     " + str(args[x]))
 
     def callback(self, address, *args):
-        #print("OSC IN ", address, args[0])
+        # print("OSC IN ", address, args[0])
         if(address == '/lastresponse'):
             self.receiveResponse(args[0])
         elif(address == '/relance'):
@@ -422,16 +412,11 @@ class LitteBotServer:
         self.osc_server.stop()
         os._exit(0)
 
-# def handler(signum, frame):
-#     bot_server.kill()
-#     exit(1)
-#
-# signal.signal(signal.SIGINT, handler)
-
 if __name__ == '__main__':
-    try:
-        bot_server = LitteBotServer()
-    except KeyboardInterrupt:
-        pass
-    finally:
-        bot_server.kill()
+    LitteBotServer()
+    # try:
+    #     bot_server = LitteBotServer()
+    # except KeyboardInterrupt:
+    #     pass
+    # finally:
+    #     bot_server.kill()
