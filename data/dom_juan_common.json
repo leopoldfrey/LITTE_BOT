@@ -4,13 +4,7 @@
             "__START__"
         ],
         "a": [
-            "Qui vient rompre mon somme ?..... Qui est l\u00e0 ?",
-            "Sganarelle ? Elvire ? Don Carlos ? Charlotte ? Monsieur Dimanche ? Commandeur ?",
-            "Qui va l\u00e0 ?",
-            "Approchez vous pour que je puisse profiter de votre visage. Approchez, posez bien votre visage face \u00e0 mes yeux, posez vos yeux dans mes yeux pour que je puisse vous reconna\u00eetre.",
             "Haussez un peu la t\u00eate de gr\u00e2ce.",
-            "Alors je ne vous connais pas ? J'ai donc l'honneur de parler a tout une autre personne ?",
-            "Approchez... Ah que ce visage est mignon ! Ouvrez vos yeux enti\u00e8rement, ah qu'ils sont beaux ! Que je voie un peu vos dents, je vous prie. Ah qu'elles sont amoureuses, et ces l\u00e8vres app\u00e9tissantes ! Pour moi je suis ravi, et je n'ai jamais vu une si charmante personne. Vous me ferez plaisir de demeurer ici, je vous assure.",
             "Beau d\u00e9sir, qui te donne empire sur mes sens ?",
             "Tu ne r\u00e9pondras pas ?",
             "Veux tu r\u00e9pondre, te dis-je.",
@@ -445,6 +439,49 @@
             "Je sais mon don juan sur le bout du doigt",
             "Je connais ton esprit, je connais tes pens\u00e9es",
             "Eh, je vois bien que vous ne me connaissez pas encore, vous me faites grand tort de juger de moi par les autres"
+        ]
+    },
+    "27": {
+        "q": [
+            "je n'ai pas compris",
+            "tu peux r\u00e9p\u00e9ter",
+            "pardon"
+        ],
+        "a": [
+            "__REPEAT__"
+        ]
+    },
+    "28": {
+        "q": [
+            "au revoir"
+        ],
+        "a": [
+            "__TO_EPILOGUE__"
+        ]
+    },
+    "29": {
+        "q": [
+            "__QUIT__"
+        ],
+        "a": [
+            "Adieu, tu sais le temps, ne me fais pas attendre, ou ne me promets pas.",
+            "Adieu, retirez-vous...",
+            "Nous nous verrons tant\u00f4t adieu, je me retire.",
+            "Adieu, soyez certain qu'\u00e0 vous seul je r\u00e9serve et mon coeur et ma main",
+            "Adieu, je n'en puis plus, c'en est fait, et j'expire."
+        ]
+    },
+    "30": {
+        "q": [
+            "__FIRST__"
+        ],
+        "a": [
+            "Qui vient rompre mon somme ?..... Qui est l\u00e0 ?",
+            "Sganarelle ? Elvire ? Don Carlos ? Charlotte ? Monsieur Dimanche ? Commandeur ?",
+            "Qui va l\u00e0 ?",
+            "Alors je ne vous connais pas ? J'ai donc l'honneur de parler a tout une autre personne ?",
+            "Approchez... Ah que ce visage est mignon ! Ouvrez vos yeux enti\u00e8rement, ah qu'ils sont beaux ! Que je voie un peu vos dents, je vous prie. Ah qu'elles sont amoureuses, et ces l\u00e8vres app\u00e9tissantes ! Pour moi je suis ravi, et je n'ai jamais vu une si charmante personne. Vous me ferez plaisir de demeurer ici, je vous assure.",
+            "Approchez vous pour que je puisse profiter de votre visage. Approchez, posez bien votre visage face \u00e0 mes yeux, posez vos yeux dans mes yeux pour que je puisse vous reconna\u00eetre."
         ]
     }
 }

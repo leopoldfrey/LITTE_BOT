@@ -13,7 +13,8 @@
     <label class="switch">
       <input type="checkbox" name="phone" id="phone">
       <span class="slider round"></span>
-    </label>
+    </label><br/>
+    <input type="text" id="cant_speak" name="cant_speak" onkeypress="onTextChange();" size="100"><button onclick="sendText();">Send</button>
   </div>
   <div id='speech'>
   </div>
@@ -48,8 +49,11 @@
   socket.onmessage = function(event) {
     // console.log(`[message] Data received from server: ${event.data}`);
     data = JSON.parse(event.data);
-    if(data.command == "message") {
-      console.log("[ws]", data);
+    if(data.command == "on") {
+      console.log("ON", data.value);
+      $("#phone").prop("checked", data.value);
+    } else if(data.command == "message") {
+        console.log("[ws]", data);
     } else if(data.command == "bot" || data.command == "_bot") {
       console.log("BOT", data.value);
       if(!p || p.text() != "")
@@ -64,12 +68,13 @@
     } else if(data.command == "clear") {
       $sp.empty();
     } else if(data.command == "timers") {
-      $timer.html("Interactions : "+data.interactions+"<br/>Global : "+convertTime(data.global)+"<br/>Section : "+convertTime(data.section)+"<br/>Interaction : "+convertTime(data.current));
+      $timer.html("Interactions : "+data.interactions_section+" / "+data.maxinter_section+" ("+data.interactions+")"+"<br/>Global : "+convertTime(data.global)+"<br/>Section : "+convertTime(data.section)+"<br/>Interaction : "+convertTime(data.current));
     } else if(data.command == "step") {
       switch (data.value) {
         case 0:
           $stat1.text("0. Off");
-          $timer.hide();
+          $timer.show();
+          // $timer.hide();
           break;
         case 1:
           $stat1.text("1. Introduction");
@@ -102,6 +107,15 @@
         $(".speech_you").attr('data-content', name+" : ");
     } else if(data.command == "silent") {
       $silent = data.value;
+      if($silent) {
+        $stat2.text('Pause');
+        $stat2.removeClass('ready');
+        $stat2.addClass('pause');
+      } else {
+        $stat2.text('Ready');
+        $stat2.removeClass('pause');
+        $stat2.addClass('ready');
+      }
       console.log("WEBSOCKET SILENT", $silent)
       if($silent == true) {
         recognition.stop();
@@ -224,6 +238,7 @@
         recognition.stop();
         console.log("USER",event.results[i][0].transcript);
         p = $('<p class="speech_bot"></p>');
+        // $(p).text("...");
         $sp.append(p);
       }
       $.ajax({
@@ -265,9 +280,52 @@
 
   $("#phone").change(function () {
     // console.log($("#phone").prop('checked'));
+    $silent = !$("#phone").prop('checked');
+    if($silent) {
+      $stat2.text('Pause');
+      $stat2.removeClass('ready');
+      $stat2.addClass('pause');
+    } else {
+      $stat2.text('Ready');
+      $stat2.removeClass('pause');
+      $stat2.addClass('ready');
+    }
     socket.send(JSON.stringify({'command':'phone', 'phone':$("#phone").prop('checked') ? 1 : 0}));
  });
 
+ function onTextChange() {
+   if(window.event.keyCode === 13) {
+     sendText()
+   }
+ }
+
+ function sendText() {
+   answer = $("#cant_speak").val();
+   if(!$silent) {
+     $(p).text(answer);
+     $(p).get(0).scrollIntoView();
+     recognition.stop();
+     console.log("USER",answer);
+     p = $('<p class="speech_bot"></p>');
+     $sp.append(p);
+     $.ajax({
+       type: "POST",
+       url: '/result',
+       data: {
+         transcript: String(answer),
+         confidence: 1,
+         sentence: 1
+       },
+       success: function(data) {
+         if(data != '') {
+           console.log("BOT",data);
+           $(p).text(data);
+           $(p).get(0).scrollIntoView();
+         }
+       }
+     });
+   }
+ }
   </script>
 </body>
 </html>

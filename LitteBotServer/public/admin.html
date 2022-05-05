@@ -15,16 +15,37 @@
         <span class="slider round"></span>
       </label>
     <br/>
-    <label for="max_interactions">Nombre maximum d'interactions</label>
-    <input type="number" id="max_interactions" name="max_interactions" min="1" max="100"><br/>
-    <label for="max_silence">Silence maximum avant relance (en secondes)</label>
-    <input type="number" id="max_silence" name="max_silence" min="1" max="120"><br/>
-    <label for="max_section">Duree maximum d'une section (en secondes)</label>
-    <input type="number" id="max_section" name="max_section" min="1" max="360"><br/>
-    <label for="max_inter_relance">Nombres d'interactions avant relance</label>
-    <input type="number" id="max_inter_relance" name="max_inter_relance" min="3" max="360"><br/>
-    <button id="save_params" onclick='saveConfig()'>Sauvegarder les parametres</button>
-    <button id="reload" onclick='reloadBrain()'>Recharger les donnees</button>
+    <!-- <input type="number" id="max_interactions" name="max_interactions" min="1" max="100" disabled>
+    <label for="max_interactions">Nombre maximum d'interactions</label><br/>
+    <input type="number" id="max_section" name="max_section" min="10" max="360" disabled>
+    <label for="max_section">Duree maximum d'une section (en secondes)</label><br/> -->
+    <h5>Introduction</h5>
+    <input type="number" id="max_intro" name="max_intro" min="1" max="100">
+    <label for="max_intro">Nombre maximum d'interactions</label><br/>
+    <input type="number" id="max_intro_s" name="max_intro_s" min="10" max="360">
+    <label for="max_intro_s">Durée maximum d'interaction (en secondes)</label><br/>
+    <h5>Seduction</h5>
+    <input type="number" id="max_seduction" name="max_seduction" min="1" max="100">
+    <label for="max_seduction">Nombre maximum d'interactions</label><br/>
+    <input type="number" id="max_seduction_s" name="max_seduction_s" min="10" max="360">
+    <label for="max_seduction_s">Durée maximum d'interaction (en secondes)</label><br/>
+    <h5>Provocation</h5>
+    <input type="number" id="max_provocation" name="max_provocation" min="1" max="100">
+    <label for="max_provocation">Nombre maximum d'interactions</label><br/>
+    <input type="number" id="max_provocation_s" name="max_provocation_s" min="10" max="360">
+    <label for="max_provocation_s">Durée maximum d'interaction (en secondes)</label><br/>
+    <h5>Fuite</h5>
+    <input type="number" id="max_fuite" name="max_fuite" min="1" max="100">
+    <label for="max_fuite">Nombre maximum d'interactions</label><br/>
+    <input type="number" id="max_fuite_s" name="max_fuite_s" min="10" max="360">
+    <label for="max_fuite_s">Durée maximum d'interaction (en secondes)</label><br/>
+    <h5>General</h5>
+    <input type="number" id="max_silence" name="max_silence" min="1" max="120">
+    <label for="max_silence">Silence maximum avant relance (en secondes)</label><br/>
+    <input type="number" id="max_inter_relance" name="max_inter_relance" min="3" max="360">
+    <label for="max_inter_relance">Nombres d'interactions avant relance</label><br/>
+    <button class="but2" id="save_params" onclick='saveConfig()'>Sauvegarder les parametres</button>
+    <button class="but2" id="reload" onclick='reloadBrain()'>Recharger les donnees</button>
   </div>
   <div id='speech'>
   </div>
@@ -59,7 +80,10 @@
   socket.onmessage = function(event) {
     // console.log(`[message] Data received from server: ${event.data}`);
     data = JSON.parse(event.data);
-    if(data.command == "message") {
+    if(data.command == "on") {
+      console.log("ON", data.value);
+      $("#phone").prop("checked", data.value);
+    } else if(data.command == "message") {
       console.log("[ws]", data);
     } else if(data.command == "bot" || data.command == "_bot") {
       console.log("BOT", data.value);
@@ -82,7 +106,7 @@
       switch (data.value) {
         case 0:
           $stat1.text("0. Off");
-          $timer.hide();
+          $timer.show();
           break;
         case 1:
           $stat1.text("1. Introduction");
@@ -125,9 +149,17 @@
         $stat2.addClass('ready');
       }
     } else if(data.command == "params") {
-      $("#max_interactions").val(data.max_interactions);
+      // $("#max_interactions").val(data.max_interactions);
+      // $("#max_section").val(data.max_section);
+      $("#max_intro").val(data.max_intro);
+      $("#max_seduction").val(data.max_seduction);
+      $("#max_provocation").val(data.max_provocation);
+      $("#max_fuite").val(data.max_fuite);
+      $("#max_intro_s").val(data.max_intro_s);
+      $("#max_seduction_s").val(data.max_seduction_s);
+      $("#max_provocation_s").val(data.max_provocation_s);
+      $("#max_fuite_s").val(data.max_fuite_s);
       $("#max_silence").val(data.max_silence);
-      $("#max_section").val(data.max_section);
       $("#max_inter_relance").val(data.max_inter_relance);
     } else {
       console.log("[ws]", data);
@@ -177,7 +209,21 @@
   }
 
   function saveConfig() {
-    socket.send(JSON.stringify({'command':'saveConfig', 'max_interactions':$("#max_interactions").val(), 'max_silence':$("#max_silence").val(), 'max_section':$("#max_section").val(), 'max_inter_relance':$("#max_inter_relance").val()}));
+    socket.send(JSON.stringify({
+        'command':          'saveConfig',
+        'max_intro':        $("#max_intro").val(),
+        'max_seduction':    $("#max_seduction").val(),
+        'max_provocation':  $("#max_provocation").val(),
+        'max_fuite':        $("#max_fuite").val(),
+        'max_intro_s':        $("#max_intro_s").val(),
+        'max_seduction_s':    $("#max_seduction_s").val(),
+        'max_provocation_s':  $("#max_provocation_s").val(),
+        'max_fuite_s':        $("#max_fuite_s").val(),
+        'max_silence':      $("#max_silence").val(),
+        'max_inter_relance':$("#max_inter_relance").val()
+        // 'max_interactions': $("#max_interactions").val(),
+        // 'max_section':      $("#max_section").val()
+      }));
   }
 
   function reloadBrain() {
@@ -186,6 +232,16 @@
 
   $("#phone").change(function () {
       // console.log($("#phone").prop('checked'));
+      $silent = !$("#phone").prop('checked');
+      if($silent) {
+        $stat2.text('Pause');
+        $stat2.removeClass('ready');
+        $stat2.addClass('pause');
+      } else {
+        $stat2.text('Ready');
+        $stat2.removeClass('pause');
+        $stat2.addClass('ready');
+      }
       socket.send(JSON.stringify({'command':'phone', 'phone':$("#phone").prop('checked') ? 1 : 0}));
    });
 

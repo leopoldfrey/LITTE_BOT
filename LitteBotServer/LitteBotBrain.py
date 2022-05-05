@@ -73,6 +73,10 @@ class LitteBot:
         self.filter = []
         self.currentStart = []
         self.start = []
+        self.currentFirst = []
+        self.first = []
+        self.currentQuit = []
+        self.quit = []
         self.epilogue = []
         self.history = [[], []]
         self.lastresponse = ""
@@ -124,6 +128,8 @@ class LitteBot:
             self.newConversation()
         elif(address == '/relance'):
             self.relance()
+        elif(address == '/first'):
+            self.speakFirst()
         elif(address == '/getEpilogue'):
             self.getEpilogue()
         elif(address == '/reload'):
@@ -142,15 +148,15 @@ class LitteBot:
         if self.botmode != 1:
             self.currentStart = self.start[self.botmode].copy()
         if self.botmode == 0:
-            print("     "+formatColor(1,color[OFF],40,"Bot Mode Passe-partout"))
+            print(" - "+formatColor(1,color[OFF],40,"Bot Mode Passe-partout"))
         elif self.botmode == 1:
-            print("     "+formatColor(1,color[INTRO],40,"Bot Mode Introduction"))
+            print(" - "+formatColor(1,color[INTRO],40,"Bot Mode Introduction"))
         elif self.botmode == 2:
-            print("     "+formatColor(1,color[SEDUCTION],40,"Bot Mode Seduction"))
+            print(" - "+formatColor(1,color[SEDUCTION],40,"Bot Mode Seduction"))
         elif self.botmode == 3:
-            print("     "+formatColor(1,color[PROVOCATION],40,"Bot Mode Provocation"))
+            print(" - "+formatColor(1,color[PROVOCATION],40,"Bot Mode Provocation"))
         elif self.botmode == 4:
-            print("     "+formatColor(1,color[FUITE],40,"Bot Mode Fuite"))
+            print(" - "+formatColor(1,color[FUITE],40,"Bot Mode Fuite"))
 
     def getEpilogue(self):
         self.osc_client.send('/epilogue',self.epilogue)
@@ -175,16 +181,28 @@ class LitteBot:
 
     def newConversation(self):
         self.setBotMode(1)
+        self.currentStart = self.start[self.botmode].copy()
         self.history = [[], []]
         self.log.start()
         self.botresponses.clear()
 
     def relance(self):
-        print("BRAIN RELANCE")
+        # print("BRAIN RELANCE")
         if(len(self.currentStart) == 0):
             self.currentStart = self.start[self.botmode].copy()
         idx = random.randrange(len(self.currentStart))
         self.lastresponse = self.currentStart.pop(idx).strip()
+        print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
+        self.botresponses.append(self.lastresponse)
+        self.log.logBot(str(self.botmode), self.lastresponse)
+        self.osc_client.send('/lastresponse',self.lastresponse)
+
+    def speakFirst(self):
+        # print("BRAIN FIRST")
+        if(len(self.currentFirst) == 0):
+            self.currentFirst = self.first.copy()
+        idx = random.randrange(len(self.currentFirst))
+        self.lastresponse = self.currentFirst.pop(idx).strip()
         print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
         self.botresponses.append(self.lastresponse)
         self.log.logBot(str(self.botmode), self.lastresponse)
@@ -226,6 +244,8 @@ class LitteBot:
         """
         self.filter = []
         self.start = []
+        self.quit = []
+        self.first = []
         self.epilogue = []
         dom_juan = []
         print("Loading ", dialog_path+def_questions_common+".json")
@@ -240,6 +260,10 @@ class LitteBot:
                     qql = qq.lower()
                     if qq.__contains__("__START__"):
                         start_common = tmp[i]['a']
+                    if qq.__contains__("__QUIT__"):
+                        self.quit = tmp[i]['a']
+                    if qq.__contains__("__FIRST__"):
+                        self.first = tmp[i]['a']
                     elif qql.__contains__('#'):
                         #print("WILDCARD", qq, tmp[i]['a'])
                         filter_common[qql] = tmp[i]['a']
@@ -324,6 +348,8 @@ class LitteBot:
         self.start.append(start_common)
 
         self.currentStart = self.start[self.botmode].copy()
+        self.currentQuit = self.quit.copy()
+        self.currentFirst = self.first.copy()
 
         print("Loading ", dialog_path+def_questions_epilogue+".json")
         with open(dialog_path+def_questions_epilogue+".json") as dj:
@@ -380,17 +406,19 @@ class LitteBot:
         new_question = user_input.lower()
         new_question_embedding = self.embed(new_question)
 
+        self.prevResponse = self.lastresponse
+
         found = False
         for filt in mode_filter.keys():
             f = filt.replace("#","")
             if new_question.__contains__(f):
                 #print("FILTER OK", filt, mode_filter[filt])
                 res = mode_filter[filt]
+                tmp = ""
                 if type(res) == list:
-                    self.lastresponse = random.choice(res)
+                    tmp_response = random.choice(res)
                 else:
-                    self.lastresponse = res
-                history[0].append(tuple([user_input,self.lastresponse]))
+                    tmp_response = res
                 found = True
 
         if not found:
@@ -405,27 +433,38 @@ class LitteBot:
                 index = np.where(corr == max_score)[0][0]
                 res = mode_response[mode_questions[index]]
                 if type(res) == list:
-                    self.lastresponse = random.choice(res)
+                    tmp_response = random.choice(res)
                 else:
-                    self.lastresponse = res
-                response = [user_input, self.lastresponse]
-                history[0].append(tuple(response))
+                    tmp_response = res
             else:
                 response, history[1] = self.predict_nlp(new_question, history[1])
-                self.lastresponse = list(response[-1])[-1]
-                history[0].append(tuple([user_input,self.lastresponse]))
+                tmp_response = list(response[-1])[-1]
 
-        self.history = history
-        # print("RESPONSE", self.lastresponse)
-        # print ("history[0] size", len(self.history[0]))
-        # print ("history[0]", self.history[0])
-        if self.lastresponse.__contains__("__START__"):
+        if tmp_response.__contains__("__START__"):
             if(len(self.currentStart) == 0):
                 self.currentStart = self.start[self.botmode].copy()
             idx = random.randrange(len(self.currentStart))
             start = self.currentStart.pop(idx).strip()
             # start = random.choice(self.currentStart)
-            self.lastresponse = self.lastresponse.replace("__START__", start)
+            self.lastresponse = tmp_response.replace("__START__", start)
+        # elif tmp_response.__contains__("__QUIT__"):
+        #     print("QUIT")
+        #     self.osc_client.send('/quit',1)
+        elif tmp_response.__contains__("__TO_EPILOGUE__"):
+            self.lastresponse = tmp_response
+            # self.osc_client.send('/toEpilogue',1)
+        elif tmp_response.__contains__("__REPEAT__"):
+            self.lastresponse = self.prevResponse
+        else:
+            self.lastresponse = tmp_response
+
+        history[0].append(tuple([user_input,self.lastresponse]))
+
+        self.history = history
+        # print("RESPONSE", self.lastresponse)
+        # print ("history[0] size", len(self.history[0]))
+        # print ("history[0]", self.history[0])
+
 
         return history[0], history
 
@@ -439,6 +478,7 @@ class LitteBot:
         Returns:
             list: Answer and history of the conversation
         """
+        print(formatColor(0,color[self.botmode],40, "...(bot think)..."))
         if history is None:
             history = []
         new_user_input_ids = self.tokenizer.encode(

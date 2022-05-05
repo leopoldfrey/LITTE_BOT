@@ -4,7 +4,7 @@ start python3 ./LitteBotEditor.py
 cd C:\Users\littl\Documents\LITTE_BOT\LitteBotServer
 start python3 ./LitteBotBrain.py
 
-timeout /t 30 /nobreak
+timeout /t 40 /nobreak
 
 python3 ./LitteBotServer.py
 

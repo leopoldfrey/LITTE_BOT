@@ -26,15 +26,18 @@ class ThreadGroup(Thread):
                     self.parent.lastInteractionTime = time.time()
                     # print("END OF SYNTH THREAD")
                     self.thread_group.remove(t)
-                    if(self.parent.step == 5): #and self.parent.interactions > 1):
+                    if(self.parent.on == False):
+                        print("OFF!!!")
+                    elif(self.parent.step == 5): #and self.parent.interactions > 1):
                         self.parent.nextEpilogue()
                     else:
                         # print("DO RELANCE ?", self.parent.interactions % self.parent.config["max_inter_relance"])
                         if(self.parent.interactions % self.parent.config["max_inter_relance"] == self.parent.config["max_inter_relance"] - 1):
-                            print("DO RELANCE !!!")
-                            time.sleep(2)
+                            # print("DO RELANCE !!!")
+                            time.sleep(1)
                             self.parent.relance()
                         else:
+                            # print("REDONNE LA PAROLE !!!")
                             self.parent.silent = False
                             self.parent.wsServer.broadcast({'command':'silent','value':False})
 
@@ -53,18 +56,20 @@ class LitteBotWebSocket(Thread):
 
     # Called for every client connecting (after handshake)
     def new_client(self, client, server):
-        print("    [ws] Client(%d) connected" % client['id'])
+        # print("[ws] Client(%d) connected" % client['id'])
         self.broadcast({"command":"message","value":"Connection established"})
+        self.broadcast({"command":"on","value":self.parent.on})
 
     # Called for every client disconnecting
     def client_left(self, client, server):
-    	print("    [ws] Client(%d) disconnected" % client['id'])
+    	#print("[ws] Client(%d) disconnected" % client['id'])
+        pass
 
     # Called when a client sends a message
     def message_received(self, client, server, message):
         # if len(message) > 200:
         # 	message = message[:200]+'..'
-        print("    [ws] Client(%d) message: %s" % (client['id'], message))
+        print("[ws] %s (%d)" % (message, client['id']))
         msg = json.loads(message)
         # print(msg["command"])
         if msg["command"] == "connect" :
@@ -82,10 +87,18 @@ class LitteBotWebSocket(Thread):
         elif msg["command"] == "getConfig" :
             self.parent.getConfig()
         elif msg["command"] == "saveConfig" :
-            self.parent.config["max_interactions"] = int(msg["max_interactions"])
+            # self.parent.config["max_interactions"] = int(msg["max_interactions"])
+            # self.parent.config["max_section"] = int(msg["max_section"])
             self.parent.config["max_silence"] = int(msg["max_silence"])
-            self.parent.config["max_section"] = int(msg["max_section"])
             self.parent.config["max_inter_relance"] = int(msg["max_inter_relance"])
+            self.parent.config["max_intro"] = int(msg["max_intro"])
+            self.parent.config["max_seduction"] = int(msg["max_seduction"])
+            self.parent.config["max_provocation"] = int(msg["max_provocation"])
+            self.parent.config["max_fuite"] = int(msg["max_fuite"])
+            self.parent.config["max_intro_s"] = int(msg["max_intro_s"])
+            self.parent.config["max_seduction_s"] = int(msg["max_seduction_s"])
+            self.parent.config["max_provocation_s"] = int(msg["max_provocation_s"])
+            self.parent.config["max_fuite_s"] = int(msg["max_fuite_s"])
             self.parent.saveConfig()
         elif msg["command"] == "phone" :
             if(int(msg["phone"]) == 1):
@@ -107,6 +120,7 @@ class LitteBotServer:
     def __init__(self, http_server_port=8080, jsonFile="none"):
         #init
         self.http_server_port = http_server_port
+        self.on = False
         self.silent = True
         self.step = 0
         self.epilogue = 0
@@ -118,13 +132,30 @@ class LitteBotServer:
         self.sectionTime = 0
         self.currentTime = 0
         self.interactions = 0
+        self.interactions_section = 0
         self.is_restart_needed = True
         self.tmp_response = ""
 
         #read from settings.json
         print("___READING CONFIG___")
-        self.config = {"max_interactions": 15, "max_silence": 30, "max_section": 60, "max_inter_relance": 4}
+        self.config = {
+            # "max_interactions": 15,
+            # "max_section": 60,
+            "max_silence": 30,
+            "max_inter_relance": 4,
+            "max_intro": 5,
+            "max_seduction": 12,
+            "max_provocation": 10,
+            "max_fuite": 8,
+            "max_intro_s": 45,
+            "max_seduction_s": 180,
+            "max_provocation_s": 120,
+            "max_fuite_s": 120
+        }
         self.readConfig()
+
+        print("___INIT TextToSpeech___")
+        TextToSpeech("Dom Juan").start()
 
         #websocket
         print("___STARTING WEBSOCKETSERVER___")
@@ -179,8 +210,8 @@ class LitteBotServer:
 
     def video_callback(self, address, *args):
         print("VIDEO OSC IN ", address, args[0])
-        # if(address == '/lastresponse'):
-        #     self.receiveResponse(args[0])
+        if(address == '/facedetect'):
+            print("FACEDETECT", args[0])
         # else:
         #     print("callback : "+str(address))
         #     for x in range(0,len(args)):
@@ -197,6 +228,15 @@ class LitteBotServer:
                 self.phoneOn()
             else:
                 self.phoneOff()
+        # elif(address == '/toEpilogue'):
+        #     self.toEpilogue()
+        # elif(address == '/quit'):
+        #     print("RACCROCHEZ LE TELEPHONE")
+        #     self.on = False
+        #     self.silent = True
+        #     self.wsServer.broadcast({'command':'silent','value':self.silent})
+        #     self.wsServer.broadcast({"command":"on","value":self.on})
+        #     self.reset()
         else:
             print("callback : "+str(address))
             for x in range(0,len(args)):
@@ -204,17 +244,23 @@ class LitteBotServer:
 
     def receiveResponse(self, r):
         self.tmp_response = r
+        if(self.tmp_response.__contains__("__TO_EPILOGUE__")):
+            self.toEpilogue()
+            return
         # print("SERVER receiveResponse", self.tmp_response)
         self.video_client.send("/bot", self.tmp_response)
         self.video_client.send("/phase", 2)
         self.interactions += 1
+        self.interactions_section += 1
+        self.video_client.send("/interactions", self.interactions)
         self.lastInteractionTime = time.time()
         self.wsServer.broadcast({'command':'_bot','value':self.tmp_response})
+        # print("INTERACTIONS", self.interactions % self.config["max_interactions"])
         if self.step == 0 :
             # self.bot.newConversation()
             # self.osc_client.send('newConversation', 1)
             self.stepUp()
-        elif self.step > 0 and self.interactions >= self.config["max_interactions"] :
+        elif self.step > 0 and self.interactions_section >= self.maxinter[self.step] :
             self.stepUp()
         self.video_client.send("/botspeak", 1)
         tts = TextToSpeech(self.tmp_response)
@@ -265,6 +311,8 @@ class LitteBotServer:
             s = self.epilogueSentences[self.epilogue].strip()
             self.epilogue += 1
             self.interactions += 1
+            self.interactions_section += 1
+            self.video_client.send("/interactions", self.interactions)
             self.silent = True
             self.wsServer.broadcast({'command':'silent','value':self.silent})
             self.lastInteractionTime = time.time()
@@ -277,36 +325,47 @@ class LitteBotServer:
             self.osc_client.send("/logbot", s)
             self.video_client.send("/bot", s)
             return s
-        self.silent = False
+
+        print("RACCROCHEZ LE TELEPHONE")
+        self.on = False
+        self.silent = True
         self.wsServer.broadcast({'command':'silent','value':self.silent})
+        self.wsServer.broadcast({"command":"on","value":self.on})
         self.reset()
         return ""
 
     def relance(self):
-        # print("SERVER RELANCE", self.interactions)
-        # TODO PROBLEME SI PARLE !!!!!
-        # if self.silent :
-        #     return;
         self.silent = True
         self.wsServer.broadcast({'command':'silent','value':self.silent})
         self.lastInteractionTime = time.time()
-        # self.interactions += 1
         self.osc_client.send("/relance", 1)
 
+    def first(self):
+        self.silent = True
+        self.wsServer.broadcast({'command':'silent','value':self.silent})
+        self.lastInteractionTime = time.time()
+        self.osc_client.send("/first", 1)
+
     def updateTimers(self):
-        self.globalTime = time.time() - self.startTime
-        self.sectionTime = time.time() - self.startSectionTime
-        self.currentTime = time.time() - self.lastInteractionTime
-        if(self.currentTime > self.config["max_silence"]):
-            if(self.step > 0 and self.step < 5):
-                self.relance()
-        if(self.step > 0 and self.step < 5 and self.sectionTime > self.config["max_section"]):
-            self.stepUp()
-        self.video_client.send("/globalTime", int(self.globalTime))
-        self.video_client.send("/sectionTime", int(self.sectionTime))
-        self.video_client.send("/currentTime", int(self.currentTime))
-        self.video_client.send("/interactions", self.interactions)
-        self.wsServer.broadcast({"command":"timers","global":self.globalTime, "section":self.sectionTime, "current":self.currentTime, 'interactions':self.interactions})
+        if(self.step != 0):
+            self.globalTime = time.time() - self.startTime
+            self.sectionTime = time.time() - self.startSectionTime
+            self.currentTime = time.time() - self.lastInteractionTime
+            if(self.currentTime > self.config["max_silence"]):
+                if(self.step > 0 and self.step < 5 and not self.silent):
+                    self.relance()
+            if(self.step > 0 and self.step < 5 and self.sectionTime > self.maxsection[self.step]):
+                self.stepUp()
+        else:
+            self.globalTime = 0
+            self.sectionTime = 0
+            self.currentTime = 0
+
+            # self.video_client.send("/globalTime", int(self.globalTime))
+            # self.video_client.send("/sectionTime", int(self.sectionTime))
+            # self.video_client.send("/currentTime", int(self.currentTime))
+            # self.video_client.send("/interactions", self.interactions)
+        self.wsServer.broadcast({"command":"timers","global":self.globalTime, "section":self.sectionTime, "current":self.currentTime, 'interactions':self.interactions, 'interactions_section':self.interactions_section, 'maxinter_section':self.maxinter[self.step]})
 
     def poll(self):
         self.updateTimers()
@@ -325,23 +384,69 @@ class LitteBotServer:
         return open("public/admin.html", "rt").read()
 
     def getConfig(self):
-        self.wsServer.broadcast({'command':'params','max_interactions':self.config["max_interactions"],'max_silence':self.config["max_silence"],'max_section':self.config["max_section"],'max_inter_relance':self.config["max_inter_relance"]})
+        self.wsServer.broadcast({
+            'command':'params',
+            # 'max_interactions':self.config["max_interactions"],
+            # 'max_section':self.config["max_section"],
+            'max_silence':self.config["max_silence"],
+            'max_inter_relance':self.config["max_inter_relance"],
+            'max_intro':self.config["max_intro"],
+            'max_seduction':self.config["max_seduction"],
+            'max_provocation':self.config["max_provocation"],
+            'max_fuite':self.config["max_fuite"],
+            'max_intro_s':self.config["max_intro_s"],
+            'max_seduction_s':self.config["max_seduction_s"],
+            'max_provocation_s':self.config["max_provocation_s"],
+            'max_fuite_s':self.config["max_fuite_s"]
+        })
 
     def saveConfig(self):
-        print("CONFIG", self.config)
+        # print("CONFIG", self.config)
         with open('settings.json', 'w') as f:
             json.dump(self.config, f, indent=4)
+        self.updateMax()
 
     def readConfig(self):
         with open('settings.json', 'r') as f:
             self.config = json.load(f)
+        self.updateMax()
+
+    def updateMax(self):
+        self.maxsection = []
+        self.maxsection.append(0)
+        self.maxsection.append(self.config["max_intro_s"])
+        self.maxsection.append(self.config["max_seduction_s"])
+        self.maxsection.append(self.config["max_provocation_s"])
+        self.maxsection.append(self.config["max_fuite_s"])
+        self.maxsection.append(0)
+
+        self.maxinter = []
+        self.maxinter.append(0)
+        self.maxinter.append(self.config["max_intro"])
+        self.maxinter.append(self.config["max_seduction"])
+        self.maxinter.append(self.config["max_provocation"])
+        self.maxinter.append(self.config["max_fuite"])
+        self.maxinter.append(0)
+
+        # print("MAXSECTION", self.maxsection)
+        # print("MAXINTER", self.maxinter)
+
+    def toEpilogue(self):
+        # print("TO EPILOGUE")
+        self.step = 5
+        self.epilogue = 0
+        self.startSectionTime = time.time()
+        self.osc_client.send("/setbotmode", self.step)
+        self.video_client.send("/section", self.step)
+        self.wsServer.broadcast({'command':'step','value':self.step})
+        self.nextEpilogue()
 
     def stepUp(self):
         # print("STEP UP")
         # if self.step == 0 :
         #     self.osc_client.send("/newConversation", 1)
         self.step = self.step + 1
-        self.interactions = 0
+        self.interactions_section = 0
         self.epilogue = 0
         if self.step == 1 :
             self.startTime = time.time()
@@ -368,6 +473,8 @@ class LitteBotServer:
         self.startSectionTime = time.time()
         self.lastInteractionTime = time.time()
         self.interactions = 0
+        self.interactions_section = 0
+        self.video_client.send("/interactions", self.interactions)
         self.wsServer.broadcast({'command':'step','value':self.step})
         self.wsServer.broadcast({'command':'clear'})
         # self.bot.newConversation()
@@ -391,11 +498,19 @@ class LitteBotServer:
 
     def phoneOn(self):
         print("PHONE ON")
-        time.sleep(1)
-        self.relance()
+        self.on = True
+        self.video_client.send("/phone", 1)
+        self.wsServer.broadcast({"command":"on","value":self.on})
+        time.sleep(2)
+        self.first()
 
     def phoneOff(self):
         print("PHONE OFF")
+        self.on = False
+        self.silent = True
+        self.video_client.send("/phone", 0)
+        self.wsServer.broadcast({'command':'silent','value':self.silent})
+        self.wsServer.broadcast({"command":"on","value":self.on})
         self.reset()
 
 if __name__ == '__main__':

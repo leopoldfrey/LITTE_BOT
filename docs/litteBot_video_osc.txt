@@ -7,10 +7,10 @@ LA VIDEO RECOIT SUR LE PORT 14003
 
 /botspeak       0/1           (1 quand le bot parle 0 quand il a terminé)
 /section        int           (changement de section 0. OFF 1. INTRO 2. SEDUCTION 3. PROVOCATION 4. FUITE 5. EPILOGUE)
-/globalTime     int           (temps global depuis le début de la session en secondes)
-/sectionTime    int           (temps global depuis le début de la section en secondes)
-/currentTime    int           (temps depuis la dernière interaction en secondes)
-/interactions   int           (nombres d'interactions de la section)
+#/globalTime     int           (temps global depuis le début de la session en secondes)
+#/sectionTime    int           (temps global depuis le début de la section en secondes)
+#/currentTime    int           (temps depuis la dernière interaction en secondes)
+/interactions   int           (nombres d'interactions)
 /stop           1             (fin de session)
 /nlpScore       float [0..1]  (score de similarité)
 

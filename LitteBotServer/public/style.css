@@ -97,7 +97,7 @@ p
   top: 0px;
   background-color: black;
   width: 100%;
-  padding: 20px 30px 6px 30px;
+  padding: 20px 30px 17px 30px;
   margin: 0px;
   font-size: 1rem;
   /*height: 100px;*/
@@ -190,4 +190,40 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+input#cant_speak {
+    font-size: 1.2rem;
+    width: calc(100% - 140px);
+}
+
+button {
+  border: none;
+  background: #2196F3;
+  color: white;
+  font-size: 1rem;
+  border-radius: 5px;
+  padding: 4px 10px;
+  margin: 0px 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #2075b8;
+}
+
+button:active {
+    background: lightblue;
+}
+
+.but2 {
+  margin: 10px 0px;
+}
+
+.hidden {
+  display: none;
+}
+
+h5 {
+  margin: 18px 0 0px 0;
 }

@@ -39,7 +39,7 @@ def list_voices():
             print(f"{voice.name}")
 
 class TextToSpeech(Thread):
-    def __init__(self, text):
+    def __init__(self, text, pitch=0.0, speed=1.08):
         Thread.__init__(self)
         #print("TTS", text)
         self.language_code = "-".join(VOICE.split("-")[:2])
@@ -47,7 +47,7 @@ class TextToSpeech(Thread):
         self.voice_params = tts.VoiceSelectionParams(
             language_code=self.language_code, name=VOICE
         )
-        self.audio_config = tts.AudioConfig(audio_encoding=tts.AudioEncoding.LINEAR16)
+        self.audio_config = tts.AudioConfig(audio_encoding=tts.AudioEncoding.LINEAR16, speaking_rate=speed, pitch=pitch)
         self.client = tts.TextToSpeechClient()
 
     def run(self):
@@ -112,6 +112,9 @@ if __name__ == '__main__':
     # list_voices()
     if len(sys.argv) == 2:
         thd = TextToSpeech(sys.argv[1])
+        thd.start()
+    elif len(sys.argv) == 4:
+        thd = TextToSpeech(sys.argv[1], float(sys.argv[2]), float(sys.argv[3]))
         thd.start()
         # print(thd.is_alive())
         # tts = TextToSpeechNoThread()
