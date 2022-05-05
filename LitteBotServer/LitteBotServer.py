@@ -32,6 +32,7 @@ class ThreadGroup(Thread):
                         # print("DO RELANCE ?", self.parent.interactions % self.parent.config["max_inter_relance"])
                         if(self.parent.interactions % self.parent.config["max_inter_relance"] == self.parent.config["max_inter_relance"] - 1):
                             print("DO RELANCE !!!")
+                            time.sleep(2)
                             self.parent.relance()
                         else:
                             self.parent.silent = False
@@ -86,6 +87,11 @@ class LitteBotWebSocket(Thread):
             self.parent.config["max_section"] = int(msg["max_section"])
             self.parent.config["max_inter_relance"] = int(msg["max_inter_relance"])
             self.parent.saveConfig()
+        elif msg["command"] == "phone" :
+            if(int(msg["phone"]) == 1):
+                self.parent.phoneOn()
+            else:
+                self.parent.phoneOff()
         elif msg["command"] == "reload" :
             self.parent.osc_client.send("/reload", 1)
 
@@ -186,6 +192,11 @@ class LitteBotServer:
             self.receiveResponse(args[0])
         elif(address == '/epilogue'):
             self.receiveEpilogue(args)
+        elif(address == '/phone'):
+            if(args[0] == 1):
+                self.phoneOn()
+            else:
+                self.phoneOff()
         else:
             print("callback : "+str(address))
             for x in range(0,len(args)):
@@ -273,6 +284,7 @@ class LitteBotServer:
 
     def relance(self):
         # print("SERVER RELANCE", self.interactions)
+        # TODO PROBLEME SI PARLE !!!!!
         # if self.silent :
         #     return;
         self.silent = True
@@ -376,6 +388,12 @@ class LitteBotServer:
         print("Stop Brain Osc Server")
         self.osc_server.stop()
         os._exit(0)
+
+    def phoneOn(self):
+        print("PHONE ON")
+
+    def phoneOff(self):
+        print("PHONE OFF")
 
 if __name__ == '__main__':
     LitteBotServer()
