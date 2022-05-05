@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 import os, sys
 import google.cloud.texttospeech as tts
+from sys import platform as _platform
 from threading import Thread
-# from playsound import playsound
 from pedalboard import *
 from pedalboard.io import AudioFile
+if _platform == "darwin":
+    from playsound import playsound
 
 VOICE = "fr-FR-Wavenet-C"
 
@@ -68,11 +70,10 @@ class TextToSpeech(Thread):
         with AudioFile('processed-output.wav', 'w', samplerate, effected.shape[0]) as f:
           f.write(effected)
 
-        # playsound('processed-output.wav')
-        os.system("ffplay.exe -nodisp -autoexit -loglevel quiet .\processed-output.wav")
-
-
-        # playsound(filename)
+        if _platform == "darwin":
+            playsound('processed-output.wav')
+        elif _platform == "win32" or _platform == "win64":
+            os.system("ffplay.exe -nodisp -autoexit -loglevel quiet .\processed-output.wav")
 
 # class TextToSpeechNoThread():
 #     def __init__(self):

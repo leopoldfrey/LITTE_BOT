@@ -3,14 +3,15 @@ import json, pickle, random, logging, os, signal
 from typing import Union
 from pyosc import Client, Server
 from botLog import BotLog
+from sys import platform as _platform
 
 import gradio as gr
 import numpy as np
 
-# import os
 # os.environ["CUDA_VISIBLE_DEVICES"]="1"
-os.add_dll_directory("C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.6/bin")
-os.add_dll_directory("C:/tools/cuda/bin")
+if _platform == "win32" or _platform == "win64":
+    os.add_dll_directory("C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.6/bin")
+    os.add_dll_directory("C:/tools/cuda/bin")
 
 import tensorflow as tf
 import tensorflow_hub as hub
@@ -72,7 +73,6 @@ class LitteBot:
         self.filter = []
         self.currentStart = []
         self.start = []
-        self.relance = []
         self.epilogue = []
         self.history = [[], []]
         self.lastresponse = ""
@@ -122,14 +122,13 @@ class LitteBot:
             self.setBotMode(args[0])
         elif(address == '/newConversation'):
             self.newConversation()
+        elif(address == '/relance'):
+            self.relance()
         elif(address == '/getEpilogue'):
             self.getEpilogue()
-        elif(address == '/getRelance'):
-            self.getRelance()
         elif(address == '/reload'):
             self.loadQuestionsAndEmbeddings()
             self.getEpilogue()
-            self.getRelance()
         elif(address == '/logbot'):
             print(formatColor(0,color[self.botmode],40, "bot: "+args[0]))
             self.log.logBot(str(self.botmode), args[0])
@@ -153,9 +152,6 @@ class LitteBot:
         elif self.botmode == 4:
             print("     "+formatColor(1,color[FUITE],40,"Bot Mode Fuite"))
 
-    def getRelance(self):
-        self.osc_client.send('/relance',self.relance)
-
     def getEpilogue(self):
         self.osc_client.send('/epilogue',self.epilogue)
 
@@ -171,6 +167,7 @@ class LitteBot:
         print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
         self.botresponses.append(self.lastresponse)
         self.log.logBot(str(self.botmode), self.lastresponse)
+        self.osc_client.send('/lastresponse',self.lastresponse)
         return self.lastresponse
 
     def getAllResponses(self):
@@ -181,6 +178,17 @@ class LitteBot:
         self.history = [[], []]
         self.log.start()
         self.botresponses.clear()
+
+    def relance(self):
+        print("BRAIN RELANCE")
+        if(len(self.currentStart) == 0):
+            self.currentStart = self.start[self.botmode].copy()
+        idx = random.randrange(len(self.currentStart))
+        self.lastresponse = self.currentStart.pop(idx).strip()
+        print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
+        self.botresponses.append(self.lastresponse)
+        self.log.logBot(str(self.botmode), self.lastresponse)
+        self.osc_client.send('/lastresponse',self.lastresponse)
 
     def embed(self, input: Union[str, list, dict]) -> tf.Tensor:
         """Embed a string or list or dictionary of strings.
@@ -217,7 +225,6 @@ class LitteBot:
             dict: Dictionary of questions
         """
         self.filter = []
-        self.relance = []
         self.start = []
         self.epilogue = []
         dom_juan = []
@@ -231,10 +238,7 @@ class LitteBot:
                 for qq in tmp[i]['q']:
                     # print(qq, tmp[i]['a'])
                     qql = qq.lower()
-                    if qq.__contains__("__RELANCE__"):
-                        #print("__RELANCE__", tmp[i]['a'])
-                        self.relance += tmp[i]['a']
-                    elif qq.__contains__("__START__"):
+                    if qq.__contains__("__START__"):
                         start_common = tmp[i]['a']
                     elif qql.__contains__('#'):
                         #print("WILDCARD", qq, tmp[i]['a'])
@@ -330,7 +334,6 @@ class LitteBot:
                         #print("__EPILOGUE__", qq, tmp[i]['a'])
                         self.epilogue = tmp[i]['a']
 
-        # print("RELANCE", len(self.relance), self.relance)
         # print("EPILOGUE", len(self.epilogue), self.epilogue)
         # print("START", len(self.start), self.start)
 
@@ -423,8 +426,6 @@ class LitteBot:
             start = self.currentStart.pop(idx).strip()
             # start = random.choice(self.currentStart)
             self.lastresponse = self.lastresponse.replace("__START__", start)
-
-        self.osc_client.send('/lastresponse',self.lastresponse)
 
         return history[0], history
 

@@ -2,7 +2,7 @@ venv
 tmp
 *.log
 model
-*.wav
+*output.wav
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

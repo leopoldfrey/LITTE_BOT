@@ -14,8 +14,10 @@
     <input type="number" id="max_interactions" name="max_interactions" min="1" max="100"><br/>
     <label for="max_silence">Silence maximum avant relance (en secondes)</label>
     <input type="number" id="max_silence" name="max_silence" min="1" max="120"><br/>
-    <label for="max_section">Durée maximum d'une section (en secondes)</label>
+    <label for="max_section">Duree maximum d'une section (en secondes)</label>
     <input type="number" id="max_section" name="max_section" min="1" max="360"><br/>
+    <label for="max_inter_relance">Nombres d'interactions avant relance</label>
+    <input type="number" id="max_inter_relance" name="max_inter_relance" min="3" max="360"><br/>
     <button id="save_params" onclick='saveConfig()'>Sauvegarder les parametres</button>
     <button id="reload" onclick='reloadBrain()'>Recharger les donnees</button>
   </div>
@@ -121,6 +123,7 @@
       $("#max_interactions").val(data.max_interactions);
       $("#max_silence").val(data.max_silence);
       $("#max_section").val(data.max_section);
+      $("#max_inter_relance").val(data.max_inter_relance);
     } else {
       console.log("[ws]", data);
     }
@@ -169,7 +172,7 @@
   }
 
   function saveConfig() {
-    socket.send(JSON.stringify({'command':'saveConfig', 'max_interactions':$("#max_interactions").val(), 'max_silence':$("#max_silence").val(), 'max_section':$("#max_section").val()}));
+    socket.send(JSON.stringify({'command':'saveConfig', 'max_interactions':$("#max_interactions").val(), 'max_silence':$("#max_silence").val(), 'max_section':$("#max_section").val(), 'max_inter_relance':$("#max_inter_relance").val()}));
   }
 
   function reloadBrain() {

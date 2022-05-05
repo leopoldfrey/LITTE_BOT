@@ -1,44 +1,4 @@
 {
-    "1": {
-        "q": [
-            "__RELANCE__"
-        ],
-        "a": [
-            "Beau d\u00e9sir, qui te donne empire sur mes sens ?",
-            "Tu ne r\u00e9pondras pas ?",
-            "Veux tu r\u00e9pondre, te dis-je.",
-            "Qu'est-ce que vous dites ?",
-            "Attends-moi un peu.",
-            "Voyons cela.",
-            "Eh bien, que vous ai-je dit ?",
-            "N'ai-je pas devin\u00e9.",
-            "Hon.",
-            "Comment ?",
-            "Comment donc ?",
-            "Et bien",
-            "Quoi? Parle.",
-            "Eh bien! Je te donne la libert\u00e9 de parler et de me dire tes sentiments.",
-            "Mais encore, quelle est ta pens\u00e9e l\u00e0-dessous ? Que t'imagines tu de cet affaire ?",
-            "Ah!",
-            "Heu?",
-            "Ah ! Que de bruit !",
-            "Voyons cela.",
-            "Huais !",
-            "Qu'est-ce que vous dites ?",
-            "N'ai-je pas devin\u00e9 ?",
-            "Pouvez-vous avoir cette pens\u00e9e ?",
-            "L'effet est admirable.",
-            "Eh, bien ?",
-            "Laissons cela.",
-            "Eh !",
-            "Ah ! Ah ! Ah !",
-            "Vous vous raillez de moi.",
-            "Mais c'est assez de cette mati\u00e8re ; reprenons notre discours.",
-            "Ah, que cela est beau",
-            "Je n'ai rien \u00e0 r\u00e9pondre",
-            "Que voulez vous que je dise"
-        ]
-    },
     "2": {
         "q": [
             "__START__"
@@ -50,7 +10,28 @@
             "Approchez vous pour que je puisse profiter de votre visage. Approchez, posez bien votre visage face \u00e0 mes yeux, posez vos yeux dans mes yeux pour que je puisse vous reconna\u00eetre.",
             "Haussez un peu la t\u00eate de gr\u00e2ce.",
             "Alors je ne vous connais pas ? J'ai donc l'honneur de parler a tout une autre personne ?",
-            "Approchez... Ah que ce visage est mignon ! Ouvrez vos yeux enti\u00e8rement, ah qu'ils sont beaux ! Que je voie un peu vos dents, je vous prie. Ah qu'elles sont amoureuses, et ces l\u00e8vres app\u00e9tissantes ! Pour moi je suis ravi, et je n'ai jamais vu une si charmante personne. Vous me ferez plaisir de demeurer ici, je vous assure."
+            "Approchez... Ah que ce visage est mignon ! Ouvrez vos yeux enti\u00e8rement, ah qu'ils sont beaux ! Que je voie un peu vos dents, je vous prie. Ah qu'elles sont amoureuses, et ces l\u00e8vres app\u00e9tissantes ! Pour moi je suis ravi, et je n'ai jamais vu une si charmante personne. Vous me ferez plaisir de demeurer ici, je vous assure.",
+            "Beau d\u00e9sir, qui te donne empire sur mes sens ?",
+            "Tu ne r\u00e9pondras pas ?",
+            "Veux tu r\u00e9pondre, te dis-je.",
+            "Qu'est-ce que vous dites ?",
+            "Attends-moi un peu.",
+            "Eh bien, que vous ai-je dit ?",
+            "N'ai-je pas devin\u00e9.",
+            "Eh bien! Je te donne la libert\u00e9 de parler et de me dire tes sentiments.",
+            "Mais encore, quelle est ta pens\u00e9e l\u00e0-dessous ? Que t'imagines tu de cet affaire ?",
+            "Ah ! Que de bruit !",
+            "Voyons cela.",
+            "Qu'est-ce que vous dites ?",
+            "N'ai-je pas devin\u00e9 ?",
+            "Pouvez-vous avoir cette pens\u00e9e ?",
+            "L'effet est admirable.",
+            "Laissons cela.",
+            "Vous vous raillez de moi.",
+            "Mais c'est assez de cette mati\u00e8re ; reprenons notre discours.",
+            "Ah, que cela est beau",
+            "Je n'ai rien \u00e0 r\u00e9pondre",
+            "Que voulez vous que je dise"
         ]
     },
     "3": {
