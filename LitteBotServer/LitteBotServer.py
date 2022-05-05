@@ -107,7 +107,7 @@ class LitteBotServer:
     def __init__(self, http_server_port=8080, jsonFile="none"):
         #init
         self.http_server_port = http_server_port
-        self.silent = False
+        self.silent = True
         self.step = 0
         self.epilogue = 0
         self.username = ""
@@ -391,9 +391,12 @@ class LitteBotServer:
 
     def phoneOn(self):
         print("PHONE ON")
+        time.sleep(1)
+        self.relance()
 
     def phoneOff(self):
         print("PHONE OFF")
+        self.reset()
 
 if __name__ == '__main__':
     LitteBotServer()
