@@ -1,0 +1,26 @@
+Littebot
+
+DONE:
+- √ rediriger relance vers start
+- √ temps d’attente après speak !
+- √ Toutes les N phrases -> start
+- √ au revoir -> vers épilogue à VERIFIER
+- √ répéter
+- √ interactions
+- √ durée différente par section
+- √ google tss speaking_rate & pitch
+- √ paramètre d’admin dans page principale
+- √ remettre épilogue dans brain pour accélérer le démarrage
+- √ nom de l’utilisateur
+- √ Filtrer eh/ah / monsieur / monseigneur ???
+- √ vitesse/pitch par section
+
+TODO:
+- passer le tout dans plastic
+- quand face detect phone ring
+- raccrochez !
+- Modulation voix (pitch? , + rapide?)
+- Son quand réfléchit
+- interrupteur nodemcu
+- Windows autologin & autostart littebot + anydesk
+- start.bat plus clean

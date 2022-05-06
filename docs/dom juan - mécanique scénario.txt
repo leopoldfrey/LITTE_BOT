@@ -16,7 +16,7 @@ installation : _install.sh
       - Épilogue
 
 Le passage d'une section à l'autre se fait automatiquement après un temps défini (max_section) ou un nombre d'interactions défini (max_interactions)
-Si l'utilisateur n'interagit pas pendant un temps défini (max_silence), le bot relance la conversation (__RELANCE__)
+Si l'utilisateur n'interagit pas pendant un temps défini (max_silence), le bot relance la conversation (__START__)
 L'épilogue est séquentiel, l'utilisateur n'intervient pas dans son déroulement.
 
 
@@ -89,15 +89,26 @@ Ordre de priorité :
   - le fichier common est valable dans toutes les sections, mais ses entrées peuvent être réécrites dans les autres fichiers (qui sont prioritaires)
 
 
-*** __RELANCE__ (uniquement dans le fichier common)
+*** __FIRST__ / __SECOND__ / __THIRD__ (uniquement dans le fichier common)
 
-Phrases utilisées pour relancer la conversation après un silence
+Phrases utilisées pour le démarrage de la conversation
+Dans __SECOND__ on doit demander le nom de manière claire
 
+*** __NAME__
+
+on peut inclure __NAME__ dans une réponse il remplacera pas le nom de l'utilisateur détecté
 
 *** __EPILOGUE__ (uniquement dans le fichier épilogue)
 
 Les phrases sont utilisées dans l'ordre. Elles terminent la conversation
 
+*** __TO_EPILOGUE__ (uniquement dans la sortie)
+
+les phrases en entrée déclenchent l'épilogue
+
+*** __REPEAT__ (uniquement dans la sortie)
+
+les phrases en entrée font répéter le bot
 
 *** LOG
 
@@ -109,6 +120,11 @@ Un journal de chaque conversation est enregistré dans le répertoire log
 
 (le numéro derrière bot indique dans quelle section le bot se situe)
 
+------WIN---------
+
+Tout démarrer via la commande start.bat
+
+------MAC OS------
 
 *** EDITEUR
 
