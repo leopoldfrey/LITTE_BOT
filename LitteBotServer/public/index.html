@@ -102,9 +102,13 @@
           break;
       }
     } else if(data.command == "username") {
-      if(data.value != "")
+      if(data.value != "") {
         name = data.value;
         $(".speech_you").attr('data-content', name+" : ");
+      } else {
+        name = "user";
+        $(".speech_you").attr('data-content', name+" : ");
+      }
     } else if(data.command == "silent") {
       $silent = data.value;
       if($silent) {
@@ -243,18 +247,11 @@
       }
       $.ajax({
         type: "POST",
-        url: '/result',
+        url: '/reco',
         data: {
           transcript: String(event.results[i][0].transcript),
           confidence: event.results[i][0].confidence,
           sentence: event.results[i].isFinal ? 1 : 0
-        },
-        success: function(data) {
-          if(data != '') {
-            console.log("BOT",data);
-            $(p).text(data);
-            $(p).get(0).scrollIntoView();
-          }
         }
       });
       timer = setTimeout(function() {
@@ -310,18 +307,11 @@
      $sp.append(p);
      $.ajax({
        type: "POST",
-       url: '/result',
+       url: '/reco',
        data: {
          transcript: String(answer),
          confidence: 1,
          sentence: 1
-       },
-       success: function(data) {
-         if(data != '') {
-           console.log("BOT",data);
-           $(p).text(data);
-           $(p).get(0).scrollIntoView();
-         }
        }
      });
    }

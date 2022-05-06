@@ -5,5 +5,5 @@ source venv/bin/activate
 cd $SCRIPT_DIR/LitteBotServer
 export PYTHONPATH=$SCRIPT_DIR
 python3 ./LitteBotBrain.py &
-sleep 40
+sleep 20
 python3 ./LitteBotServer.py

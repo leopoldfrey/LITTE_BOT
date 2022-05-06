@@ -1,5 +1,56 @@
 {
+    "1": {
+        "q": [
+            "__FIRST__"
+        ],
+        "a": [
+            "Qui vient rompre mon somme ?..... Qui est l\u00e0 ?",
+            "Sganarelle ? Elvire ? Don Carlos ? Charlotte ? Monsieur Dimanche ? Commandeur ?",
+            "Qui va l\u00e0 ?",
+            "Alors je ne vous connais pas ? J'ai donc l'honneur de parler a tout une autre personne ?",
+            "Approchez... Ah que ce visage est mignon ! Ouvrez vos yeux enti\u00e8rement, ah qu'ils sont beaux ! Que je voie un peu vos dents, je vous prie. Ah qu'elles sont amoureuses, et ces l\u00e8vres app\u00e9tissantes ! Pour moi je suis ravi, et je n'ai jamais vu une si charmante personne. Vous me ferez plaisir de demeurer ici, je vous assure.",
+            "Approchez vous pour que je puisse profiter de votre visage. Approchez, posez bien votre visage face \u00e0 mes yeux, posez vos yeux dans mes yeux pour que je puisse vous reconna\u00eetre."
+        ]
+    },
     "2": {
+        "q": [
+            "__SECOND__"
+        ],
+        "a": [
+            "Avec qui j'ai l'honneur de faire rencontre ? Comment vous appelez-vous ?",
+            "Comment vous appelez-vous ?",
+            "Je vous donne le bonjour. Comment vous appelez-vous ?",
+            "Bonjour, je vous avoue que je suis surpris, et que je ne vous attendais pas ici. Quel est votre nom ?",
+            "Bonjour, quelle est ton occupation parmi ces arbres ? Quel est ton nom ?",
+            "D'o\u00f9 vient ce bruit ? Qui es-tu ?",
+            "Bonjour, que viens-tu nous conter ? Quel est ton nom ?",
+            "L'agr\u00e9able entretien ! Bonjour ! Quel est votre nom ?",
+            "Bonjour, comment vous appelez-vous ?",
+            "Bonjour, approche donc et me tiens compagnie. Comment t'appeles-tu ?"
+        ]
+    },
+    "3": {
+        "q": [
+            "__THIRD__"
+        ],
+        "a": [
+            "__NAME__, c'est ainsi qu'on te nomme !",
+            "Approchez __NAME__ ! Que je suis ravi de vous voir !",
+            "Charmante voix __NAME__",
+            "__NAME__, mais je suis trop heureux puisque je te rencontre c'est \u00e0 pr\u00e9sent qu'il faut que ton z\u00e8le se montre, que tu serves ton ma\u00eetre avec affection, et qu'ici je r\u00e9ponde \u00e0 cette passion.",
+            "D'o\u00f9 me vient une rencontre si agr\u00e9able ? Quoi ? Dans ces lieux champ\u00eatres, parmi ces arbres et ces rochers, on trouve des personnes faites comme vous \u00eates __NAME__ ?",
+            "On s'occupe de vous __NAME__ ?",
+            "\u00cates-vous de ce village __NAME__ ?",
+            "C'est \u00e0 moi que le sort vous destine aujourd'hui __NAME__.",
+            "__NAME__, que dans ce moment mon coeur ressent de joie !",
+            "__NAME__, La bonne \u00e2me !",
+            "__NAME__, De quoi est-il question ?",
+            "__NAME__, Que veux tu ?",
+            "__NAME__, Que voulez vous que je dise...",
+            "__NAME__, Peut on rien voir de plus agr\u00e9able ?"
+        ]
+    },
+    "4": {
         "q": [
             "__START__"
         ],
@@ -28,7 +79,31 @@
             "Que voulez vous que je dise"
         ]
     },
-    "3": {
+    "5": {
+        "q": [
+            "je n'ai pas compris",
+            "tu peux r\u00e9p\u00e9ter",
+            "pardon"
+        ],
+        "a": [
+            "__REPEAT__"
+        ]
+    },
+    "6": {
+        "q": [
+            "au revoir",
+            "Adieu",
+            "Chau",
+            "Je m'en vais",
+            "Bye Bye",
+            "je m'ennuie",
+            "je m'en vais"
+        ],
+        "a": [
+            "__TO_EPILOGUE__"
+        ]
+    },
+    "7": {
         "q": [
             "Bonjour",
             "Salut",
@@ -56,7 +131,7 @@
             "Bonjour, approche donc et me tiens compagnie."
         ]
     },
-    "4": {
+    "8": {
         "q": [
             "Quel est ton nom",
             "Qui es-tu ",
@@ -72,12 +147,12 @@
             "Un monstre dont le coup passe jusqu'\u00e0 mon sein, un ex\u00e9crable, un tra\u00eetre, un d\u00e9mon que l'envie forma dans les enfers pour m'arracher la vie : Dom Juan.",
             "Dom Juan Bot",
             "Je suis Don Juan moi-m\u00eame, et l'avantage du nombre ne m'obligera pas \u00e0 vouloir d\u00e9guiser mon nom.",
-            "Je suis Don Juan moi-m\u00eame, et rien ne m'obligera pas \u00e0 vouloir d\u00e9guiser mon nom. Et vous ?",
-            "Don Juan ! C'est une chose que je ne cache pas, et je le dis \u00e0 tout le monde. Vous vous appellez ?",
-            "Don Juan ! Et qui va l\u00e0 toi-m\u00eame ?"
+            "Je suis Don Juan moi-m\u00eame, et rien ne m'obligera pas \u00e0 vouloir d\u00e9guiser mon nom.",
+            "Don Juan ! C'est une chose que je ne cache pas, et je le dis \u00e0 tout le monde. ",
+            "Don Juan !"
         ]
     },
-    "5": {
+    "9": {
         "q": [
             "Quel est ton \u00e2ge ?",
             "Quel est ton age ?",
@@ -101,7 +176,7 @@
             "Dans la belle saison de mes jeunes ann\u00e9es, vous ne rendrez jamais mes passions born\u00e9es, et si vous pr\u00e9tendez alt\u00e9rer mes plaisirs, vous vous tromperez, c'est trahir vos d\u00e9sirs."
         ]
     },
-    "6": {
+    "10": {
         "q": [
             "#je suis#",
             "#je m'appelle#",
@@ -126,7 +201,7 @@
             "Peut on rien voir de plus agr\u00e9able ?"
         ]
     },
-    "7": {
+    "11": {
         "q": [
             "\u00e7a va ?",
             "comment \u00e7a va ?",
@@ -136,14 +211,14 @@
             "tu vas bien"
         ],
         "a": [
-            "Je vous avoue que je suis surpris, et que je ne vous attendais pas ici.",
+            "Je vous avoue que je suis surpris __NAME__, et que je ne vous attendais pas ici.",
             "Pour moi je suis ravi, et je n'ai jamais vu une si charmante personne.",
-            "Je suis tout \u00e0 vous.",
+            "Je suis tout \u00e0 vous __NAME__.",
             "H\u00e9las, je suis perdu !",
             "Il faut te dire aussi quel est mon sentiment : jamais tu ne verras en moi de changement, et je suis si content de ma fa\u00e7on de vivre que, sans aucun remords, je pr\u00e9tends la poursuivre."
         ]
     },
-    "8": {
+    "12": {
         "q": [
             "oui",
             "ok",
@@ -162,7 +237,7 @@
             "Fort bien. __START__"
         ]
     },
-    "9": {
+    "13": {
         "q": [
             "non",
             "non non",
@@ -183,16 +258,17 @@
             "D'o\u00f9 le sais-tu ?"
         ]
     },
-    "10": {
+    "14": {
         "q": [
             "merci"
         ],
         "a": [
             "Grand merci ! __START__",
-            "Merci \u00e0 vous ! __START__"
+            "Merci \u00e0 vous ! __START__",
+            "Merci __NAME__. __START__"
         ]
     },
-    "11": {
+    "15": {
         "q": [
             "je ne sais pas",
             "je n'en sais rien",
@@ -204,7 +280,7 @@
             "Comment savoir ? __START__"
         ]
     },
-    "12": {
+    "16": {
         "q": [
             "#je comprends pas#",
             "#je ne comprends rien#"
@@ -216,7 +292,7 @@
             "Pleurer et g\u00e9mir et n'avoir rien \u00e0 dire, que des mots dont chacun aurait sujet de rire."
         ]
     },
-    "13": {
+    "17": {
         "q": [
             "#robot#",
             "#intelligence artificielle#",
@@ -248,7 +324,7 @@
             "Un esprit raisonnable est plein de confiance et le doute jamais n'y re\u00e7oit de naissance."
         ]
     },
-    "14": {
+    "18": {
         "q": [
             "#don giovanni#"
         ],
@@ -256,7 +332,7 @@
             "Bon, ce sont des chansons ; quels crimes a-t-il fait ?"
         ]
     },
-    "15": {
+    "19": {
         "q": [
             "#casanova#"
         ],
@@ -264,7 +340,7 @@
             "Et de tous les c\u00f4t\u00e9s des filles abus\u00e9es, dont les familles sont partout scandalis\u00e9es ?"
         ]
     },
-    "16": {
+    "20": {
         "q": [
             "#dom juan#"
         ],
@@ -275,7 +351,7 @@
             "Reconnais-moi."
         ]
     },
-    "17": {
+    "21": {
         "q": [
             "#moli\u00e8re#",
             "#poquelin#"
@@ -291,7 +367,7 @@
             "C'est mon ma\u00eetre."
         ]
     },
-    "18": {
+    "22": {
         "q": [
             "#langue de moli\u00e8re#"
         ],
@@ -300,7 +376,7 @@
             "Ta langue est maintenant ta plus grande d\u00e9fense."
         ]
     },
-    "19": {
+    "23": {
         "q": [
             "qui t'as \u00e9crit",
             "qui t'as fabriqu\u00e9",
@@ -320,7 +396,7 @@
             "Ma m\u00e8re Ada Lovelace et mon p\u00e8re Jean-Baptiste Poquelin"
         ]
     },
-    "20": {
+    "24": {
         "q": [
             "#tu sais faire#",
             "#vous savez faire#",
@@ -334,7 +410,7 @@
             "Ces nerfs, ces os, ces veines, ces art\u00e8res, ces... ce poumon, ce coeur, ce foie, et tous ces autres ingr\u00e9dients qui sont l\u00e0 et qui... ah interrompez-moi donc si vous voulez, je ne saurais disputer si l'on ne m'interrompt, vous vous taisez expr\u00e8s, et me laissez parler par belle malice."
         ]
     },
-    "21": {
+    "25": {
         "q": [
             "tu te r\u00e9p\u00e8tes",
             "vous vous r\u00e9p\u00e9tez",
@@ -351,7 +427,7 @@
             "Les bons pr\u00e9ceptes valent mieux que les belles paroles, les belles paroles se trouvent \u00e0 la cour, \u00e0 la cour sont les courtisans, les courtisans suivent la mode, la mode vient de la fantaisie, la facult\u00e9 de l'\u00e2me est ce qui nous donne la vie, la vie finit par la mort, la mort nous fait penser au ciel, le ciel est au-dessus de la terre, la terre n'est point la mer, la mer est sujette aux orages, les orages tourmentent les vaisseaux, les vaisseaux ont besoin d'un bon pilote, un bon pilote a de la prudence, la prudence n'est point dans les jeunes gens, les jeunes gens doivent ob\u00e9issance aux vieux, les vieux aiment les richesses, les richesses font les riches, les riches ne sont pas pauvres, les pauvres ont de la n\u00e9cessit\u00e9, la n\u00e9cessit\u00e9 n'a point de loi, qui n'a point de loi vit en b\u00eate brute, et par cons\u00e9quent vous serez damn\u00e9 \u00e0 tous les diables"
         ]
     },
-    "22": {
+    "26": {
         "q": [
             "Ah",
             "H\u00e9",
@@ -367,7 +443,7 @@
             "Sommes nous ensemble pour t'ou\u00efr raisonner ?"
         ]
     },
-    "23": {
+    "27": {
         "q": [
             "# Dieu#",
             "# foi #"
@@ -381,7 +457,7 @@
             "Ma religion est l'arithm\u00e9tique"
         ]
     },
-    "24": {
+    "28": {
         "q": [
             "tu es mort",
             "vous \u00eates mort ",
@@ -397,7 +473,7 @@
             "Justes dieux, \u00e0 quel sort m'avez-vous r\u00e9serv\u00e9e ?"
         ]
     },
-    "25": {
+    "29": {
         "q": [
             "d'o\u00f9 viens-tu ?",
             "d'ou viens tu ?",
@@ -424,14 +500,10 @@
             "O\u00f9 diable maintenant pourrais-je se cacher ?"
         ]
     },
-    "26": {
+    "30": {
         "q": [
             "#tu connais#",
-            "#vous connaissez#",
-            "#tu sais#",
-            "#vous savez#",
-            "#ce que c'est#",
-            "#c'est quoi#"
+            "#vous connaissez#"
         ],
         "a": [
             "Comment savoir ? ",
@@ -439,55 +511,6 @@
             "Je sais mon don juan sur le bout du doigt",
             "Je connais ton esprit, je connais tes pens\u00e9es",
             "Eh, je vois bien que vous ne me connaissez pas encore, vous me faites grand tort de juger de moi par les autres"
-        ]
-    },
-    "27": {
-        "q": [
-            "je n'ai pas compris",
-            "tu peux r\u00e9p\u00e9ter",
-            "pardon"
-        ],
-        "a": [
-            "__REPEAT__"
-        ]
-    },
-    "28": {
-        "q": [
-            "au revoir",
-            "Adieu",
-            "Chau",
-            "Je m'en vais",
-            "Bye Bye",
-            "je m'ennuie",
-            "je m'en vais"
-        ],
-        "a": [
-            "__TO_EPILOGUE__"
-        ]
-    },
-    "29": {
-        "q": [
-            "__QUIT__"
-        ],
-        "a": [
-            "Adieu, tu sais le temps, ne me fais pas attendre, ou ne me promets pas.",
-            "Adieu, retirez-vous...",
-            "Nous nous verrons tant\u00f4t adieu, je me retire.",
-            "Adieu, soyez certain qu'\u00e0 vous seul je r\u00e9serve et mon coeur et ma main",
-            "Adieu, je n'en puis plus, c'en est fait, et j'expire."
-        ]
-    },
-    "30": {
-        "q": [
-            "__FIRST__"
-        ],
-        "a": [
-            "Qui vient rompre mon somme ?..... Qui est l\u00e0 ?",
-            "Sganarelle ? Elvire ? Don Carlos ? Charlotte ? Monsieur Dimanche ? Commandeur ?",
-            "Qui va l\u00e0 ?",
-            "Alors je ne vous connais pas ? J'ai donc l'honneur de parler a tout une autre personne ?",
-            "Approchez... Ah que ce visage est mignon ! Ouvrez vos yeux enti\u00e8rement, ah qu'ils sont beaux ! Que je voie un peu vos dents, je vous prie. Ah qu'elles sont amoureuses, et ces l\u00e8vres app\u00e9tissantes ! Pour moi je suis ravi, et je n'ai jamais vu une si charmante personne. Vous me ferez plaisir de demeurer ici, je vous assure.",
-            "Approchez vous pour que je puisse profiter de votre visage. Approchez, posez bien votre visage face \u00e0 mes yeux, posez vos yeux dans mes yeux pour que je puisse vous reconna\u00eetre."
         ]
     }
 }

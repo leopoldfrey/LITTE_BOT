@@ -1,8 +1,10 @@
 var sentencesData;
 var $sentences = $("#sentences");
 var modalSentence = $('#modalSentence');
+var modalAdmin = $('#modalAdmin');
 var newSentence = $('#newSentence');
 var newAnswer = $('#newAnswer');
+var stateBut = $("#socketState");
 var oldQ = "";
 var sentences = new Array();
 var mod = false;
@@ -203,6 +205,8 @@ $(window).keydown(function (e) {
       next();
     } else if (e.which == 83 && e.shiftKey) {
       //save();
+    } else if (e.which == 65) { // a
+      modalAdmin.modal('show');
     }
 });
 
@@ -441,3 +445,144 @@ $('#Ok').click(function(ev)
   // console.log("OK");
   validSentence(ev);
 });
+
+function saveConfig() {
+  modalAdmin.modal('hide');
+  socket.send(JSON.stringify({
+      'command':            'saveConfig',
+      'max_intro':          $("#max_intro").val(),
+      'max_seduction':      $("#max_seduction").val(),
+      'max_provocation':    $("#max_provocation").val(),
+      'max_fuite':          $("#max_fuite").val(),
+      'max_intro_s':        $("#max_intro_s").val(),
+      'max_seduction_s':    $("#max_seduction_s").val(),
+      'max_provocation_s':  $("#max_provocation_s").val(),
+      'max_fuite_s':        $("#max_fuite_s").val(),
+      'pitch_intro':        $("#pitch_intro").val(),
+      'pitch_seduction':    $("#pitch_seduction").val(),
+      'pitch_provocation':  $("#pitch_provocation").val(),
+      'pitch_fuite':        $("#pitch_fuite").val(),
+      'pitch_epilogue':     $("#pitch_epilogue").val(),
+      'speed_intro':        $("#speed_intro").val(),
+      'speed_seduction':    $("#speed_seduction").val(),
+      'speed_provocation':  $("#speed_provocation").val(),
+      'speed_fuite':        $("#speed_fuite").val(),
+      'speed_epilogue':     $("#speed_epilogue").val(),
+      'max_silence':        $("#max_silence").val(),
+      'max_inter_relance':  $("#max_inter_relance").val()
+      // 'max_interactions': $("#max_interactions").val(),
+      // 'max_section':      $("#max_section").val()
+    }));
+}
+
+function reloadBrain() {
+  modalAdmin.modal('hide');
+  socket.send(JSON.stringify({'command':'reload'}));
+}
+
+$("#phone").change(function () {
+    console.log($("#phone").prop('checked'));
+    socket.send(JSON.stringify({'command':'phone', 'phone':$("#phone").prop('checked') ? 1 : 0}));
+ });
+
+// WEBSOCKET
+
+var socket;
+
+function connectToWS()
+{
+  socket = new WebSocket("ws://localhost:9001");
+
+  socket.onopen = function(e) {
+    stateBut.html("Open :)");
+    stateBut.css("background", "lightgreen");
+    console.log("[open] Connection established");
+    socket.send(JSON.stringify({'command':'connect'}));
+    socket.send(JSON.stringify({'command':'getConfig'}));
+  };
+
+  socket.onmessage = function(event) {
+    // console.log(`[message] Data received from server: ${event.data}`);
+    data = JSON.parse(event.data);
+    if(data.command == "on") {
+      console.log("PHONE ON", data.value);
+      $("#phone").prop("checked", data.value);
+    } else if(data.command == "message") {
+      console.log("[ws]", data);
+    } else if(data.command == "params") {
+      // $("#max_interactions").val(data.max_interactions);
+      // $("#max_section").val(data.max_section);
+      $("#max_intro").val(data.max_intro);
+      $("#max_seduction").val(data.max_seduction);
+      $("#max_provocation").val(data.max_provocation);
+      $("#max_fuite").val(data.max_fuite);
+      $("#max_intro_s").val(data.max_intro_s);
+      $("#max_seduction_s").val(data.max_seduction_s);
+      $("#max_provocation_s").val(data.max_provocation_s);
+      $("#max_fuite_s").val(data.max_fuite_s);
+      $("#max_silence").val(data.max_silence);
+      $("#max_inter_relance").val(data.max_inter_relance);
+      $("#pitch_intro").val(data.pitch_intro);
+      $("#pitch_seduction").val(data.pitch_seduction);
+      $("#pitch_provocation").val(data.pitch_provocation);
+      $("#pitch_fuite").val(data.pitch_fuite);
+      $("#pitch_epilogue").val(data.pitch_epilogue);
+      $("#speed_intro").val(data.speed_intro);
+      $("#speed_seduction").val(data.speed_seduction);
+      $("#speed_provocation").val(data.speed_provocation);
+      $("#speed_fuite").val(data.speed_fuite);
+      $("#speed_epilogue").val(data.speed_epilogue);
+    } else if(data.command == "timers") {
+    } else if(data.command == "silent") {
+    } else if(data.command == "step") {
+    } else {
+      console.log("[ws]", data);
+    }
+  };
+
+  socket.onclose = function(event) {
+    stateBut.html("Closed :(");
+    stateBut.css("background", "#ff9797");
+    // console.log('[close] Connection closed');
+    setTimeout(function(){
+        checkSocket(socket.readyState);
+    }, 3000);
+  };
+
+  socket.onerror = function(error) {
+    stateBut.html("Error :(");
+    stateBut.css("background", "#ff9797");
+    // console.log(`[error] ${error.message}`);
+    setTimeout(function(){
+        checkSocket(socket.readyState);
+    }, 3000);
+  };
+}
+
+function checkSocket(state) {
+    switch(state) {
+        case socket.CONNECTING:
+            stateBut.html("Connecting...");
+            stateBut.css("background", "orange");
+            console.log("- WebSocket Connecting...");
+            break;
+        case socket.OPEN:
+            stateBut.html("Open :)");
+            stateBut.css("background", "lightgreen");
+            console.log("- WebSocket Open :)");
+            break;
+        case socket.CLOSING:
+            stateBut.html("Closing...");
+            stateBut.css("background", "orange");
+            console.log("- WebSocket Closing...");
+            break;
+        case socket.CLOSED:
+            stateBut.html("Closed :(");
+            stateBut.css("background", "#ff9797");
+            console.log("* WebSocket Closed :(");
+            connectToWS();
+            break;
+    }
+}
+
+connectToWS();

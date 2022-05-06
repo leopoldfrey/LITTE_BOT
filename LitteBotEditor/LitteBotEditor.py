@@ -75,31 +75,31 @@ class LitteBotEditor():
         return static_file(filename, root='./')
 
     def getCommon(self):
-        print("getCommon")
+        # print("getCommon")
         self.filename = dialog_path + def_questions_common + ".json"
         self.load()
         return self.data
 
     def getSeduction(self):
-        print("getSeduction")
+        # print("getSeduction")
         self.filename = dialog_path + def_questions_seduction + ".json"
         self.load()
         return self.data
 
     def getProvocation(self):
-        print("getProvocation")
+        # print("getProvocation")
         self.filename = dialog_path + def_questions_provocation + ".json"
         self.load()
         return self.data
 
     def getFuite(self):
-        print("getFuite")
+        # print("getFuite")
         self.filename = dialog_path + def_questions_fuite + ".json"
         self.load()
         return self.data
 
     def getEpilogue(self):
-        print("getEpilogue")
+        # print("getEpilogue")
         self.filename = dialog_path + def_questions_epilogue + ".json"
         self.load()
         return self.data
