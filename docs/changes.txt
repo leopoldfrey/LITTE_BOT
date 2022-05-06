@@ -14,11 +14,12 @@ DONE:
 - √ nom de l’utilisateur
 - √ Filtrer eh/ah / monsieur / monseigneur ???
 - √ vitesse/pitch par section
+- √ quand face detect phone ring
+- √ couper les voix quand on raccroche le téléphone
+- √ raccrochez !
 
 TODO:
 - passer le tout dans plastic
-- quand face detect phone ring
-- raccrochez !
 - Modulation voix (pitch? , + rapide?)
 - Son quand réfléchit
 - interrupteur nodemcu

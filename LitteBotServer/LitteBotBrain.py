@@ -144,6 +144,9 @@ class LitteBot:
         elif(address == '/logbot'):
             print(formatColor(0,color[self.botmode],40, "bot: "+args[0]))
             self.log.logBot(str(self.botmode), args[0])
+        elif(address == '/logme'):
+            print("user: "+args[0])
+            self.log.logMe(args[0])
         else:
             print("OSC IN : "+str(address))
             for x in range(0,len(args)):

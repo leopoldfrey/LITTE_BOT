@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-import os, sys
+import os, sys, time
 import google.cloud.texttospeech as tts
 from sys import platform as _platform
 from threading import Thread
 from pedalboard import *
 from pedalboard.io import AudioFile
+import subprocess
 if _platform == "darwin":
     from playsound import playsound
 
@@ -41,7 +42,7 @@ def list_voices():
 class TextToSpeech(Thread):
     def __init__(self, text, pitch=0.0, speed=1.08):
         Thread.__init__(self)
-        # print("TTS", text, pitch, speed)
+        print("TTS", text, pitch, speed)
         self.language_code = "-".join(VOICE.split("-")[:2])
         self.text_input = tts.SynthesisInput(text=text)
         self.voice_params = tts.VoiceSelectionParams(
@@ -49,6 +50,14 @@ class TextToSpeech(Thread):
         )
         self.audio_config = tts.AudioConfig(audio_encoding=tts.AudioEncoding.LINEAR16, speaking_rate=speed, pitch=pitch)
         self.client = tts.TextToSpeechClient()
+        self._running = True
+        self.pid = 0
+
+    def stop(self):
+        # print("TODO STOP VOICE", self.pid)
+        if(self.pid != 0):
+            subprocess.Popen(["kill", str(self.pid)])
+        # pass
 
     def run(self):
         response = self.client.synthesize_speech(
@@ -71,9 +80,20 @@ class TextToSpeech(Thread):
           f.write(effected)
 
         if _platform == "darwin":
-            playsound('processed-output.wav')
+            self.proc = subprocess.Popen(["ffplay","-nodisp","-autoexit","-loglevel","quiet","processed-output.wav"])
+            self.pid = self.proc.pid
+            # print("process pid", self.pid)
+            self.proc.wait()
+            # while (self.proc.poll() is None):
+            #     print("wait")
+            #     time.sleep(1)
+            #playsound('processed-output.wav')
         elif _platform == "win32" or _platform == "win64":
-            os.system("ffplay.exe -nodisp -autoexit -loglevel quiet .\processed-output.wav")
+            self.proc = subprocess.Popen(["ffplay.exe","-nodisp","-autoexit","-loglevel","quiet","processed-output.wav"])
+            self.pid = self.proc.pid
+            # print("process pid", self.pid)
+            self.proc.wait()
+            #os.system("ffplay.exe -nodisp -autoexit -loglevel quiet .\processed-output.wav")
 
 # class TextToSpeechNoThread():
 #     def __init__(self):

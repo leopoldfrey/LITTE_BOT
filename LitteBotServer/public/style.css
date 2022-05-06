@@ -6,7 +6,7 @@ html
 body
 {
   font-family:helvetica;
-  background-color: white;
+  background-color: #0a2337;
   color: black;
   padding: 0px;
   margin: 0px;
@@ -30,11 +30,11 @@ p
 }
 
 .speech_you {
-  color: black;
+  color: lightblue;
 }
 
 .speech_bot {
-  color: gray;
+  color: lightpink;
 }
 
 .speech_you::before, .speech_bot::before {
@@ -195,6 +195,8 @@ input:checked + .slider:before {
 input#cant_speak {
     font-size: 1.2rem;
     width: calc(100% - 140px);
+    background: #185382;
+    color: lightblue;
 }
 
 button {
