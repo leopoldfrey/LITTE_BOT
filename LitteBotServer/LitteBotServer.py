@@ -408,12 +408,13 @@ class LitteBotServer:
         self.wsServer.broadcast({"command":"bot","value":s})
 
     def endEpilogue(self):
-        self.phoneHang()
         self.on = False
         self.silent = True
         self.wsServer.broadcast({'command':'silent','value':self.silent})
         # self.wsServer.broadcast({"command":"on","value":self.on})
         self.reset()
+        time.sleep(1)
+        self.phoneHang()
 
     def nextEpilogue(self):
         self.osc_client.send("/nextEpilogue", 1)

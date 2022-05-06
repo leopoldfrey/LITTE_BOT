@@ -24,16 +24,21 @@ class PhoneCtrl():
         self.loop = None
 
     def ring(self):
+        if self.loop :
+            self.loop.stop()
         self.loop = Loop("./391870_phone.wav")
         self.loop.start()
 
     def hang(self):
+        if self.loop :
+            self.loop.stop()
         self.loop = Loop("./178537_phone-hang-up.wav")
         self.loop.start()
 
     def stop(self):
         if self.loop :
             self.loop.stop()
+            self.loop = None
 
     def oscIn(self, address, *args):
         # print("OSCin", address, args)
@@ -41,8 +46,11 @@ class PhoneCtrl():
             # print("STOP")
             if self.loop :
                 self.loop.stop()
+                self.loop = None
         elif address == "/start" :
             # print("PLAY")
+            if self.loop :
+                self.loop.stop()
             self.loop = Loop("./391870_phone.wav")
             self.loop.start()
 

@@ -42,7 +42,7 @@ def list_voices():
 class TextToSpeech(Thread):
     def __init__(self, text, pitch=0.0, speed=1.08):
         Thread.__init__(self)
-        print("TTS", text, pitch, speed)
+        # print("TTS", text, pitch, speed)
         self.language_code = "-".join(VOICE.split("-")[:2])
         self.text_input = tts.SynthesisInput(text=text)
         self.voice_params = tts.VoiceSelectionParams(
