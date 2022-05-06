@@ -1,7 +1,8 @@
-cd C:\Users\littl\Documents\LITTE_BOT\LitteBotEditor
+set curdir = %CD%
+cd %curdir%\LitteBotEditor
 start python3 ./LitteBotEditor.py
 
-cd C:\Users\littl\Documents\LITTE_BOT\LitteBotServer
+cd %curdir%\LitteBotServer
 start python3 ./LitteBotBrain.py
 
 timeout /t 40 /nobreak

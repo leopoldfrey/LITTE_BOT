@@ -6,8 +6,8 @@ from threading import Thread
 from pedalboard import *
 from pedalboard.io import AudioFile
 import subprocess
-if _platform == "darwin":
-    from playsound import playsound
+# if _platform == "darwin":
+#     from playsound import playsound
 
 VOICE = "fr-FR-Wavenet-C"
 
