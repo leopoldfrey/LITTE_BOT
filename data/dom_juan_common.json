@@ -453,7 +453,13 @@
     },
     "28": {
         "q": [
-            "au revoir"
+            "au revoir",
+            "Adieu",
+            "Chau",
+            "Je m'en vais",
+            "Bye Bye",
+            "je m'ennuie",
+            "je m'en vais"
         ],
         "a": [
             "__TO_EPILOGUE__"

@@ -1,10 +1,10 @@
 {
     "max_interactions": 12,
-    "max_silence": 12,
+    "max_silence": 4,
     "max_section": 200,
-    "max_inter_relance": 4,
+    "max_inter_relance": 5,
     "max_intro": 5,
-    "max_seduction": 20,
+    "max_seduction": 30,
     "max_provocation": 12,
     "max_fuite": 12,
     "max_intro_s": 50,
