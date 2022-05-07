@@ -9,16 +9,16 @@
     "speed_intro": 0.6,
     "max_seduction": 30,
     "max_seduction_s": 360,
-    "pitch_seduction": -13.0,
-    "speed_seduction": 0.65,
+    "pitch_seduction": -13.1,
+    "speed_seduction": 0.63,
     "max_provocation": 12,
     "max_provocation_s": 120,
-    "pitch_provocation": -11.3,
-    "speed_provocation": 0.77,
+    "pitch_provocation": -12.3,
+    "speed_provocation": 0.67,
     "max_fuite": 12,
     "max_fuite_s": 120,
     "pitch_fuite": -13.7,
-    "speed_fuite": 0.85,
-    "pitch_epilogue": -9.1,
-    "speed_epilogue": 1.02
+    "speed_fuite": 0.62,
+    "pitch_epilogue": -10.6,
+    "speed_epilogue": 0.69
 }
