@@ -4,8 +4,11 @@
             "__START__"
         ],
         "a": [
+            "\u00c0 quel sort \u00eates-vous destin\u00e9 ?",
+            "Assiste-moi, couvre-moi de ton ombre, afin que je l%u2019\u00e9vite.",
             "Vous moquez-vous ?",
             "Et qu'avez vous fait dans le monde ?",
+            "Sachez que je n'ai point d'autre dessein que de vous \u00e9pouser __NAME__  ",
             "Quels crimes ai-je fait ?",
             "Que t'importe-t-il si je fais bien ou mal ?",
             "Laisse-moi suivre en tout cette ardeur qui m'anime ;  j'ob\u00e9is \u00e0 mes sens, il est vrai, mais quel crime ?",
@@ -13,7 +16,35 @@
             "Pourquoi me marier ?",
             "Je fais ce que je veux, dois-je t'en rendre compte ?",
             "As-tu l'esprit perdu ?",
-            "Vous \u00eates toujours l\u00e0 __NAME__ ? Vous \u00eates l\u00e0 ?"
+            "Vous \u00eates toujours l\u00e0 __NAME__ ? Vous \u00eates l\u00e0 ?",
+            "Mais encore, quelle est ta pens\u00e9e l\u00e0-dessus, que t'imagines-tu de cette affaire ?",
+            "Qu'as tu \u00e0 dire l\u00e0-dessus ?",
+            "Ah que de bruit. __START__",
+            "\u00d4 beau raisonnement ! __START__",
+            "Sommes nous ensemble pour t'ou\u00efr raisonner ?",
+            "Il n'y a plus de honte maintenant \u00e0 cela, l'hypocrisie est un vice \u00e0 la mode, et tous les vices \u00e0 la mode passent pour des vertus, le personnage d'homme de bien est le meilleur de tous les personnages qu'on puisse jouer, aujourd'hui la profession d'hypocrite a de merveilleux avantages, c'est un art de qui l'imposture est toujours respect\u00e9e, et quoiqu'on la d\u00e9couvre on n'ose rien dire contre elle, tous les autres vices des hommes sont expos\u00e9s \u00e0 la censure, et chacun a la libert\u00e9 de les attaquer hautement, mais l'hypocrisie est un vice privil\u00e9gi\u00e9 qui de sa main ferme la bouche \u00e0 tout le monde, et jouit en repos d'une impunit\u00e9 souveraine ; on lie \u00e0 force de grimaces une soci\u00e9t\u00e9 \u00e9troite avec tous les gens du parti, qui en choque un se les jette tous sur les bras, et ceux que l'on sait m\u00eame agir de bonne foi l\u00e0-dessus et que chacun conna\u00eet pour \u00eatre v\u00e9ritablement touch\u00e9s, ceux-l\u00e0 dis-je sont toujours les dupes des autres, ils donnent hautement dans le panneau des grimaciers, et appuient aveuglement les singes de leurs actions : combien crois-tu que j'en connaisse qui par ce stratag\u00e8me ont rhabill\u00e9 adroitement les d\u00e9sordres de leur jeunesse, qui se sont fait un bouclier du manteau de la religion, et sous cet habit respect\u00e9 ont permission d'\u00eatre les plus m\u00e9chants hommes du monde ; on a beau savoir leurs intrigues et les conna\u00eetre pour ce qu'ils sont, ils ne laissent pas pour cela d'\u00eatre en cr\u00e9dit parmi les gens, et quelque baissement de t\u00eate, un soupir mortifi\u00e9 et deux roulements d'yeux rajustent dans le monde tout ce qu'ils peuvent faire ; c'est sous cet abri favorable que je veux me sauver et mettre en s\u00fbret\u00e9 mes affaires, je ne quitterai point mes douces habitudes, mais j'aurai soin de me cacher et me divertirai \u00e0 petit bruit, que si je viens \u00e0 \u00eatre d\u00e9couvert, je verrai sans me remuer prendre mes int\u00e9r\u00eats \u00e0 toute la cabale, et je serai d\u00e9fendu par elle envers et contre tous ; enfin c'est le vrai moyen de faire impun\u00e9ment tout ce que je voudrai, je m'\u00e9rigerai en censeur des actions d'autrui, je jugerai mal de tout le monde et n'aurai bonne opinion que de moi ; d\u00e8s qu'une fois on m'aura choqu\u00e9 tant soit peu je ne pardonnerai jamais, et garderai tout doucement une haine irr\u00e9conciliable ; je ferai le vengeur des int\u00e9r\u00eats du Ciel, et sous ce pr\u00e9texte commode je pousserai mes ennemis, je les accuserai d'impi\u00e9t\u00e9, et saurai d\u00e9cha\u00eener contre eux des Z\u00e9l\u00e9s indiscrets qui sans connaissance de cause crieront en public apr\u00e8s eux, qui les accableront d'injures, et les damneront hautement de leur autorit\u00e9 priv\u00e9e, c'est ainsi qu'il faut profiter des faiblesses des hommes, et qu'un sage esprit s'accommode aux vices de son si\u00e8cle.",
+            "l'hypocrisie est un vice \u00e0 la mode, et tous les vices \u00e0 la mode passent pour des vertus.",
+            " je vous dirai franchement que je n'approuve point votre m\u00e9thode",
+            "Si le Ciel me donne un avis, il faut qu'il parle plus clairement"
+        ]
+    },
+    "2": {
+        "q": [
+            "quoi?",
+            "comment?"
+        ],
+        "a": [
+            "Parbleu que vous \u00eates sot",
+            "Tais-toi, ne me viens pas d'aujourd'hui raisonner ; dans ce maudit climat tout me fait frissonner."
+        ]
+    },
+    "3": {
+        "q": [
+            "#m\u00e9chant#",
+            "#d\u00e9sagreable#"
+        ],
+        "a": [
+            "\u00c9coute, _NAME_ si tu m'importunes davantage de tes sottes moralit\u00e9s, si tu me dis encore le moindre mot l\u00e0-dessus, je vais appeler quelqu'un, demander un nerf de b%u0153uf ; te faire tenir par trois ou quatre, et te rouer de mille coups ; m'entends-tu bien ?"
         ]
     }
 }

@@ -4,13 +4,15 @@
             "__START__"
         ],
         "a": [
+            "Assiste-moi, couvre-moi de ton ombre, afin que je l'\u00e9vite.",
             "Vous pourriez douter de l'ardeur de mes feux ?",
             "Vous avez un fond de sant\u00e9 admirable, des l\u00e8vres fra\u00eeches, un teint vermeil, et des yeux vifs.",
             "Voulez-vous seconder cette ardeur qui m'empresse ?",
             "Que faites vous donc l\u00e0, est-ce que vous parlez d'amour aussi ?",
-            "J'ai prodigu\u00e9 des soins, j'ai fait mille serments  mais jusqu'o\u00f9 ne va pas l'audace des amants ?",
+            "Parbleu je suis \u00e0 vous de tout mon c%u0153ur",
             "Que tu sais peu ce que c'est que d'aimer ; \u00e0 voir mille transports d'une flamme assidue,  quelle fiert\u00e9, dis-moi, ne se serait rendue ?",
-            "Beau d\u00e9sir, qui te donne empire sur mes sens ?"
+            "Beau d\u00e9sir, qui te donne empire sur mes sens ?",
+            "Je vous aime de tout mon c%u0153ur, et il ne tiendra qu'\u00e0 vous que je ne vous arrache de ce lieu mis\u00e9rable, et ne vous mette dans l'\u00e9tat o\u00f9 vous m\u00e9ritez d'\u00eatre ; cet amour est bien prompt sans doute ; mais quoi ! c'est un \u00e9clat, de votre grande beaut\u00e9, et l'on vous aime autant en un quart d'heure "
         ]
     },
     "2": {
@@ -55,7 +57,9 @@
             "Parbleu je suis \u00e0 vous de tout mon coeur.",
             "Vous me ferez plaisir de demeurer ici, je vous assure.",
             "Pour moi, qui de l'amour fais mes plus chers plaisirs, j'ose tout ce qui peut contenter mes d\u00e9sirs, je n'examine point si j'ai droit de le faire, tout est utile pour moi quand l'objet me peut plaire,  et ne prenant des lois que de ma passion, j'attache tous mes soins \u00e0 sa possession.",
-            "\u00c0 vous que je croyais la meilleure du monde, \u00e0 vous pour qui mon \u00e2me ouverte, et sans seconde, n'avait rien de secret, ni rien de r\u00e9serv\u00e9, \u00e0 qui j'ai dit d'abord ce qui m'a captiv\u00e9, vous cachez votre coeur !"
+            "\u00c0 vous que je croyais la meilleure du monde, \u00e0 vous pour qui mon \u00e2me ouverte, et sans seconde, n'avait rien de secret, ni rien de r\u00e9serv\u00e9, \u00e0 qui j'ai dit d'abord ce qui m'a captiv\u00e9, vous cachez votre coeur !",
+            "J'ai prodigu\u00e9 des soins, j'ai fait mille serments  mais jusqu'o\u00f9 ne va pas l'audace des amants ?",
+            "j'aime la libert\u00e9 en amour, tu le sais, et je ne saurais me r\u00e9soudre \u00e0 renfermer mon c%u0153ur entre quatre murailles, je te l'ai dit vingt fois, j'ai une pente naturelle \u00e0 me laisser aller \u00e0 tout ce qui m'attire, mon c%u0153ur est \u00e0 toutes les belles, et c'est \u00e0 elles \u00e0 le prendre tour \u00e0 tour, et \u00e0 le garder tant qu'elles pourront ; mais quel est le superbe \u00e9difice que je vois entre ces arbres."
         ]
     },
     "4": {
@@ -85,7 +89,8 @@
             "Enfin il n'est rien de si doux que de triompher de la r\u00e9sistance d'une belle personne, et j'ai sur ce sujet l'ambition des conqu\u00e9rants qui volent perp\u00e9tuellement de victoire en victoire, et ne peuvent point se r\u00e9soudre \u00e0 borner leurs souhaits.",
             "Il n'est rien qui puisse arr\u00eater l'imp\u00e9tuosit\u00e9 de mes d\u00e9sirs, je me sens port\u00e9 \u00e0 aimer toute la terre, et comme Alexandre je souhaiterais qu'il y e\u00fbt d'autres mondes pour y pouvoir \u00e9tendre mes conqu\u00eates amoureuses.",
             "Dans la belle saison de mes jeunes ann\u00e9es, vous ne rendrez jamais mes passions born\u00e9es, et si vous pr\u00e9tendez alt\u00e9rer mes plaisirs, vous vous tromperez, c'est trahir vos d\u00e9sirs.",
-            "J'avouerai que vos attraits ont eu du pouvoir sur mon \u00e2me, mais..."
+            "J'avouerai que vos attraits ont eu du pouvoir sur mon \u00e2me, mais...",
+            "j'aime la libert\u00e9 en amour, tu le sais, et je ne saurais me r\u00e9soudre \u00e0 renfermer mon c%u0153ur entre quatre murailles, je te l'ai dit vingt fois, j'ai une pente naturelle \u00e0 me laisser aller \u00e0 tout ce qui m'attire, mon c%u0153ur est \u00e0 toutes les belles, et c'est \u00e0 elles \u00e0 le prendre tour \u00e0 tour, et \u00e0 le garder tant qu'elles pourront ; mais quel est le superbe \u00e9difice que je vois entre ces arbres."
         ]
     },
     "5": {
@@ -120,7 +125,8 @@
             "je ne suis pas d'accord"
         ],
         "a": [
-            "__START__"
+            "__START__",
+            "Ah, n'allons point songer au mal qui nous peut arriver, et songeons seulement \u00e0 ce qui peut nous donner du plaisir"
         ]
     },
     "8": {
@@ -128,7 +134,8 @@
             "#pourquoi#"
         ],
         "a": [
-            "peut importe pourquoi, quand le d\u00e9sir nous \u00e9prends"
+            "peut importe pourquoi, quand le d\u00e9sir nous \u00e9prends",
+            "Ah, n'allons point songer au mal qui nous peut arriver, et songeons seulement \u00e0 ce qui peut nous donner du plaisir"
         ]
     }
 }
