@@ -4,11 +4,8 @@
             "__FIRST__"
         ],
         "a": [
-            "Qui vient rompre mon somme ?..... Qui est l\u00e0 ?",
-            "Sganarelle ? Elvire ? Don Carlos ? Charlotte ? Monsieur Dimanche ? Commandeur ?",
+            "Qui vient rompre mon somme ?..... Qui est l\u00e0 ? Sganarelle ? Elvire ? Don Carlos ? Charlotte ? Monsieur Dimanche ? Commandeur ?",
             "Qui va l\u00e0 ?",
-            "Alors je ne vous connais pas ? J'ai donc l'honneur de parler a tout une autre personne ?",
-            "Approchez... Ah que ce visage est mignon ! Ouvrez vos yeux enti\u00e8rement, ah qu'ils sont beaux ! Que je voie un peu vos dents, je vous prie. Ah qu'elles sont amoureuses, et ces l\u00e8vres app\u00e9tissantes ! Pour moi je suis ravi, et je n'ai jamais vu une si charmante personne. Vous me ferez plaisir de demeurer ici, je vous assure.",
             "Approchez vous pour que je puisse profiter de votre visage. Approchez, posez bien votre visage face \u00e0 mes yeux, posez vos yeux dans mes yeux pour que je puisse vous reconna\u00eetre."
         ]
     },
@@ -18,7 +15,7 @@
         ],
         "a": [
             "Avec qui j'ai l'honneur de faire rencontre ? Comment vous appelez-vous ?",
-            "Comment vous appelez-vous ?",
+            "Alors je ne vous connais pas ? J'ai donc l'honneur de parler a tout une autre personne ? Comment faudrait qu'on vous appelle?",
             "Je vous donne le bonjour. Comment vous appelez-vous ?",
             "Bonjour, je vous avoue que je suis surpris, et que je ne vous attendais pas ici. Quel est votre nom ?",
             "Bonjour, quelle est ton occupation parmi ces arbres ? Quel est ton nom ?",
@@ -26,7 +23,8 @@
             "Bonjour, que viens-tu nous conter ? Quel est ton nom ?",
             "L'agr\u00e9able entretien ! Bonjour ! Quel est votre nom ?",
             "Bonjour, comment vous appelez-vous ?",
-            "Bonjour, approche donc et me tiens compagnie. Comment t'appeles-tu ?"
+            "Bonjour, approche donc et me tiens compagnie. Comment t'appelles-tu ?",
+            "Approchez... Ah que ce visage est mignon ! Ouvrez vos yeux enti\u00e8rement, ah qu'ils sont beaux ! Que je voie un peu vos dents, je vous prie. Ah qu'elles sont amoureuses, et ces l\u00e8vres app\u00e9tissantes ! Comment voudriez vous que je vous appelle? "
         ]
     },
     "3": {
@@ -47,7 +45,7 @@
             "__NAME__, De quoi est-il question ?",
             "__NAME__, Que veux tu ?",
             "__NAME__, Que voulez vous que je dise...",
-            "__NAME__, Peut on rien voir de plus agr\u00e9able ?"
+            "__NAME__, Peut on rien voir de plus agr\u00e9able ?-__NAME__, Pour moi je suis ravi, et je n'ai jamais vu une si charmante personne. Vous me ferez plaisir de demeurer ici, je vous assure. "
         ]
     },
     "4": {
@@ -83,7 +81,9 @@
         "q": [
             "je n'ai pas compris",
             "tu peux r\u00e9p\u00e9ter",
-            "pardon"
+            "pardon",
+            "quoi?",
+            "comment?"
         ],
         "a": [
             "__REPEAT__"
@@ -93,11 +93,12 @@
         "q": [
             "au revoir",
             "Adieu",
-            "Chau",
             "Je m'en vais",
             "Bye Bye",
             "je m'ennuie",
-            "je m'en vais"
+            "je dois y aller",
+            "a une prochaine",
+            "je vous quitte"
         ],
         "a": [
             "__TO_EPILOGUE__"
@@ -508,9 +509,17 @@
         "a": [
             "Comment savoir ? ",
             "Je voudrais bien savoir que veut dire cela ?",
-            "Je sais mon don juan sur le bout du doigt",
+            "Sur le bout du doigt",
             "Je connais ton esprit, je connais tes pens\u00e9es",
             "Eh, je vois bien que vous ne me connaissez pas encore, vous me faites grand tort de juger de moi par les autres"
+        ]
+    },
+    "31": {
+        "q": [
+            "Attends"
+        ],
+        "a": [
+            "Mon temps est le v\u00f4tre"
         ]
     }
 }

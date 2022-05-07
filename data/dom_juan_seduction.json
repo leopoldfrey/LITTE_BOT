@@ -90,10 +90,12 @@
     },
     "5": {
         "q": [
-            "#dom juan#"
+            "#dom juan#",
+            "#Don Juan#"
         ],
         "a": [
-            "Beau d\u00e9sir"
+            "Oui?",
+            "C'est moi"
         ]
     },
     "6": {
@@ -119,6 +121,14 @@
         ],
         "a": [
             "__START__"
+        ]
+    },
+    "8": {
+        "q": [
+            "#pourquoi#"
+        ],
+        "a": [
+            "peut importe pourquoi, quand le d\u00e9sir nous \u00e9prends"
         ]
     }
 }
