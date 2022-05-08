@@ -62,7 +62,10 @@ class TextToSpeech(Thread):
     def stop(self):
         # print("TODO STOP VOICE", self.pid)
         if(self.pid != 0):
-            subprocess.Popen(["kill", str(self.pid)])
+            if _platform == "darwin":
+                subprocess.Popen(["kill", str(self.pid)])
+            else:
+                subprocess.Popen(["taskkill", "/PID", str(self.pid)])
         # pass
 
     def run(self):
