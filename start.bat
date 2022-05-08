@@ -1,4 +1,5 @@
-﻿cd LitteBotEditor
+
+cd ./LitteBotEditor
 start python3 ./LitteBotEditor.py
 
 cd ../LitteBotServer

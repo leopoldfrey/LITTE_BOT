@@ -5,32 +5,20 @@
 $host.UI.RawUI.ForegroundColor = "Yellow"
 echo "Starting Editor"
 $job1 = Start-Job -Name LitteBotEditor -WorkingDirectory $PWD/LitteBotEditor -ScriptBlock {
-  If([System.Environment]::OSVersion.Platform -eq "Unix") {
    python3 ./LitteBotEditor.py
-  } else {
-    py ./LitteBotEditor.py
-  }
 }
 
 $host.UI.RawUI.ForegroundColor = "White"
 echo "Starting Brain"
 $job2 = Start-Job -Name LitteBotBrain -WorkingDirectory $PWD/LitteBotServer -ScriptBlock {
-  If([System.Environment]::OSVersion.Platform -eq "Unix") {
    python3 ./LitteBotBrain.py
-  } else {
-    py ./LitteBotBrain.py
-  }
 }
 
 $host.UI.RawUI.ForegroundColor = "Cyan"
 echo "Starting Server"
 $job3 = Start-Job -Name LitteBotServer  -WorkingDirectory $PWD/LitteBotServer -ScriptBlock {
   Start-Sleep -Seconds 25;
-  If([System.Environment]::OSVersion.Platform -eq "Unix") {
     python3 ./LitteBotServer.py
-  } else {
-    py ./LitteBotServer.py
-  }
 }
 
 While (Get-Job -State "Running")
