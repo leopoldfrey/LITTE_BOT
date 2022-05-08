@@ -91,14 +91,7 @@
     },
     "6": {
         "q": [
-            "au revoir",
-            "Adieu",
-            "Je m'en vais",
-            "Bye Bye",
-            "je m'ennuie",
-            "je dois y aller",
-            "a une prochaine",
-            "je vous quitte"
+            "au revoir"
         ],
         "a": [
             "__TO_EPILOGUE__"
