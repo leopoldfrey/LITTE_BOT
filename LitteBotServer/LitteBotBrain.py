@@ -52,7 +52,7 @@ color = [COLOR_OFF, COLOR_INTRO, COLOR_SEDUCTION, COLOR_PROVOCATION, COLOR_FUITE
 
 # section = ["Off", "Introduction", "Séduction", "Provocation", "Fuite", "Epilogue"]
 
-MAX_HISTORY_SIZE = 5
+MAX_HISTORY_SIZE = 15
 
 def print_formatColor_table():
     """
@@ -96,9 +96,6 @@ class LitteBot:
 
         self.log = BotLog()
 
-        print()
-        print(formatColor(6,37,40,"Starting Chatbot"))
-
         """Initializes the bot."""
         print("Loading module "+def_module)
         self.module_url = ( def_module )
@@ -114,8 +111,7 @@ class LitteBot:
         self.osc_server = Server('127.0.0.1', 14001, self.oscIn)
         self.osc_client = Client('127.0.0.1', 14000)
 
-        print(formatColor(0,37,40,"Chatbot ready"))
-        print()
+        print("Chatbot ready")
 
     def kill(self):
         self.osc_server.stop()
@@ -160,6 +156,7 @@ class LitteBot:
                 print("     " + str(args[x]))
 
     def setBotMode(self, mode):
+        # self.history = [[], []]
         self.botmode = mode
         if self.botmode != 1:
             self.currentStart = self.start[self.botmode].copy()
@@ -219,6 +216,7 @@ class LitteBot:
             self.currentStart = self.start[self.botmode].copy()
         idx = random.randrange(len(self.currentStart))
         self.lastresponse = self.currentStart.pop(idx).strip()
+        self.lastresponse = self.postProcess(self.lastresponse)
         print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
         self.botresponses.append(self.lastresponse)
         self.log.logBot(str(self.botmode), self.lastresponse)
@@ -230,6 +228,7 @@ class LitteBot:
             self.currentFirst = self.first.copy()
         idx = random.randrange(len(self.currentFirst))
         self.lastresponse = self.currentFirst.pop(idx).strip()
+        self.lastresponse = self.postProcess(self.lastresponse)
         print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
         self.botresponses.append(self.lastresponse)
         self.log.logBot(str(self.botmode), self.lastresponse)
@@ -240,8 +239,8 @@ class LitteBot:
             self.username = mess.split("moi c'est ")[-1]
         elif(mess.__contains__("suis là")):
             pass
-        elif(mess.__contains__("c'est moi ")):
-            self.username = mess.split("c'est moi ")[-1]
+        # elif(mess.__contains__("c'est moi ")):
+        #     self.username = mess.split("c'est moi ")[-1]
         elif(mess.__contains__("moi")):
             pass
         elif(mess.__contains__("appelle")):
@@ -261,6 +260,7 @@ class LitteBot:
                 self.currentSecond = self.second.copy()
             idx = random.randrange(len(self.currentSecond))
             self.lastresponse = self.currentSecond.pop(idx).strip()
+            self.lastresponse = self.postProcess(self.lastresponse)
             print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
             self.botresponses.append(self.lastresponse)
             self.log.logBot(str(self.botmode), self.lastresponse)
@@ -308,7 +308,7 @@ class LitteBot:
         self.osc_client.send('/lastresponse',self.lastresponse)
 
     def postProcess(self, msg):
-        if(msg == " « " or msg == " » " or msg == " Ah " or msg == "Oh!  " or msg == " Eh " or msg == " Eh bien " or msg == " Oh! " or msg == "Ah! " or msg == "Ah, ah, ah!"):
+        if(msg == " « " or msg == " » " or msg == " Ah " or msg == "Oh!  " or msg == "Oh!" or msg == " Eh " or msg == " Eh bien " or msg == " Oh! " or msg == "Ah! " or msg == "Ah, ah, ah!"):
             msg = "__START__"
         if(msg.__contains__("__NAME__")):
             if(self.username != ""):
@@ -323,7 +323,7 @@ class LitteBot:
             msg = msg.replace("__START__", start)
         if(msg.__contains__("%u0153")):
             msg = msg.replace("%u0153", "oe")
-        if(msg.__contains__("_") and not msg.__contains__("__TO_EPILOGUE__")):
+        if(msg.__contains__("_") and not msg.__contains__("__TO_EPILOGUE__") and not msg.__contains__("__REPEAT__")):
             msg = msg.replace("_", " ")
         if(self.username != ""):
             if(msg.__contains__("Monsignor")):
@@ -344,10 +344,14 @@ class LitteBot:
                 msg = msg.replace("monsieu", self.username)
             elif(msg.__contains__("Monsir")):
                 msg = msg.replace("Monsir", self.username)
+            elif(msg.__contains__("Monsi")):
+                msg = msg.replace("Monsi", self.username)
             elif(msg.__contains__("Madame")):
                 msg = msg.replace("Madame", self.username)
             elif(msg.__contains__("madame")):
                 msg = msg.replace("madame", self.username)
+            elif(msg.__contains__("Ma soeur")):
+                msg = msg.replace("Ma soeur", self.username)
 
         return msg
 
@@ -603,9 +607,10 @@ class LitteBot:
 
         history[0].append(tuple([user_input,self.lastresponse]))
 
-        # print ("history[0]", len(history[0]), history[0])
+        # print ("history[0]", len(history[0]))#, history[0])
         if(len(history[0]) > MAX_HISTORY_SIZE):
-            history[0].pop(0)
+            history = [[], []]
+        #     history[1].pop(0)
             # print (">> pop", len(history[0]), history[0])
 
         self.history = history
