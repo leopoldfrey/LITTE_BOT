@@ -122,7 +122,7 @@
       }
       console.log("WEBSOCKET SILENT", $silent)
       if($silent == true) {
-        recognition.stop();
+        // recognition.stop();
       } else {
         p = $('<p class="speech_you"></p>');
         $sp.append(p);
@@ -180,16 +180,19 @@
     }
     recognition.continuous = true;
     recognition.interimResults = true;
-    recognition.maxAlternatives = 3;
+    recognition.maxAlternatives = 1;
     recognition.lang = "fr-FR";
     recognition.onresult = detect;
     recognition.onend = function(event) {
-      console.log('event: end');
+      console.log('recognition: end, restart');
+      try{
+        recognition.start();
+      } catch (e) {
+      }
       if($silent == false) {
-        try{
-          recognition.start();
-        } catch (e) {
-        }
+        $stat2.text('Ready');
+        $stat2.removeClass('pause');
+        $stat2.addClass('ready');
       } else {
         $stat2.text('Pause');
         $stat2.removeClass('ready');
@@ -199,10 +202,18 @@
 
     recognition.onstart = function(event) {
       console.log('event: start');
-      $stat2.text('Ready');
-      $stat2.removeClass('pause');
-      $stat2.addClass('ready');
+      if($silent == false) {
+        $stat2.text('Ready');
+        $stat2.removeClass('pause');
+        $stat2.addClass('ready');
+      } else {
+        $stat2.text('Pause');
+        $stat2.removeClass('ready');
+        $stat2.addClass('pause');
+      }
     }
+
+    recognition.start();
 
   } catch (e) {
     alert('ERROR: webkitSpeechRecognition not available');
@@ -233,32 +244,33 @@
     {
       if(event.results[i][0].confidence < .5)
         continue;
+      console.log("result", i, "conf:", event.results[i][0].confidence, "final:", event.results[i].isFinal, "transcript:", event.results[i][0].transcript)
       if(!$silent) {
         $(p).text(event.results[i][0].transcript);
         $(p).get(0).scrollIntoView();
-      }
-      if(event.results[i].isFinal)
-      {
-        recognition.stop();
-        console.log("USER",event.results[i][0].transcript);
-        p = $('<p class="speech_bot"></p>');
-        // $(p).text("...");
-        $sp.append(p);
-      }
-      $.ajax({
-        type: "POST",
-        url: '/reco',
-        data: {
-          transcript: String(event.results[i][0].transcript),
-          confidence: event.results[i][0].confidence,
-          sentence: event.results[i].isFinal ? 1 : 0
+        if(event.results[i].isFinal)
+        {
+          recognition.stop();
+          console.log("USER",event.results[i][0].transcript);
+          p = $('<p class="speech_bot"></p>');
+          // $(p).text("...");
+          $sp.append(p);
         }
-      });
-      timer = setTimeout(function() {
-        recognition.stop();
-        timer = null;
-      }, 5000);
+        $.ajax({
+          type: "POST",
+          url: '/reco',
+          data: {
+            transcript: String(event.results[i][0].transcript),
+            confidence: event.results[i][0].confidence,
+            sentence: event.results[i].isFinal ? 1 : 0
+          }
+        });
+      }
     }
+    timer = setTimeout(function() {
+      recognition.stop();
+      timer = null;
+    }, 5000);
   }
 
   // POLL FUNCTION FOR TIMERS

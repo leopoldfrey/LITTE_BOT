@@ -6,6 +6,7 @@ from threading import Thread
 from pedalboard import *
 from pedalboard.io import AudioFile
 import subprocess
+import re
 # if _platform == "darwin":
 #     from playsound import playsound
 
@@ -28,7 +29,7 @@ API_KEY_PATH = "../model/gtts_api_key.json"
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = API_KEY_PATH
 
 # Make a Pedalboard object, containing multiple plugins:
-board = Pedalboard([PitchShift(semitones=-3),Chorus(),Reverb(room_size=0.02,damping=0.1,wet_level=0.6,dry_level=0.8,width=0.9,freeze_mode=0)])
+board = Pedalboard([PitchShift(semitones=-3),Chorus(),Reverb(room_size=0.02,damping=0.1,wet_level=0.7,dry_level=1.0,width=0.9,freeze_mode=0)])
 
 #PitchShift(semitones=+3),
 def list_voices():
@@ -44,7 +45,12 @@ class TextToSpeech(Thread):
         Thread.__init__(self)
         # print("TTS", text, pitch, speed)
         self.language_code = "-".join(VOICE.split("-")[:2])
-        self.text_input = tts.SynthesisInput(text=text)
+        if(len(text) > 500):
+            self.textA = re.split("[.!?;:]", text)
+        else:
+            self.textA = []
+            self.textA.append(text)
+        # print(len(self.textA), self.textA)
         self.voice_params = tts.VoiceSelectionParams(
             language_code=self.language_code, name=VOICE
         )
@@ -60,40 +66,44 @@ class TextToSpeech(Thread):
         # pass
 
     def run(self):
-        response = self.client.synthesize_speech(
-            input=self.text_input, voice=self.voice_params, audio_config=self.audio_config
-        )
-        filename = "output.wav"
-        with open(filename, "wb") as out:
-            out.write(response.audio_content)
+        for t in self.textA :
+            self.text_input = tts.SynthesisInput(text=t)
+            if t != "":
+                # print("speak", t)
+                response = self.client.synthesize_speech(
+                    input=self.text_input, voice=self.voice_params, audio_config=self.audio_config
+                )
+                filename = "output.wav"
+                with open(filename, "wb") as out:
+                    out.write(response.audio_content)
 
-        # Read in a whole audio file:
-        with AudioFile(filename, 'r') as f:
-          audio = f.read(f.frames)
-          samplerate = f.samplerate
+                # Read in a whole audio file:
+                with AudioFile(filename, 'r') as f:
+                  audio = f.read(f.frames)
+                  samplerate = f.samplerate
 
-        # Run the audio through this pedalboard!
-        effected = board(audio, samplerate)
+                # Run the audio through this pedalboard!
+                effected = board(audio, samplerate)
 
-        # Write the audio back as a wav file:
-        with AudioFile('processed-output.wav', 'w', samplerate, effected.shape[0]) as f:
-          f.write(effected)
+                # Write the audio back as a wav file:
+                with AudioFile('processed-output.wav', 'w', samplerate, effected.shape[0]) as f:
+                  f.write(effected)
 
-        if _platform == "darwin":
-            self.proc = subprocess.Popen(["ffplay","-nodisp","-autoexit","-loglevel","quiet","processed-output.wav"])
-            self.pid = self.proc.pid
-            # print("process pid", self.pid)
-            self.proc.wait()
-            # while (self.proc.poll() is None):
-            #     print("wait")
-            #     time.sleep(1)
-            #playsound('processed-output.wav')
-        elif _platform == "win32" or _platform == "win64":
-            self.proc = subprocess.Popen(["ffplay.exe","-nodisp","-autoexit","-loglevel","quiet","processed-output.wav"])
-            self.pid = self.proc.pid
-            # print("process pid", self.pid)
-            self.proc.wait()
-            #os.system("ffplay.exe -nodisp -autoexit -loglevel quiet .\processed-output.wav")
+                if _platform == "darwin":
+                    self.proc = subprocess.Popen(["ffplay","-nodisp","-autoexit","-loglevel","quiet","processed-output.wav"])
+                    self.pid = self.proc.pid
+                    # print("process pid", self.pid)
+                    self.proc.wait()
+                    # while (self.proc.poll() is None):
+                    #     print("wait")
+                    #     time.sleep(1)
+                    #playsound('processed-output.wav')
+                elif _platform == "win32" or _platform == "win64":
+                    self.proc = subprocess.Popen(["ffplay.exe","-nodisp","-autoexit","-loglevel","quiet","processed-output.wav"])
+                    self.pid = self.proc.pid
+                    # print("process pid", self.pid)
+                    self.proc.wait()
+                    #os.system("ffplay.exe -nodisp -autoexit -loglevel quiet .\processed-output.wav")
 
 # class TextToSpeechNoThread():
 #     def __init__(self):

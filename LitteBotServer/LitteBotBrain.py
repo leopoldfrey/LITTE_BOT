@@ -47,6 +47,8 @@ color = [COLOR_OFF, COLOR_INTRO, COLOR_SEDUCTION, COLOR_PROVOCATION, COLOR_FUITE
 
 # section = ["Off", "Introduction", "Séduction", "Provocation", "Fuite", "Epilogue"]
 
+MAX_HISTORY_SIZE = 5
+
 def print_formatColor_table():
     """
     prints table of formatColorted text formatColor options
@@ -134,7 +136,7 @@ class LitteBot:
         elif(address == '/first'):
             self.speakFirst()
         elif(address == '/second'):
-            self.speakSecond()
+            self.speakSecond(args[0])
         elif(address == '/third'):
             self.speakThird(args[0])
         elif(address == '/nextEpilogue'):
@@ -228,20 +230,54 @@ class LitteBot:
         self.log.logBot(str(self.botmode), self.lastresponse)
         self.osc_client.send('/lastresponse',self.lastresponse)
 
-    def speakSecond(self):
-        # print("BRAIN SECOND")
-        if(len(self.currentSecond) == 0):
-            self.currentSecond = self.second.copy()
-        idx = random.randrange(len(self.currentSecond))
-        self.lastresponse = self.currentSecond.pop(idx).strip()
-        print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
-        self.botresponses.append(self.lastresponse)
-        self.log.logBot(str(self.botmode), self.lastresponse)
-        self.osc_client.send('/lastresponse',self.lastresponse)
+    def speakSecond(self, mess):
+        if(mess.__contains__("moi c'est ")):
+            self.username = mess.split("moi c'est ")[-1]
+        elif(mess.__contains__("suis là")):
+            pass
+        elif(mess.__contains__("c'est moi ")):
+            self.username = mess.split("c'est moi ")[-1]
+        elif(mess.__contains__("moi")):
+            pass
+        elif(mess.__contains__("appelle")):
+            self.username = mess.split("appelle ")[-1]
+        elif(mess.__contains__("suis")):
+            self.username = mess.split("suis ")[-1]
+        elif(mess.__contains__("nomme")):
+            self.username = mess.split("nomme ")[-1]
+        elif(mess.__contains__("est")):
+            self.username = mess.split("est ")[-1]
+
+        # print("BRAIN SECOND", ">"+self.username+"<")
+
+        if(self.username == ""):
+            # print("NO USERNAME")
+            if(len(self.currentSecond) == 0):
+                self.currentSecond = self.second.copy()
+            idx = random.randrange(len(self.currentSecond))
+            self.lastresponse = self.currentSecond.pop(idx).strip()
+            print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
+            self.botresponses.append(self.lastresponse)
+            self.log.logBot(str(self.botmode), self.lastresponse)
+            self.osc_client.send('/lastresponse',self.lastresponse)
+        else:
+            self.osc_client.send('/username',self.username)
+            if(len(self.currentThird) == 0):
+                self.currentThird = self.third.copy()
+            idx = random.randrange(len(self.currentThird))
+            self.lastresponse = self.currentThird.pop(idx).strip()
+            self.lastresponse = self.postProcess(self.lastresponse)
+            print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
+            self.botresponses.append(self.lastresponse)
+            self.log.logBot(str(self.botmode), self.lastresponse)
+            self.osc_client.send('/lastresponse',self.lastresponse)
 
     def speakThird(self, mess):
-        # print("BRAIN THIRD name:", mess)
-        if(mess.__contains__("appelle")):
+        if(mess.__contains__("moi c'est ")):
+            self.username = mess.split("moi c'est ")[-1]
+        if(mess.__contains__("c'est moi ")):
+            self.username = mess.split("c'est moi ")[-1]
+        elif(mess.__contains__("appelle")):
             self.username = mess.split("appelle ")[-1]
         elif(mess.__contains__("suis")):
             self.username = mess.split("suis ")[-1]
@@ -251,6 +287,8 @@ class LitteBot:
             self.username = mess.split("est ")[-1]
         else:
             self.username = mess.split(" ")[-1]
+
+        # print("BRAIN THIRD", self.username)
 
         self.osc_client.send('/username',self.username)
 
@@ -265,16 +303,23 @@ class LitteBot:
         self.osc_client.send('/lastresponse',self.lastresponse)
 
     def postProcess(self, msg):
-        if(msg == " Ah " or msg == " Eh " or msg == " Eh bien " or msg == " Oh! " or msg == "Ah! " or msg == "Ah, ah, ah!"):
+        if(msg == " « " or msg == " » " or msg == " Ah " or msg == "Oh!  " or msg == " Eh " or msg == " Eh bien " or msg == " Oh! " or msg == "Ah! " or msg == "Ah, ah, ah!"):
             msg = "__START__"
-        if(msg.__contains__("__NAME__") and self.username != ""):
-            msg = msg.replace("__NAME__", self.username)
+        if(msg.__contains__("__NAME__")):
+            if(self.username != ""):
+                msg = msg.replace("__NAME__", self.username)
+            else:
+                msg = msg.replace("__NAME__", "")
         if(msg.__contains__("__START__")):
             if(len(self.currentStart) == 0):
                 self.currentStart = self.start[self.botmode].copy()
             idx = random.randrange(len(self.currentStart))
             start = self.currentStart.pop(idx).strip()
             msg = msg.replace("__START__", start)
+        if(msg.__contains__("%u0153")):
+            msg = msg.replace("%u0153", "oe")
+        if(msg.__contains__("_") and not msg.__contains__("__TO_EPILOGUE__")):
+            msg = msg.replace("_", " ")
         if(self.username != ""):
             if(msg.__contains__("Monsignor")):
                 msg = msg.replace("Monsignor", self.username)
@@ -553,10 +598,13 @@ class LitteBot:
 
         history[0].append(tuple([user_input,self.lastresponse]))
 
+        # print ("history[0]", len(history[0]), history[0])
+        if(len(history[0]) > MAX_HISTORY_SIZE):
+            history[0].pop(0)
+            # print (">> pop", len(history[0]), history[0])
+
         self.history = history
         # print("RESPONSE", self.lastresponse)
-        # print ("history[0] size", len(self.history[0]))
-        # print ("history[0]", self.history[0])
 
 
         return history[0], history

@@ -304,12 +304,12 @@ class LitteBotServer:
         mess = result['transcript']
         self.lastInteractionTime = time.time()
         # print(result['sentence'], mess);
-        if self.silent == True:
-            if result['sentence'] == 1:
-                print("(pause)phrase  _" + mess)
-            else:
-                print("(pause)mots    _" + mess)
-            return ''
+        # if self.silent == True:
+        #     if result['sentence'] == 1:
+        #         print("(pause)phrase  _" + mess)
+        #     else:
+        #         print("(pause)mots    _" + mess)
+        #     return ''
         if result['sentence'] == 1:
             # print("user:", mess)
             # self.lastInteractionTime = time.time()
@@ -321,8 +321,8 @@ class LitteBotServer:
             # print("INTER", self.interactions)
             if self.interactions == 1:
                 self.osc_client.send('/logme', mess)
-                self.second()
-            elif self.interactions == 2:
+                self.second(mess)
+            elif self.interactions == 2 and self.username == "":
                 self.osc_client.send('/logme', mess)
                 self.third(mess)
             elif self.step < 5 :
@@ -431,11 +431,11 @@ class LitteBotServer:
         self.lastInteractionTime = time.time()
         self.osc_client.send("/first", 1)
 
-    def second(self):
+    def second(self, mess):
         self.silent = True
         self.wsServer.broadcast({'command':'silent','value':self.silent})
         self.lastInteractionTime = time.time()
-        self.osc_client.send("/second", 1)
+        self.osc_client.send("/second", mess)
 
     def third(self, mess):
         self.silent = True

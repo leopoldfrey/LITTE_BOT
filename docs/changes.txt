@@ -17,6 +17,12 @@ DONE:
 - √ quand face detect phone ring
 - √ couper les voix quand on raccroche le téléphone
 - √ raccrochez !
+- √ réouvrir reco plus tôt ?
+- √ filtrer guillemets & cœur
+- √ volume bot++
+- √ historique limité à N interactions
+- √ nom dans la première phrase ?
+- √ découper les phrases pour synthèse ?
 
 TODO:
 - passer le tout dans plastic
