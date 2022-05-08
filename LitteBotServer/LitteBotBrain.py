@@ -5,7 +5,11 @@ from pyosc import Client, Server
 from botLog import BotLog
 from sys import platform as _platform
 
-import gradio as gr
+import functools
+print = functools.partial(print, end='\n',flush=True)
+
+# import gradio as gr
+# print("Loading numpy...")
 import numpy as np
 
 # os.environ["CUDA_VISIBLE_DEVICES"]="1"
@@ -13,6 +17,7 @@ if _platform == "win32" or _platform == "win64":
     os.add_dll_directory("C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.6/bin")
     os.add_dll_directory("C:/tools/cuda/bin")
 
+print("Loading Tensorflow...")
 import tensorflow as tf
 import tensorflow_hub as hub
 import tensorflow_text
@@ -653,26 +658,26 @@ class LitteBot:
 
         return res, history
 
-    def gradio_interface(self) -> gr.interface.Interface:
-        """Returns the gradio interface.
-
-        Returns:
-            gr.interface.Interface: Interface
-        """
-        return gr.Interface(
-            fn=self.predict,
-            theme="default",
-            inputs=[
-                gr.inputs.Textbox(
-                    placeholder="Bonjour !", label="Parlez avec Dom Juan:"
-                ),
-                "state",
-            ],
-            outputs=["chatbot", "state"],
-            title="LITTE_BOT",
-            allow_flagging="never",
-            css=self.css,
-        )
+    # def gradio_interface(self) -> gr.interface.Interface:
+    #     """Returns the gradio interface.
+    #
+    #     Returns:
+    #         gr.interface.Interface: Interface
+    #     """
+    #     return gr.Interface(
+    #         fn=self.predict,
+    #         theme="default",
+    #         inputs=[
+    #             gr.inputs.Textbox(
+    #                 placeholder="Bonjour !", label="Parlez avec Dom Juan:"
+    #             ),
+    #             "state",
+    #         ],
+    #         outputs=["chatbot", "state"],
+    #         title="LITTE_BOT",
+    #         allow_flagging="never",
+    #         css=self.css,
+    #     )
 
 def handler(signum, frame):
     litte_bot.kill()

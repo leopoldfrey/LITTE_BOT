@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import os, json, webbrowser, html
+import os, json, webbrowser, html, sys
 from bottle import post, static_file, template, Bottle, request
 from sys import platform as _platform
 from subprocess import Popen
@@ -13,11 +13,14 @@ def_questions_provocation = "dom_juan_provocation"
 def_questions_fuite = "dom_juan_fuite"
 def_questions_epilogue = "dom_juan_epilogue"
 
+import functools
+print = functools.partial(print, flush=True)
 
 class LitteBotEditor():
     def __init__(self):
 
         print("Loading data...")
+
         self.filename = dialog_path + def_questions_common + ".json"
         self.load()
 
@@ -38,6 +41,7 @@ class LitteBotEditor():
         self.server = Bottle()
         self.route()
         self.start()
+
 
     def load(self):
         print("Loading data "+self.filename)

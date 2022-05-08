@@ -9,6 +9,9 @@ from websocket_server import WebsocketServer
 from pyosc import Client, Server
 from ringCtrl import PhoneCtrl
 
+import functools
+print = functools.partial(print, flush=True)
+
 class ThreadGroup(Thread):
     def __init__(self, parent):
         Thread.__init__(self)
