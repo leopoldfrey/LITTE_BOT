@@ -14,8 +14,16 @@ import numpy as np
 
 # os.environ["CUDA_VISIBLE_DEVICES"]="1"
 if _platform == "win32" or _platform == "win64":
-    os.add_dll_directory("C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.6/bin")
-    os.add_dll_directory("C:/tools/cuda/bin")
+    try:
+        os.add_dll_directory("C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.6/bin")
+    except :
+        print("Error loading CUDA binaries")
+
+    try:
+        os.add_dll_directory("C:/tools/cuda/bin")
+    except :
+        print("Error loading CUDNN binaries")
+
 
 print("Loading Tensorflow...")
 import tensorflow as tf

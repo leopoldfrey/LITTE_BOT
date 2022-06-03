@@ -3,6 +3,8 @@ tmp
 *.log
 model
 *output.wav
+tmp.wav
+LitteBotServer/voices/*.wav
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

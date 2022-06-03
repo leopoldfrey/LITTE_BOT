@@ -109,37 +109,44 @@ class TextToSpeech(Thread):
                     self.proc.wait()
                     #os.system("ffplay.exe -nodisp -autoexit -loglevel quiet .\processed-output.wav")
 
-# class TextToSpeechNoThread():
-#     def __init__(self):
-#         self.language_code = "-".join(VOICE.split("-")[:2])
-#         self.voice_params = tts.VoiceSelectionParams(
-#             language_code=self.language_code, name=VOICE
-#         )
-#         self.audio_config = tts.AudioConfig(audio_encoding=tts.AudioEncoding.LINEAR16)
-#         self.client = tts.TextToSpeechClient()
-#
-#     def synthesize(self, text):
-#         self.text_input = tts.SynthesisInput(text=text)
-#         response = self.client.synthesize_speech(
-#             input=self.text_input, voice=self.voice_params, audio_config=self.audio_config
-#         )
-#         filename = "output.wav"
-#         with open(filename, "wb") as out:
-#             out.write(response.audio_content)
-#
-#         # Read in a whole audio file:
-#         with AudioFile(filename, 'r') as f:
-#           audio = f.read(f.frames)
-#           samplerate = f.samplerate
-#
-#         # Run the audio through this pedalboard!
-#         effected = board(audio, samplerate)
-#
-#         # Write the audio back as a wav file:
-#         with AudioFile('processed-output.wav', 'w', samplerate, effected.shape[0]) as f:
-#           f.write(effected)
-#
-#         os.system("ffplay.exe -nodisp -autoexit -loglevel quiet .\processed-output.wav")
+class TextToSpeechNoThread():
+    def __init__(self):
+        self.language_code = "-".join(VOICE.split("-")[:2])
+        self.voice_params = tts.VoiceSelectionParams(
+            language_code=self.language_code, name=VOICE
+        )
+        self.audio_config = tts.AudioConfig(audio_encoding=tts.AudioEncoding.LINEAR16)
+        self.client = tts.TextToSpeechClient()
+
+    def synthesize(self, text, pitch=0.0, speed=1.08, fname="output", play=True):
+        self.audio_config = tts.AudioConfig(audio_encoding=tts.AudioEncoding.LINEAR16, speaking_rate=speed, pitch=pitch)
+        self.text_input = tts.SynthesisInput(text=text)
+        response = self.client.synthesize_speech(
+            input=self.text_input, voice=self.voice_params, audio_config=self.audio_config
+        )
+        filename = "tmp.wav"
+        with open(filename, "wb") as out:
+            out.write(response.audio_content)
+
+        # Read in a whole audio file:
+        with AudioFile(filename, 'r') as f:
+          audio = f.read(f.frames)
+          samplerate = f.samplerate
+
+        # Run the audio through this pedalboard!
+        effected = board(audio, samplerate)
+
+        # Write the audio back as a wav file:
+        proc_filename = fname+".wav"
+        with AudioFile(proc_filename, 'w', samplerate, effected.shape[0]) as f:
+          f.write(effected)
+
+        if play:
+            self.proc = subprocess.Popen(["ffplay","-nodisp","-autoexit","-loglevel","quiet",proc_filename])
+            self.pid = self.proc.pid
+            # print("process pid", self.pid)
+            self.proc.wait()
+            # os.system("ffplay.exe -nodisp -autoexit -loglevel quiet .\processed-output.wav")
 
 
 if __name__ == '__main__':
