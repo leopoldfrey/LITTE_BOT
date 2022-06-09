@@ -41,7 +41,7 @@ def list_voices():
             print(f"{voice.name}")
 
 class TextToSpeech(Thread):
-    def __init__(self, text, pitch=0.0, speed=1.08):
+    def __init__(self, text, pitch=0.0, speed=1.08, silent=False):
         Thread.__init__(self)
         # print("TTS", text, pitch, speed)
         self.language_code = "-".join(VOICE.split("-")[:2])
@@ -57,12 +57,13 @@ class TextToSpeech(Thread):
         self.audio_config = tts.AudioConfig(audio_encoding=tts.AudioEncoding.LINEAR16, speaking_rate=speed, pitch=pitch)
         self.client = tts.TextToSpeechClient()
         self._running = True
+        self.silent = silent
         self.pid = 0
 
     def stop(self):
         # print("TODO STOP VOICE", self.pid)
+        self.textA = []
         if(self.pid != 0):
-            self.textA = []
             if _platform == "darwin":
                 subprocess.Popen(["kill", str(self.pid)])
             else:
@@ -70,7 +71,9 @@ class TextToSpeech(Thread):
         # pass
 
     def run(self):
-        for t in self.textA :
+        t = self.textA.pop(0)
+        while t != "":
+        # for t in self.textA :
             self.text_input = tts.SynthesisInput(text=t)
             if t != "":
                 # print("speak", t)
@@ -93,6 +96,9 @@ class TextToSpeech(Thread):
                 with AudioFile('processed-output.wav', 'w', samplerate, effected.shape[0]) as f:
                   f.write(effected)
 
+                if self.silent:
+                    return
+
                 if _platform == "darwin":
                     self.proc = subprocess.Popen(["ffplay","-nodisp","-autoexit","-loglevel","quiet","processed-output.wav"])
                     self.pid = self.proc.pid
@@ -108,6 +114,10 @@ class TextToSpeech(Thread):
                     # print("process pid", self.pid)
                     self.proc.wait()
                     #os.system("ffplay.exe -nodisp -autoexit -loglevel quiet .\processed-output.wav")
+            if len(self.textA) > 0:
+                t = self.textA.pop(0)
+            else:
+                return
 
 class TextToSpeechNoThread():
     def __init__(self):

@@ -47,8 +47,9 @@ def_module = "../model/universal-sentence-encoder-multilingual-large_3"
 OFF = 0
 INTRO = 1
 SEDUCTION = 2
-PROVOCATION = 3
-FUITE = 4
+INTER = 3
+PROVOCATION = 4
+FUITE = 5
 
 COLOR_INTRO = 32
 COLOR_SEDUCTION = 33
@@ -56,7 +57,7 @@ COLOR_PROVOCATION = 35
 COLOR_FUITE = 36
 COLOR_OFF = 37
 
-color = [COLOR_OFF, COLOR_INTRO, COLOR_SEDUCTION, COLOR_PROVOCATION, COLOR_FUITE, COLOR_OFF ]
+color = [COLOR_OFF, COLOR_INTRO, COLOR_SEDUCTION, COLOR_OFF, COLOR_PROVOCATION, COLOR_FUITE, COLOR_OFF ]
 
 # section = ["Off", "Introduction", "Séduction", "Provocation", "Fuite", "Epilogue"]
 
@@ -98,6 +99,8 @@ class LitteBot:
         self.quit = []
         self.epilogue = []
         self.curEpilogue = 0
+        self.inter = []
+        self.curInter = 0
         self.history = [[], []]
         self.lastresponse = ""
         self.username = ""
@@ -150,6 +153,8 @@ class LitteBot:
             self.speakThird(args[0])
         elif(address == '/nextEpilogue'):
             self.nextEpilogue()
+        elif(address == '/nextInter'):
+            self.nextInter()
         elif(address == '/reload'):
             self.loadQuestionsAndEmbeddings()
         elif(address == '/logbot'):
@@ -175,8 +180,10 @@ class LitteBot:
         elif self.botmode == 2:
             print(" - "+formatColor(1,color[SEDUCTION],40,"Bot Mode Seduction"))
         elif self.botmode == 3:
-            print(" - "+formatColor(1,color[PROVOCATION],40,"Bot Mode Provocation"))
+            print(" - "+formatColor(1,color[INTER],40,"Bot Mode Intermede"))
         elif self.botmode == 4:
+            print(" - "+formatColor(1,color[PROVOCATION],40,"Bot Mode Provocation"))
+        elif self.botmode == 5:
             print(" - "+formatColor(1,color[FUITE],40,"Bot Mode Fuite"))
 
     def nextEpilogue(self):
@@ -190,6 +197,18 @@ class LitteBot:
             self.curEpilogue += 1
         else:
             self.osc_client.send('/endEpilogue',1)
+
+    def nextInter(self):
+        if(self.curInter < len(self.inter)):
+            # print("NEXT EPILOGUE", self.epilogue)
+            self.lastresponse = self.postProcess(self.inter[self.curInter].strip())
+            print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
+            self.botresponses.append(self.lastresponse)
+            self.log.logBot(str(self.botmode), self.lastresponse)
+            self.osc_client.send('/curInter',self.lastresponse)
+            self.curInter += 1
+        else:
+            self.osc_client.send('/endInter',1)
 
     def getResponse(self, q):
         self.log.logMe(q)
@@ -214,6 +233,7 @@ class LitteBot:
         self.setBotMode(1)
         self.currentStart = self.start[self.botmode].copy()
         self.curEpilogue = 0
+        self.curInter = 0
         self.history = [[], []]
         self.log.start()
         self.botresponses.clear()
@@ -331,6 +351,8 @@ class LitteBot:
             msg = msg.replace("__START__", start)
         if(msg.__contains__("%u0153")):
             msg = msg.replace("%u0153", "oe")
+        if(msg.__contains__("%u2019")):
+            msg = msg.replace("%u2019", "'")
         if(msg.__contains__("_") and not msg.__contains__("__TO_EPILOGUE__") and not msg.__contains__("__REPEAT__")):
             msg = msg.replace("_", " ")
         if(self.username != ""):
@@ -404,6 +426,7 @@ class LitteBot:
         self.second = []
         self.third = []
         self.epilogue = []
+        self.inter = []
         dom_juan = []
         print("Loading ", dialog_path+def_questions_common+".json")
         with open(dialog_path+def_questions_common+".json") as dj_common:
@@ -490,6 +513,7 @@ class LitteBot:
         dom_juan.append(dom_juan_common)
         dom_juan.append(dom_juan_common)
         dom_juan.append(dom_juan_seduction)
+        dom_juan.append(dom_juan_seduction)
         dom_juan.append(dom_juan_provocation)
         dom_juan.append(dom_juan_fuite)
         dom_juan.append(dom_juan_common)
@@ -497,12 +521,14 @@ class LitteBot:
         self.filter.append(filter_common)
         self.filter.append(filter_common)
         self.filter.append(filter_seduction)
+        self.filter.append(filter_seduction)
         self.filter.append(filter_provocation)
         self.filter.append(filter_fuite)
         self.filter.append(filter_common)
 
         self.start.append(start_common)
         self.start.append(start_common)
+        self.start.append(start_seduction)
         self.start.append(start_seduction)
         self.start.append(start_provocation)
         self.start.append(start_fuite)
@@ -522,8 +548,12 @@ class LitteBot:
                     if qq.__contains__("__EPILOGUE__"):
                         #print("__EPILOGUE__", qq, tmp[i]['a'])
                         self.epilogue = tmp[i]['a']
+                    if qq.__contains__("__INTER__"):
+                        #print("__EPILOGUE__", qq, tmp[i]['a'])
+                        self.inter = tmp[i]['a']
 
         # print("EPILOGUE", len(self.epilogue), self.epilogue)
+        # print("INTER", len(self.inter), self.inter)
         # print("START", len(self.start), self.start)
         # print("FIRST", len(self.first), self.first)
         # print("SECOND", len(self.second), self.second)
@@ -539,6 +569,7 @@ class LitteBot:
         dom_juan_questions.append(list(self.dom_juan[3].keys()))
         dom_juan_questions.append(list(self.dom_juan[4].keys()))
         dom_juan_questions.append(list(self.dom_juan[5].keys()))
+        dom_juan_questions.append(list(self.dom_juan[6].keys()))
         return dom_juan_questions
 
     def build_embeddings(self):
@@ -549,6 +580,7 @@ class LitteBot:
         embeddings.append(self.embed(self.dom_juan_questions[3]))
         embeddings.append(self.embed(self.dom_juan_questions[4]))
         embeddings.append(self.embed(self.dom_juan_questions[5]))
+        embeddings.append(self.embed(self.dom_juan_questions[6]))
         return embeddings
 
     def predict(self, user_input: str, history: list) -> list:

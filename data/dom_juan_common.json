@@ -5,9 +5,9 @@
         ],
         "a": [
             "Qui vient rompre mon somme ?..... Qui est l\u00e0 ? Sganarelle ? Elvire ? Don Carlos ? Charlotte ? Monsieur Dimanche ? Commandeur ?",
-            "Qui va l\u00e0 ?",
+            "Qui va l\u00e0 ? Quel est ton nom ?",
             "Avec qui j'ai l'honneur de faire rencontre ? Comment vous appelez-vous ?",
-            "Alors je ne vous connais pas ? J'ai donc l'honneur de parler a tout une autre personne ? Comment faudrait qu'on vous appelle?",
+            "Alors je ne vous connais pas ? J'ai donc l'honneur de parler a tout une autre personne ? Comment vous appelez-vous ?",
             "Je vous donne le bonjour. Comment vous appelez-vous ?",
             "Bonjour, je vous avoue que je suis surpris, et que je ne vous attendais pas ici. Quel est votre nom ?",
             "Bonjour, quelle est ton occupation parmi ces arbres ? Quel est ton nom ?",
@@ -16,9 +16,9 @@
             "L'agr\u00e9able entretien ! Bonjour ! Quel est votre nom ?",
             "Bonjour, comment vous appelez-vous ?",
             "Bonjour, approche donc et me tiens compagnie. Comment t'appelles-tu ?",
-            "Approchez... Ah que ce visage est mignon ! Ouvrez vos yeux enti\u00e8rement, ah qu'ils sont beaux ! Que je voie un peu vos dents, je vous prie. Ah qu'elles sont amoureuses, et ces l\u00e8vres app\u00e9tissantes ! Comment voudriez vous que je vous appelle?  ",
-            "Peut on rien voir de plus agr\u00e9able ? Comment on vous appelle?",
-            "Je suis ravi, et je n'ai jamais vu une si charmante personne. Vous me ferez plaisir de demeurer ici, je vous assure. Comment on vous appelle?"
+            "Approchez... Ah que ce visage est mignon ! Ouvrez vos yeux enti\u00e8rement, ah qu'ils sont beaux ! Que je voie un peu vos dents, je vous prie. Ah qu'elles sont amoureuses, et ces l\u00e8vres app\u00e9tissantes ! Comment voudriez vous que je vous appelle ?  ",
+            "Peut on rien voir de plus agr\u00e9able ? Comment on vous appelle ?",
+            "Je suis ravi, et je n'ai jamais vu une si charmante personne. Vous me ferez plaisir de demeurer ici, je vous assure. Comment on vous appelle ?"
         ]
     },
     "2": {
@@ -26,7 +26,7 @@
             "__SECOND__"
         ],
         "a": [
-            "Approchez __NAME__ ! Que je suis ravi de vous voir !Charmante voix __NAME__",
+            "Approchez __NAME__ ! Que je suis ravi de vous voir ! Charmante voix __NAME__",
             "__NAME__, mais je suis trop heureux puisque je te rencontre c'est \u00e0 pr\u00e9sent qu'il faut que ton z\u00e8le se montre, que tu serves ton ma\u00eetre avec affection, et qu'ici je r\u00e9ponde \u00e0 cette passion.",
             "D'o\u00f9 me vient une rencontre si agr\u00e9able ? Quoi ? Dans ces lieux champ\u00eatres, parmi ces arbres et ces rochers, on trouve des personnes faites comme vous \u00eates __NAME__ ?",
             "On s'occupe de vous __NAME__ ?",
@@ -40,9 +40,9 @@
             "__NAME__, Que voulez vous que je dise...",
             "__NAME__, Peut on rien voir de plus agr\u00e9able ?",
             "__NAME__, Pour moi je suis ravi, et je n'ai jamais vu une si charmante personne. Vous me ferez plaisir de demeurer ici, je vous assure. ",
-            "__NAME__, que puiss\u00e8-je faire pour vous?",
-            "__NAME__, Comment vous vous sentez? ",
-            "__NAME__, Votre personne m'est agr\u00e9able. Que d\u00e9sirez vous? "
+            "__NAME__, que puis-je faire pour vous ?",
+            "__NAME__, comment vous sentez-vous ? ",
+            "__NAME__, votre personne m'est agr\u00e9able. Que d\u00e9sirez vous ? "
         ]
     },
     "3": {
@@ -52,10 +52,10 @@
         "a": [
             "Racontez-moi d'avantage.",
             "Je suis affect\u00e9 par votre beaut\u00e9. Parlez-moi de vous.",
-            "Aimez vous?",
-            "Que vous am\u00e8ne ici?",
-            "Qu'attendez-vous de moi?",
-            "Qu'en pensez vous de l'amour?"
+            "Aimez vous ?",
+            "Que vous am\u00e8ne ici ?",
+            "Qu'attendez-vous de moi ?",
+            "Que pensez vous de l'amour ?"
         ]
     },
     "4": {

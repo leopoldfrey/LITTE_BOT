@@ -37,7 +37,9 @@ class ThreadGroup(Thread):
                     if(self.parent.on == False):
                         # print("OFF!!!")
                         pass
-                    elif(self.parent.step == 5): #and self.parent.interactions > 1):
+                    elif(self.parent.step == 3):
+                        self.parent.nextInter()
+                    elif(self.parent.step == 6):
                         self.parent.nextEpilogue()
                     else:
                         # print("DO RELANCE ?", self.parent.interactions % self.parent.config["max_inter_relance"])
@@ -184,7 +186,7 @@ class LitteBotServer:
         self.readConfig()
 
         print("___INIT TextToSpeech___")
-        TextToSpeech("Dom Juan").start()
+        TextToSpeech("Dom Juan", silent=True).start()
 
         print("___INIT_RING___")
         self.phoneCtrl = PhoneCtrl()
@@ -262,6 +264,10 @@ class LitteBotServer:
             self.curEpilogue(args[0])
         elif(address == '/endEpilogue'):
             self.endEpilogue()
+        elif(address == '/curInter'):
+            self.curInter(args[0])
+        elif(address == '/endInter'):
+            self.endInter()
         elif(address == '/username'):
             self.name(args[0])
         elif(address == '/phone'):
@@ -328,7 +334,10 @@ class LitteBotServer:
             elif self.interactions == 2 and self.username == "":
                 self.osc_client.send('/logme', mess)
                 self.third(mess)
-            elif self.step < 5 :
+            elif self.step == 3:
+                self.osc_client.send('/logme', mess)
+                self.nextInter()
+            elif self.step < 6 :
                 self.osc_client.send('/getresponse', mess)
             else : #epilogue
                 self.osc_client.send('/logme', mess)
@@ -378,7 +387,7 @@ class LitteBotServer:
             self.startTime = time.time()
             self.lastInteractionTime = time.time()
         self.startSectionTime = time.time()
-        if self.step > 5 :
+        if self.step > 6 :
             self.step = 0
         # self.bot.setBotMode(self.step)
         self.osc_client.send("/setbotmode", self.step)
@@ -387,7 +396,7 @@ class LitteBotServer:
 
     def toEpilogue(self):
         # print("TO EPILOGUE")
-        self.step = 5
+        self.step = 6
         self.startSectionTime = time.time()
         self.osc_client.send("/setbotmode", self.step)
         self.video_client.send("/section", self.step)
@@ -421,6 +430,30 @@ class LitteBotServer:
 
     def nextEpilogue(self):
         self.osc_client.send("/nextEpilogue", 1)
+
+    def curInter(self, s):
+        self.interactions += 1
+        self.interactions_section += 1
+        self.video_client.send("/interactions", self.interactions)
+        self.silent = True
+        self.wsServer.broadcast({'command':'silent','value':self.silent})
+        self.lastInteractionTime = time.time()
+        self.video_client.send("/phase", 2)
+        self.video_client.send("/bot", s)
+        # self.video_client.send("/botspeak", 1)
+        # tts = TextToSpeech(s)
+        # tts.start()
+        # self.tg.addThread(tts)
+        self.speak(s)
+        self.wsServer.broadcast({"command":"bot","value":s})
+
+    def endInter(self):
+        self.silent = False
+        self.wsServer.broadcast({'command':'silent','value':self.silent})
+        self.stepUp()
+
+    def nextInter(self):
+        self.osc_client.send("/nextInter", 1)
 
     def relance(self):
         self.silent = True
@@ -471,9 +504,9 @@ class LitteBotServer:
             self.sectionTime = time.time() - self.startSectionTime
             self.currentTime = time.time() - self.lastInteractionTime
             if(self.currentTime > self.config["max_silence"] and self.interactions > 2):
-                if(self.step > 0 and self.step < 5 and not self.silent):
+                if(self.step > 0 and self.step < 6 and not self.silent):
                     self.relance()
-            if(self.step > 0 and self.step < 5 and self.sectionTime > self.maxsection[self.step]):
+            if(self.step > 0 and self.step < 6 and self.sectionTime > self.maxsection[self.step]):
                 self.stepUp()
         else:
             self.globalTime = 0
@@ -544,6 +577,7 @@ class LitteBotServer:
         self.maxsection.append(200)
         self.maxsection.append(self.config["max_intro_s"])
         self.maxsection.append(self.config["max_seduction_s"])
+        self.maxsection.append(self.config["max_seduction_s"])
         self.maxsection.append(self.config["max_provocation_s"])
         self.maxsection.append(self.config["max_fuite_s"])
         self.maxsection.append(200)
@@ -551,6 +585,7 @@ class LitteBotServer:
         self.maxinter = []
         self.maxinter.append(50)
         self.maxinter.append(self.config["max_intro"])
+        self.maxinter.append(self.config["max_seduction"])
         self.maxinter.append(self.config["max_seduction"])
         self.maxinter.append(self.config["max_provocation"])
         self.maxinter.append(self.config["max_fuite"])
@@ -560,6 +595,7 @@ class LitteBotServer:
         self.pitch.append(self.config["pitch_intro"])
         self.pitch.append(self.config["pitch_intro"])
         self.pitch.append(self.config["pitch_seduction"])
+        self.pitch.append(self.config["pitch_epilogue"])
         self.pitch.append(self.config["pitch_provocation"])
         self.pitch.append(self.config["pitch_fuite"])
         self.pitch.append(self.config["pitch_epilogue"])
@@ -568,6 +604,7 @@ class LitteBotServer:
         self.speed.append(self.config["speed_intro"])
         self.speed.append(self.config["speed_intro"])
         self.speed.append(self.config["speed_seduction"])
+        self.speed.append(self.config["speed_epilogue"])
         self.speed.append(self.config["speed_provocation"])
         self.speed.append(self.config["speed_fuite"])
         self.speed.append(self.config["speed_epilogue"])

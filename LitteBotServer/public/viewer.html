@@ -66,26 +66,31 @@
       switch (data.value) {
         case 0:
           $stat1.text("0. Off");
-          $timer.hide();
+          $timer.show();
+          // $timer.hide();
           break;
         case 1:
           $stat1.text("1. Introduction");
           $timer.show();
           break;
         case 2:
-          $stat1.text("2. Séduction");
+          $stat1.text("2. Seduction");
           $timer.show();
           break;
         case 3:
-          $stat1.text("3. Provocation");
+          $stat1.text("3. Intermède");
           $timer.show();
           break;
         case 4:
-          $stat1.text("4. Fuite");
+          $stat1.text("4. Provocation");
           $timer.show();
           break;
         case 5:
-          $stat1.text("5. Épilogue");
+          $stat1.text("5. Fuite");
+          $timer.show();
+          break;
+        case 6:
+          $stat1.text("6. Epilogue");
           $timer.show();
           break;
         default:
