@@ -6,6 +6,8 @@ LA VIDEO RECOIT SUR LE PORT 14003
 /section        int           (changement de section 0. OFF 1. INTRO 2. SEDUCTION 3. PROVOCATION 4. FUITE 5. EPILOGUE)
 /interactions   int           (nombres d'interactions)
 /stop           1             (fin de session)
+/stop           0             (L'utilisateur n'a pas répondu à la dernière question après /facedetect 0)
+
 
 #/nlpScore       float [0..1]  (score de similarité)
 #/botspeak       0/1           (1 quand le bot parle 0 quand il a terminé)
@@ -25,4 +27,5 @@ et c'est probable qu'il réponde un peu à côté de la plaque
 
 LA VIDEO ENVOIE AU CHATBOT SUR LE PORT 14002
 
-/facedetect     0/1
+/facedetect     0/1  (0 quand perte du visage pendant 30s)
+/end            1    (Fin de l'animation finale)
