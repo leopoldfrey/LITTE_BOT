@@ -37,6 +37,14 @@ class ThreadGroup(Thread):
                     if(self.parent.on == False):
                         # print("OFF!!!")
                         pass
+                    elif(self.parent.flagUserLost == True):
+                        print("USER LOST")
+                        self.flagWaitUser = False
+                        self.parent.areYouThere()
+                    elif(self.parent.flagWaitUser == True):
+                        print("WAIT USER")
+                        self.parent.silent = False
+                        self.parent.wsServer.broadcast({'command':'silent','value':False})
                     elif(self.parent.step == 3):
                         self.parent.nextInter()
                     elif(self.parent.step == 6):
@@ -156,6 +164,9 @@ class LitteBotServer:
         self.interactions_section = 0
         self.is_restart_needed = True
         self.tmp_response = ""
+        self.flagUserLost = False
+        self.flagWaitUser = False
+        self.flagWaitEnd = False
 
         #read from settings.json
         print("___READING CONFIG___")
@@ -240,17 +251,41 @@ class LitteBotServer:
     def video_oscIn(self, address, *args):
         # print("VIDEO OSC IN ", address, args[0])
         if(address == '/facedetect'):
-            # print("FACEDETECT", args[0])
             if self.on :
+                if self.flagWaitEnd :
+                    return
+                elif int(args[0]) == 1 :
+                    print("FACEDETECT User found")
+                    self.flagUserLost = False
+                    self.flagWaitUser = False
+                else:
+                    if self.flagWaitUser :
+                        return
+                    else:
+                        print("FACEDETECT User lost")
+                        self.flagUserLost = True
+                        self.flagWaitUser = False
                 return
             else:
-                if self.phone :
-                    self.phoneHang()
-                else:
-                    if int(args[0]) == 1 :
+                if int(args[0]) == 1 :
+                    print("FACEDETECT User detected")
+                    if self.phone :
+                        self.waitHangPhone = True
+                        self.phoneHang()
+                    else:
                         self.phoneCtrl.ring()
+                else:
+                    if self.phone :
+                        self.phoneHang()
                     else:
                         self.phoneCtrl.stop()
+        elif(address == '/end'):
+            if int(args[0]) == 1 : #fin vidéo finale
+                self.flagWaitEnd = False
+                print("END > RESTART")
+                if self.phone :
+                    self.phoneHang()
+                self.reset()
         # else:
         #     print("VIDEO OSC IN : "+str(address))
         #     for x in range(0,len(args)):
@@ -281,6 +316,8 @@ class LitteBotServer:
                 print("     " + str(args[x]))
 
     def phoneOn(self):
+        if self.on or self.phone :
+            return
         self.phoneCtrl.stop()
         print("PHONE ON")
         self.on = True
@@ -292,21 +329,34 @@ class LitteBotServer:
 
     def phoneOff(self):
         print("PHONE OFF")
-        self.tg.stop()
-        self.phoneCtrl.stop()
-        self.on = False
-        self.phone = False
-        self.silent = True
-        self.video_client.send("/phone", 0)
-        self.wsServer.broadcast({'command':'silent','value':self.silent})
-        self.wsServer.broadcast({"command":"on","value":self.on})
-        self.reset()
+        if self.flagWaitEnd :
+            self.phone = False
+            self.video_client.send("/phone", 0)
+        elif self.waitHangPhone :
+            self.phone = False
+            self.waitHangPhone = False
+            self.video_client.send("/phone", 0)
+            self.phoneCtrl.ring()
+        elif self.on :
+            self.tg.stop()
+            self.phoneCtrl.stop()
+            self.phone = False
+            self.video_client.send("/phone", 0)
+            self.reset()
+        else:
+            self.phoneCtrl.stop()
+            self.tg.stop()
+            self.phone = False
+            self.silent = True
+            self.wsServer.broadcast({'command':'silent','value':self.silent})
 
     def phoneHang(self):
         print("RACCROCHEZ")
         self.phoneCtrl.hang()
 
     def reco(self):
+        self.flagUserLost = False
+        self.flagWaitUser = False
         result = {'transcript': str(bottle.request.forms.getunicode('transcript')),
                 'confidence': float(bottle.request.forms.get('confidence', 0)),
                 'sentence': int(bottle.request.forms.sentence)}
@@ -331,7 +381,7 @@ class LitteBotServer:
             if self.interactions == 1:
                 self.osc_client.send('/logme', mess)
                 self.second(mess)
-            elif self.interactions == 2 and self.username == "":
+            elif self.interactions == 2:
                 self.osc_client.send('/logme', mess)
                 self.third(mess)
             elif self.step == 3:
@@ -356,6 +406,9 @@ class LitteBotServer:
         if(self.tmp_response.__contains__("__TO_EPILOGUE__")):
             self.toEpilogue()
             return
+        elif(self.flagUserLost):
+            self.flagUserLost = False
+            self.flagWaitUser = True
         # print("SERVER receiveResponse", self.tmp_response)
         self.video_client.send("/phase", 2)
         self.video_client.send("/bot", self.tmp_response)
@@ -420,13 +473,11 @@ class LitteBotServer:
         self.wsServer.broadcast({"command":"bot","value":s})
 
     def endEpilogue(self):
-        self.on = False
+        print("WAIT FOR END")
+        self.flagWaitEnd = True
         self.silent = True
         self.wsServer.broadcast({'command':'silent','value':self.silent})
-        # self.wsServer.broadcast({"command":"on","value":self.on})
-        self.reset()
-        time.sleep(1)
-        self.phoneHang()
+        self.video_client.send("/stop", 1) # déclenchement vidéo finale
 
     def nextEpilogue(self):
         self.osc_client.send("/nextEpilogue", 1)
@@ -455,11 +506,24 @@ class LitteBotServer:
     def nextInter(self):
         self.osc_client.send("/nextInter", 1)
 
+    def areYouThere(self):
+        self.osc_client.send("/areYouThere", 1)
+
     def relance(self):
-        self.silent = True
-        self.wsServer.broadcast({'command':'silent','value':self.silent})
-        self.lastInteractionTime = time.time()
-        self.osc_client.send("/relance", 1)
+        if(self.flagWaitUser):
+            print("USER REALLY LOST > RESET")
+            self.video_client.send("/stop", 0)
+            self.phoneHang()
+            self.reset()
+        elif(self.flagUserLost):
+            print("USER LOST")
+            self.flagWaitUser = False
+            self.areYouThere()
+        else:
+            self.silent = True
+            self.wsServer.broadcast({'command':'silent','value':self.silent})
+            self.lastInteractionTime = time.time()
+            self.osc_client.send("/relance", 1)
 
     def first(self):
         self.silent = True
@@ -480,6 +544,7 @@ class LitteBotServer:
         self.osc_client.send("/third", mess)
 
     def reset(self):
+        self.on = False
         self.step = 0
         self.name("")
         self.startTime = time.time()
@@ -487,11 +552,14 @@ class LitteBotServer:
         self.lastInteractionTime = time.time()
         self.interactions = 0
         self.interactions_section = 0
+        self.flagUserLost = False
+        self.flagWaitUser = False
+        self.flagWaitEnd = False
         self.video_client.send("/interactions", self.interactions)
         self.wsServer.broadcast({'command':'step','value':self.step})
         self.wsServer.broadcast({'command':'clear'})
-        # self.bot.newConversation()
-        self.video_client.send("/stop", 1)
+        self.wsServer.broadcast({'command':'silent','value':self.silent})
+        self.silent = True
         self.osc_client.send("/newConversation", 1)
 
     def name(self, name):
@@ -503,7 +571,7 @@ class LitteBotServer:
             self.globalTime = time.time() - self.startTime
             self.sectionTime = time.time() - self.startSectionTime
             self.currentTime = time.time() - self.lastInteractionTime
-            if(self.currentTime > self.config["max_silence"] and self.interactions > 2):
+            if self.currentTime > self.config["max_silence"]:
                 if(self.step > 0 and self.step < 6 and not self.silent):
                     self.relance()
             if(self.step > 0 and self.step < 6 and self.sectionTime > self.maxsection[self.step]):
@@ -522,8 +590,8 @@ class LitteBotServer:
         self.updateTimers()
         if self.is_restart_needed:
             self.is_restart_needed = False
-            return {'restart':True};#, 'timer':self.globalTime, 'section_timer':self.sectionTime, 'interaction_timer':self.currentTime, 'interactions':self.interactions}
-        return {'restart':False};#, 'timer':self.globalTime, 'section_timer':self.sectionTime, 'interaction_timer':self.currentTime, 'interactions':self.interactions}
+            return {'restart':True};
+        return {'restart':False};
 
     def index(self):
         return open("public/index.html", "rt").read()

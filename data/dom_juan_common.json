@@ -17,8 +17,7 @@
             "Bonjour, comment vous appelez-vous ?",
             "Bonjour, approche donc et me tiens compagnie. Comment t'appelles-tu ?",
             "Approchez... Ah que ce visage est mignon ! Ouvrez vos yeux enti\u00e8rement, ah qu'ils sont beaux ! Que je voie un peu vos dents, je vous prie. Ah qu'elles sont amoureuses, et ces l\u00e8vres app\u00e9tissantes ! Comment voudriez vous que je vous appelle ?  ",
-            "Peut on rien voir de plus agr\u00e9able ? Comment on vous appelle ?",
-            "Je suis ravi, et je n'ai jamais vu une si charmante personne. Vous me ferez plaisir de demeurer ici, je vous assure. Comment on vous appelle ?"
+            "Peut on rien voir de plus agr\u00e9able ? Comment on vous appelle ?"
         ]
     },
     "2": {
@@ -34,7 +33,7 @@
             "C'est \u00e0 moi que le sort vous destine aujourd'hui __NAME__.",
             "__NAME__, que dans ce moment mon coeur ressent de joie !",
             "__NAME__, La bonne \u00e2me !",
-            "__NAME__, c'est ainsi qu'on te nomme, racontez moi vos sentiments.",
+            "__NAME__, c'est ainsi qu'on vous nomme, racontez moi vos sentiments.",
             "__NAME__, De quoi est-il question ?",
             "__NAME__, Que veux tu ?",
             "__NAME__, Que voulez vous que je dise...",
@@ -613,6 +612,14 @@
         ],
         "a": [
             "D'ici, de l'au-del\u00e0, un peu de partout, mais je dois vous avouer que jamais je n'avais \u00e9t\u00e9 si proche de mon destin."
+        ]
+    },
+    "39": {
+        "q": [
+            "__AREYOUTHERE__"
+        ],
+        "a": [
+            "__NAME__ ? \u00cates-vous l\u00e0 ? Je ne vous per\u00e7ois plus. \u00cates-vous parti ?"
         ]
     }
 }

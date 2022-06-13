@@ -155,6 +155,8 @@ class LitteBot:
             self.nextEpilogue()
         elif(address == '/nextInter'):
             self.nextInter()
+        elif(address == '/areYouThere'):
+            self.areYouThere()
         elif(address == '/reload'):
             self.loadQuestionsAndEmbeddings()
         elif(address == '/logbot'):
@@ -210,6 +212,15 @@ class LitteBot:
         else:
             self.osc_client.send('/endInter',1)
 
+    def areYouThere(self):
+        idx = random.randrange(len(self.areyou))
+        self.lastresponse = self.areyou[idx].strip()
+        self.lastresponse = self.postProcess(self.lastresponse)
+        print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
+        self.botresponses.append(self.lastresponse)
+        self.log.logBot(str(self.botmode), self.lastresponse)
+        self.osc_client.send('/lastresponse',self.lastresponse)
+
     def getResponse(self, q):
         self.log.logMe(q)
         print("user: "+q)
@@ -223,7 +234,7 @@ class LitteBot:
         self.botresponses.append(self.lastresponse)
         self.log.logBot(str(self.botmode), self.lastresponse)
         self.osc_client.send('/lastresponse',self.lastresponse)
-        return self.lastresponse
+        # return self.lastresponse
 
     def getAllResponses(self):
         return self.botresponses
@@ -263,52 +274,10 @@ class LitteBot:
         self.osc_client.send('/lastresponse',self.lastresponse)
 
     def speakSecond(self, mess):
+        # print("BRAIN SECOND")
         if(mess.__contains__("moi c'est ")):
             self.username = mess.split("moi c'est ")[-1]
-        elif(mess.__contains__("suis là")):
-            pass
-        # elif(mess.__contains__("c'est moi ")):
-        #     self.username = mess.split("c'est moi ")[-1]
-        elif(mess.__contains__("moi")):
-            pass
-        elif(mess.__contains__("appelle")):
-            self.username = mess.split("appelle ")[-1]
-        elif(mess.__contains__("suis")):
-            self.username = mess.split("suis ")[-1]
-        elif(mess.__contains__("nomme")):
-            self.username = mess.split("nomme ")[-1]
-        elif(mess.__contains__("est")):
-            self.username = mess.split("est ")[-1]
-
-        # print("BRAIN SECOND", ">"+self.username+"<")
-
-        if(self.username == ""):
-            # print("NO USERNAME")
-            if(len(self.currentSecond) == 0):
-                self.currentSecond = self.second.copy()
-            idx = random.randrange(len(self.currentSecond))
-            self.lastresponse = self.currentSecond.pop(idx).strip()
-            self.lastresponse = self.postProcess(self.lastresponse)
-            print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
-            self.botresponses.append(self.lastresponse)
-            self.log.logBot(str(self.botmode), self.lastresponse)
-            self.osc_client.send('/lastresponse',self.lastresponse)
-        else:
-            self.osc_client.send('/username',self.username)
-            if(len(self.currentThird) == 0):
-                self.currentThird = self.third.copy()
-            idx = random.randrange(len(self.currentThird))
-            self.lastresponse = self.currentThird.pop(idx).strip()
-            self.lastresponse = self.postProcess(self.lastresponse)
-            print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
-            self.botresponses.append(self.lastresponse)
-            self.log.logBot(str(self.botmode), self.lastresponse)
-            self.osc_client.send('/lastresponse',self.lastresponse)
-
-    def speakThird(self, mess):
-        if(mess.__contains__("moi c'est ")):
-            self.username = mess.split("moi c'est ")[-1]
-        if(mess.__contains__("c'est moi ")):
+        elif(mess.__contains__("c'est moi ")):
             self.username = mess.split("c'est moi ")[-1]
         elif(mess.__contains__("appelle")):
             self.username = mess.split("appelle ")[-1]
@@ -319,11 +288,23 @@ class LitteBot:
         elif(mess.__contains__("est")):
             self.username = mess.split("est ")[-1]
         else:
-            self.username = mess.split(" ")[-1]
+            self.username = mess
 
-        # print("BRAIN THIRD", self.username)
-
+        print("USERNAME:", ">"+self.username+"<")
         self.osc_client.send('/username',self.username)
+
+        if(len(self.currentSecond) == 0):
+            self.currentSecond = self.second.copy()
+        idx = random.randrange(len(self.currentSecond))
+        self.lastresponse = self.currentSecond.pop(idx).strip()
+        self.lastresponse = self.postProcess(self.lastresponse)
+        print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
+        self.botresponses.append(self.lastresponse)
+        self.log.logBot(str(self.botmode), self.lastresponse)
+        self.osc_client.send('/lastresponse',self.lastresponse)
+
+    def speakThird(self, mess):
+        # print("BRAIN THIRD")
 
         if(len(self.currentThird) == 0):
             self.currentThird = self.third.copy()
@@ -424,6 +405,7 @@ class LitteBot:
         self.quit = []
         self.first = []
         self.second = []
+        self.areyou = []
         self.third = []
         self.epilogue = []
         self.inter = []
@@ -448,6 +430,8 @@ class LitteBot:
                         self.second = tmp[i]['a']
                     elif qq.__contains__("__THIRD__"):
                         self.third = tmp[i]['a']
+                    elif qq.__contains__("__AREYOUTHERE__"):
+                        self.areyou = tmp[i]['a']
                     elif qql.__contains__('#'):
                         #print("WILDCARD", qq, tmp[i]['a'])
                         filter_common[qql] = tmp[i]['a']
@@ -557,7 +541,7 @@ class LitteBot:
         # print("START", len(self.start), self.start)
         # print("FIRST", len(self.first), self.first)
         # print("SECOND", len(self.second), self.second)
-        # print("THIRD", len(self.third), self.third)
+        # print("__AREYOUTHERE__", len(self.areyou), self.areyou)
 
         return dom_juan
 
@@ -703,27 +687,6 @@ class LitteBot:
 
         return res, history
 
-    # def gradio_interface(self) -> gr.interface.Interface:
-    #     """Returns the gradio interface.
-    #
-    #     Returns:
-    #         gr.interface.Interface: Interface
-    #     """
-    #     return gr.Interface(
-    #         fn=self.predict,
-    #         theme="default",
-    #         inputs=[
-    #             gr.inputs.Textbox(
-    #                 placeholder="Bonjour !", label="Parlez avec Dom Juan:"
-    #             ),
-    #             "state",
-    #         ],
-    #         outputs=["chatbot", "state"],
-    #         title="LITTE_BOT",
-    #         allow_flagging="never",
-    #         css=self.css,
-    #     )
-
 def handler(signum, frame):
     litte_bot.kill()
 
@@ -731,6 +694,3 @@ signal.signal(signal.SIGINT, handler)
 
 if __name__ == "__main__":
     litte_bot = LitteBot()
-    # gr.close_all()
-    # interface = litte_bot.gradio_interface()
-    # interface.launch(server_name="0.0.0.0", server_port=7892)
