@@ -9,6 +9,7 @@ pip3 install bottle
 pip3 install google.cloud.texttospeech
 pip3 install pedalboard
 pip3 install python_osc
+pip3 install pygame
 
 
 :: SET PATH=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.0\bin;%PATH%

@@ -12,3 +12,4 @@ google.cloud.texttospeech
 #jinja2
 pedalboard
 python_osc
+pygame

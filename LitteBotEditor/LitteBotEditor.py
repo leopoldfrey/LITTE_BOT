@@ -19,12 +19,12 @@ print = functools.partial(print, flush=True)
 class LitteBotEditor():
     def __init__(self):
 
-        print("Loading data...")
+        print("[Editor] Loading data...")
 
         self.filename = dialog_path + def_questions_common + ".json"
         self.load()
 
-        print("___STARTING GOOGLE CHROME___")
+        print("[Editor] ___STARTING GOOGLE CHROME___")
         url = 'http://localhost:17995/'
         # MacOS
         if _platform == "darwin":
@@ -35,7 +35,7 @@ class LitteBotEditor():
         # Linux
         # chrome_path = '/usr/bin/google-chrome %s'
 
-        print("LitteBot Editor starting...")
+        print("[Editor] LitteBot Editor starting...")
         self.host = '127.0.0.1'
         self.port = int(os.environ.get("PORT", 17995))
         self.server = Bottle()
@@ -44,7 +44,7 @@ class LitteBotEditor():
 
 
     def load(self):
-        print("Loading data "+self.filename)
+        print("[Editor] Loading data "+self.filename)
         with open(self.filename) as f:
             self.data = json.load(f)
 

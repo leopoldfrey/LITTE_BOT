@@ -4,6 +4,8 @@ from sys import platform as _platform
 from threading import Thread
 import subprocess
 
+# UNUSED see LitteBotSound
+
 class Loop(Thread):
     def __init__(self, file):
         Thread.__init__(self)
@@ -26,13 +28,13 @@ class PhoneCtrl():
     def ring(self):
         if self.loop :
             self.loop.stop()
-        self.loop = Loop("./391870_phone.wav")
+        self.loop = Loop("../sounds/phoneRing.wav")
         self.loop.start()
 
     def hang(self):
         if self.loop :
             self.loop.stop()
-        self.loop = Loop("./178537_phone-hang-up.wav")
+        self.loop = Loop("../sounds/phoneHang.wav")
         self.loop.start()
 
     def stop(self):

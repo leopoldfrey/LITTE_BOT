@@ -17,15 +17,15 @@ if _platform == "win32" or _platform == "win64":
     try:
         os.add_dll_directory("C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.6/bin")
     except :
-        print("Error loading CUDA binaries")
+        print("[Brain] Error loading CUDA binaries")
 
     try:
         os.add_dll_directory("C:/tools/cuda/bin")
     except :
-        print("Error loading CUDNN binaries")
+        print("[Brain] Error loading CUDNN binaries")
 
 
-print("Loading Tensorflow...")
+print("[Brain] Loading Tensorflow...")
 import tensorflow as tf
 import tensorflow_hub as hub
 import tensorflow_text
@@ -108,7 +108,7 @@ class LitteBot:
         self.log = BotLog()
 
         """Initializes the bot."""
-        print("Loading module "+def_module)
+        print("[Brain] Loading module "+def_module)
         self.module_url = ( def_module )
         self.model_embeddings = hub.load(self.module_url)
         self.model_url = def_model
@@ -122,17 +122,17 @@ class LitteBot:
         self.osc_server = Server('127.0.0.1', 14001, self.oscIn)
         self.osc_client = Client('127.0.0.1', 14000)
 
-        print("Chatbot ready")
+        print("[Brain] Chatbot ready")
 
     def kill(self):
         self.osc_server.stop()
         os._exit(0)
 
     def loadQuestionsAndEmbeddings(self):
-        print("Loading questions")# "+def_questions)
+        print("[Brain] Loading questions")# "+def_questions)
         self.dom_juan = self.load_questions_from_json()
         self.dom_juan_questions = self.load_questions_keys()
-        print("Building embeddings")
+        print("[Brain] Building embeddings")
         self.dom_juan_questions_embeddings = self.build_embeddings()
 
     def oscIn(self, address, *args):
@@ -160,13 +160,13 @@ class LitteBot:
         elif(address == '/reload'):
             self.loadQuestionsAndEmbeddings()
         elif(address == '/logbot'):
-            print(formatColor(0,color[self.botmode],40, "bot: "+args[0]))
+            print(formatColor(0,color[self.botmode],40, "[Brain] bot: "+args[0]))
             self.log.logBot(str(self.botmode), args[0])
         elif(address == '/logme'):
-            print("user: "+args[0])
+            print("[Brain] user: "+args[0])
             self.log.logMe(args[0])
         else:
-            print("OSC IN : "+str(address))
+            print("[Brain] OSC IN : "+str(address))
             for x in range(0,len(args)):
                 print("     " + str(args[x]))
 
@@ -176,23 +176,23 @@ class LitteBot:
         if self.botmode != 1:
             self.currentStart = self.start[self.botmode].copy()
         if self.botmode == 0:
-            print(" - "+formatColor(1,color[OFF],40,"Bot Mode Passe-partout"))
+            print("[Brain]  - "+formatColor(1,color[OFF],40,"Bot Mode Passe-partout"))
         elif self.botmode == 1:
-            print(" - "+formatColor(1,color[INTRO],40,"Bot Mode Introduction"))
+            print("[Brain]  - "+formatColor(1,color[INTRO],40,"Bot Mode Introduction"))
         elif self.botmode == 2:
-            print(" - "+formatColor(1,color[SEDUCTION],40,"Bot Mode Seduction"))
+            print("[Brain]  - "+formatColor(1,color[SEDUCTION],40,"Bot Mode Seduction"))
         elif self.botmode == 3:
-            print(" - "+formatColor(1,color[INTER],40,"Bot Mode Intermede"))
+            print("[Brain]  - "+formatColor(1,color[INTER],40,"Bot Mode Intermede"))
         elif self.botmode == 4:
-            print(" - "+formatColor(1,color[PROVOCATION],40,"Bot Mode Provocation"))
+            print("[Brain]  - "+formatColor(1,color[PROVOCATION],40,"Bot Mode Provocation"))
         elif self.botmode == 5:
-            print(" - "+formatColor(1,color[FUITE],40,"Bot Mode Fuite"))
+            print("[Brain]  - "+formatColor(1,color[FUITE],40,"Bot Mode Fuite"))
 
     def nextEpilogue(self):
         if(self.curEpilogue < len(self.epilogue)):
             # print("NEXT EPILOGUE", self.epilogue)
             self.lastresponse = self.postProcess(self.epilogue[self.curEpilogue].strip())
-            print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
+            print(formatColor(0,color[self.botmode],40, "[Brain] bot: "+self.lastresponse))
             self.botresponses.append(self.lastresponse)
             self.log.logBot(str(self.botmode), self.lastresponse)
             self.osc_client.send('/curEpilogue',self.lastresponse)
@@ -204,7 +204,7 @@ class LitteBot:
         if(self.curInter < len(self.inter)):
             # print("NEXT EPILOGUE", self.epilogue)
             self.lastresponse = self.postProcess(self.inter[self.curInter].strip())
-            print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
+            print(formatColor(0,color[self.botmode],40, "[Brain] bot: "+self.lastresponse))
             self.botresponses.append(self.lastresponse)
             self.log.logBot(str(self.botmode), self.lastresponse)
             self.osc_client.send('/curInter',self.lastresponse)
@@ -216,21 +216,21 @@ class LitteBot:
         idx = random.randrange(len(self.areyou))
         self.lastresponse = self.areyou[idx].strip()
         self.lastresponse = self.postProcess(self.lastresponse)
-        print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
+        print(formatColor(0,color[self.botmode],40, "[Brain] bot: "+self.lastresponse))
         self.botresponses.append(self.lastresponse)
         self.log.logBot(str(self.botmode), self.lastresponse)
         self.osc_client.send('/lastresponse',self.lastresponse)
 
     def getResponse(self, q):
         self.log.logMe(q)
-        print("user: "+q)
+        print("[Brain] user: "+q)
         response = self.predict(q, self.history)
         # i = 0
         # while self.lastresponse in self.botresponses and i < 10:
         #     self.predict(q, self.history)
         #     # print("\t"+formatColor(0,color[self.botmode],40,"(repetitive response, new : "+ response+")"))
         #     i = i + 1
-        print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
+        print(formatColor(0,color[self.botmode],40, "[Brain] bot: "+self.lastresponse))
         self.botresponses.append(self.lastresponse)
         self.log.logBot(str(self.botmode), self.lastresponse)
         self.osc_client.send('/lastresponse',self.lastresponse)
@@ -250,31 +250,31 @@ class LitteBot:
         self.botresponses.clear()
 
     def relance(self):
-        # print("BRAIN RELANCE")
+        # print("Brain RELANCE")
         if(len(self.currentStart) == 0):
             self.currentStart = self.start[self.botmode].copy()
         idx = random.randrange(len(self.currentStart))
         self.lastresponse = self.currentStart.pop(idx).strip()
         self.lastresponse = self.postProcess(self.lastresponse)
-        print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
+        print(formatColor(0,color[self.botmode],40, "[Brain] bot: "+self.lastresponse))
         self.botresponses.append(self.lastresponse)
         self.log.logBot(str(self.botmode), self.lastresponse)
         self.osc_client.send('/lastresponse',self.lastresponse)
 
     def speakFirst(self):
-        # print("BRAIN FIRST")
+        # print("Brain FIRST")
         if(len(self.currentFirst) == 0):
             self.currentFirst = self.first.copy()
         idx = random.randrange(len(self.currentFirst))
         self.lastresponse = self.currentFirst.pop(idx).strip()
         self.lastresponse = self.postProcess(self.lastresponse)
-        print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
+        print(formatColor(0,color[self.botmode],40, "[Brain] bot: "+self.lastresponse))
         self.botresponses.append(self.lastresponse)
         self.log.logBot(str(self.botmode), self.lastresponse)
         self.osc_client.send('/lastresponse',self.lastresponse)
 
     def speakSecond(self, mess):
-        # print("BRAIN SECOND")
+        # print("Brain SECOND")
         if(mess.__contains__("moi c'est ")):
             self.username = mess.split("moi c'est ")[-1]
         elif(mess.__contains__("c'est moi ")):
@@ -290,7 +290,7 @@ class LitteBot:
         else:
             self.username = mess
 
-        print("USERNAME:", ">"+self.username+"<")
+        print("[Brain] Username:", ">"+self.username+"<")
         self.osc_client.send('/username',self.username)
 
         if(len(self.currentSecond) == 0):
@@ -298,20 +298,20 @@ class LitteBot:
         idx = random.randrange(len(self.currentSecond))
         self.lastresponse = self.currentSecond.pop(idx).strip()
         self.lastresponse = self.postProcess(self.lastresponse)
-        print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
+        print(formatColor(0,color[self.botmode],40, "[Brain] bot: "+self.lastresponse))
         self.botresponses.append(self.lastresponse)
         self.log.logBot(str(self.botmode), self.lastresponse)
         self.osc_client.send('/lastresponse',self.lastresponse)
 
     def speakThird(self, mess):
-        # print("BRAIN THIRD")
+        # print("Brain THIRD")
 
         if(len(self.currentThird) == 0):
             self.currentThird = self.third.copy()
         idx = random.randrange(len(self.currentThird))
         self.lastresponse = self.currentThird.pop(idx).strip()
         self.lastresponse = self.postProcess(self.lastresponse)
-        print(formatColor(0,color[self.botmode],40, "bot: "+self.lastresponse))
+        print(formatColor(0,color[self.botmode],40, "[Brain] bot: "+self.lastresponse))
         self.botresponses.append(self.lastresponse)
         self.log.logBot(str(self.botmode), self.lastresponse)
         self.osc_client.send('/lastresponse',self.lastresponse)
@@ -388,9 +388,9 @@ class LitteBot:
         Returns:
             Union[transformers.models.gpt2.modeling_gpt2.GPT2LMHeadModel,transformers.models.gpt2.tokenization_gpt2_fast.GPT2TokenizerFast]: Model and tokenizer
         """
-        print("Loading model "+self.model_url)
+        print("[Brain] Loading model "+self.model_url)
         model = AutoModelForCausalLM.from_pretrained(self.model_url)
-        print("Loading tokenizer "+self.tokenizer_url)
+        print("[Brain] Loading tokenizer "+self.tokenizer_url)
         tokenizer = AutoTokenizer.from_pretrained(self.tokenizer_url)
         return model, tokenizer
 
@@ -410,7 +410,7 @@ class LitteBot:
         self.epilogue = []
         self.inter = []
         dom_juan = []
-        print("Loading ", dialog_path+def_questions_common+".json")
+        print("[Brain] Loading ", dialog_path+def_questions_common+".json")
         with open(dialog_path+def_questions_common+".json") as dj_common:
             tmp = json.load(dj_common)
             dom_juan_common = {}
@@ -437,7 +437,7 @@ class LitteBot:
                         filter_common[qql] = tmp[i]['a']
                     else:
                         dom_juan_common[qql] = tmp[i]['a']
-            print("Loading ", dialog_path+def_questions_seduction+".json")
+            print("[Brain] Loading ", dialog_path+def_questions_seduction+".json")
             with open(dialog_path+def_questions_seduction+".json") as dj:
                 tmp = json.load(dj)
                 tmp_seduction = {}
@@ -456,7 +456,7 @@ class LitteBot:
                             tmp_seduction[qql] = tmp[i]['a']
                 dom_juan_seduction = {**dom_juan_common, **tmp_seduction}
                 filter_seduction = {**filter_common, **tmp_filter}
-            print("Loading ", dialog_path+def_questions_provocation+".json")
+            print("[Brain] Loading ", dialog_path+def_questions_provocation+".json")
             with open(dialog_path+def_questions_provocation+".json") as dj:
                 tmp = json.load(dj)
                 tmp_provocation = {}
@@ -475,7 +475,7 @@ class LitteBot:
                             tmp_provocation[qql] = tmp[i]['a']
                 dom_juan_provocation = {**tmp_provocation, **dom_juan_common}
                 filter_provocation = {**tmp_filter, **filter_common}
-            print("Loading ", dialog_path+def_questions_fuite+".json")
+            print("[Brain] Loading ", dialog_path+def_questions_fuite+".json")
             with open(dialog_path+def_questions_fuite+".json") as dj:
                 tmp = json.load(dj)
                 tmp_fuite = {}
@@ -524,7 +524,7 @@ class LitteBot:
         self.currentSecond = self.second.copy()
         self.currentThird = self.third.copy()
 
-        print("Loading ", dialog_path+def_questions_epilogue+".json")
+        print("[Brain] Loading ", dialog_path+def_questions_epilogue+".json")
         with open(dialog_path+def_questions_epilogue+".json") as dj:
             tmp = json.load(dj)
             for i in tmp:
@@ -653,7 +653,7 @@ class LitteBot:
         Returns:
             list: Answer and history of the conversation
         """
-        print(formatColor(0,color[self.botmode],40, "...(bot think)..."))
+        print(formatColor(0,color[self.botmode],40, "[Brain] ...(bot think)..."))
         if history is None:
             history = []
         new_user_input_ids = self.tokenizer.encode(
