@@ -3,7 +3,7 @@ from pyosc import Server
 import functools
 print = functools.partial(print, end='\n',flush=True)
 
-sound_path = "../Sounds/"
+sound_path = "../sounds/"
 configFilename = "soundconfig.json"
 
 CHANNEL_AMBIANT_A = 0
