@@ -2,7 +2,7 @@
   "ring": 0.4,
   "hang": 0.1,
   "botthink": 1,
-  "ambiant": 0.3,
+  "ambiant": 0.4,
   "final": 1,
   "fadeInMs": 3000,
   "fadeOutMs": 10000,

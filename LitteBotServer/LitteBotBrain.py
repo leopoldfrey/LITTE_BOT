@@ -276,27 +276,33 @@ class LitteBot:
     def speakSecond(self, mess):
         # print("Brain SECOND")
         if(mess.__contains__("moi c'est ")):
-            self.username = mess.split("moi c'est ")[-1]
+            self.username = mess.split("moi c'est ")[-1].split(" ")[0]
         elif(mess.__contains__("c'est moi ")):
-            self.username = mess.split("c'est moi ")[-1]
-        elif(mess.__contains__("appelle")):
-            self.username = mess.split("appelle ")[-1]
+            self.username = mess.split("c'est moi ")[-1].split(" ")[0]
+        elif(mess.__contains__("m'appelle ")):
+            self.username = mess.split("m'appelle ")[-1].split(" ")[0]
+        elif(mess.__contains__("appeller")):
+            self.username = mess.split("appeller ")[-1].split(" ")[0]
         elif(mess.__contains__("suis")):
-            self.username = mess.split("suis ")[-1]
+            self.username = mess.split("suis ")[-1].split(" ")[0]
         elif(mess.__contains__("nomme")):
-            self.username = mess.split("nomme ")[-1]
+            self.username = mess.split("nomme ")[-1].split(" ")[0]
         elif(mess.__contains__("est")):
-            self.username = mess.split("est ")[-1]
+            self.username = mess.split("nom est ")[-1].split(" ")[0]
         else:
-            self.username = mess
+            self.username = mess.split(" ")[0]
 
         print("[Brain] Username:", ">"+self.username+"<")
         self.osc_client.send('/username',self.username)
 
+        tmp = ""
+        if mess.__contains__("et toi") or mess.__contains__("t'appelle") or mess.__contains__("vous appellez") or mess.__contains__("ton nom") or mess.__contains__("votre nom") :
+            tmp = "Je suis Don Juan moi-même. "
+
         if(len(self.currentSecond) == 0):
             self.currentSecond = self.second.copy()
         idx = random.randrange(len(self.currentSecond))
-        self.lastresponse = self.currentSecond.pop(idx).strip()
+        self.lastresponse = tmp + self.currentSecond.pop(idx).strip()
         self.lastresponse = self.postProcess(self.lastresponse)
         print(formatColor(0,color[self.botmode],40, "[Brain] bot: "+self.lastresponse))
         self.botresponses.append(self.lastresponse)

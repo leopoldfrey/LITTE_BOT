@@ -47,7 +47,7 @@
             "__NAME__, Qu'est-ce qui vous am\u00e8ne ici ?",
             "__NAME__, Qu'attendez vous de moi ?",
             "__NAME__, Que pensez vous de l'amour ?",
-            "__NAME__, Quoi agite v\u00f4tre c%u0153ur? "
+            "__NAME__, Qu'est-ce qui agite votre c%u0153ur ? "
         ]
     },
     "3": {
@@ -63,7 +63,7 @@
             "__START__"
         ],
         "a": [
-            "aie"
+            "a\u00efe"
         ]
     },
     "5": {

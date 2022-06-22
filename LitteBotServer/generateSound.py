@@ -1,6 +1,17 @@
 import sys, os, time, json, random, datetime
-from gtts_synth import TextToSpeechNoThread
+#from gtts_synth import TextToSpeechNoThread
+from gtts_synth import TextToSpeech
 
+TextToSpeech("Dom Juan").start()
+
+time.sleep(3)
+
+txt = "je vous en prie, ré-interpretez-moi s'il vous plaît, ne me laissez pas me pétrifier dans ma caricature"
+print(txt)
+TextToSpeech(txt, pitch=-10, speed=0.5, voice=0).start()
+TextToSpeech(txt, pitch=-10, speed=0.5, voice=4).start()
+
+'''
 dialog_path = "../data/"
 def_questions_common = "dom_juan_common"
 def_questions_seduction = "dom_juan_seduction"
@@ -107,3 +118,4 @@ while cc < 1:
     tts.synthesize(str, pitch=p, speed=s, fname=f, play=False)
 
     cc += 1
+'''

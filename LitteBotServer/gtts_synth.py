@@ -9,8 +9,10 @@ import subprocess
 import re
 # if _platform == "darwin":
 #     from playsound import playsound
+import functools
+print = functools.partial(print, end='\n',flush=True)
 
-VOICE = "fr-FR-Wavenet-C"
+VOICE = ["fr-FR-Wavenet-C", "fr-FR-Wavenet-E", "fr-FR-Wavenet-A", "fr-FR-Wavenet-B", "fr-FR-Wavenet-D"]
 
 '''
 fr-FR-Wavenet-E
@@ -41,18 +43,19 @@ def list_voices():
             print(f"{voice.name}")
 
 class TextToSpeech(Thread):
-    def __init__(self, text, pitch=0.0, speed=1.08, silent=False):
+    def __init__(self, text, pitch=0.0, speed=1.08, voice=0, silent=False):
         Thread.__init__(self)
-        # print("TTS", text, pitch, speed)
-        self.language_code = "-".join(VOICE.split("-")[:2])
+        print("[Server] [TextToSpeech]", pitch, speed, voice, text)
+        self.language_code = "-".join(VOICE[0].split("-")[:2])
         if(len(text) > 500):
             self.textA = re.split("[.!?;:]", text)
         else:
             self.textA = []
             self.textA.append(text)
         # print(len(self.textA), self.textA)
+        self.voice = voice
         self.voice_params = tts.VoiceSelectionParams(
-            language_code=self.language_code, name=VOICE
+            language_code=self.language_code, name=VOICE[self.voice]
         )
         self.audio_config = tts.AudioConfig(audio_encoding=tts.AudioEncoding.LINEAR16, speaking_rate=speed, pitch=pitch)
         self.client = tts.TextToSpeechClient()
@@ -121,14 +124,15 @@ class TextToSpeech(Thread):
 
 class TextToSpeechNoThread():
     def __init__(self):
-        self.language_code = "-".join(VOICE.split("-")[:2])
-        self.voice_params = tts.VoiceSelectionParams(
-            language_code=self.language_code, name=VOICE
-        )
-        self.audio_config = tts.AudioConfig(audio_encoding=tts.AudioEncoding.LINEAR16)
+        self.language_code = "-".join(VOICE[0].split("-")[:2])
+        #self.audio_config = tts.AudioConfig(audio_encoding=tts.AudioEncoding.LINEAR16)
         self.client = tts.TextToSpeechClient()
 
-    def synthesize(self, text, pitch=0.0, speed=1.08, fname="output", play=True):
+    def synthesize(self, text, pitch=0.0, speed=1.08, voice=0, fname="output", play=True):
+        self.voice = voice
+        self.voice_params = tts.VoiceSelectionParams(
+            language_code=self.language_code, name=VOICE[self.voice]
+        )
         self.audio_config = tts.AudioConfig(audio_encoding=tts.AudioEncoding.LINEAR16, speaking_rate=speed, pitch=pitch)
         self.text_input = tts.SynthesisInput(text=text)
         response = self.client.synthesize_speech(
@@ -164,8 +168,14 @@ if __name__ == '__main__':
     if len(sys.argv) == 2:
         thd = TextToSpeech(sys.argv[1])
         thd.start()
+    elif len(sys.argv) == 3:
+        thd = TextToSpeech(sys.argv[1], voice=int(sys.argv[2]))
+        thd.start()
     elif len(sys.argv) == 4:
         thd = TextToSpeech(sys.argv[1], float(sys.argv[2]), float(sys.argv[3]))
+        thd.start()
+    elif len(sys.argv) == 5:
+        thd = TextToSpeech(sys.argv[1], float(sys.argv[2]), float(sys.argv[3]), int(sys.argv[4]))
         thd.start()
         # print(thd.is_alive())
         # tts = TextToSpeechNoThread()
