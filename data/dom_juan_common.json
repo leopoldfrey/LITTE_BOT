@@ -4,7 +4,7 @@
             "__FIRST__"
         ],
         "a": [
-            "Qui vient rompre mon somme ?..... Qui est l\u00e0 ? Sganarelle ? Elvire ? Don Carlos ? Charlotte ? Monsieur Dimanche ? Commandeur ?",
+            "Qui vient rompre mon somme ?..... Qui est l\u00e0 ? Sganarelle ? Elvire ? Don Carlos ? Charlotte ? Monsieur Dimanche ? Commandeur ? Quel est votre nom?",
             "Qui va l\u00e0 ? Quel est ton nom ?",
             "Avec qui j'ai l'honneur de faire rencontre ? Comment vous appelez-vous ?",
             "Alors je ne vous connais pas ? J'ai donc l'honneur de parler a tout une autre personne ? Comment vous appelez-vous ?",
@@ -41,7 +41,13 @@
             "__NAME__, Pour moi je suis ravi, et je n'ai jamais vu une si charmante personne. Vous me ferez plaisir de demeurer ici, je vous assure. ",
             "__NAME__, que puis-je faire pour vous ?",
             "__NAME__, comment vous sentez-vous ? ",
-            "__NAME__, votre personne m'est agr\u00e9able. Que d\u00e9sirez vous ? "
+            "__NAME__, votre personne m'est agr\u00e9able. Que d\u00e9sirez vous ? ",
+            "__NAME__, Je suis affect\u00e9 par votre beaut\u00e9. Parlez-moi de vous.",
+            "__NAME__, Aimez vous ?",
+            "__NAME__, Qu'est-ce qui vous am\u00e8ne ici ?",
+            "__NAME__, Qu'attendez vous de moi ?",
+            "__NAME__, Que pensez vous de l'amour ?",
+            "__NAME__, Quoi agite v\u00f4tre c%u0153ur? "
         ]
     },
     "3": {
@@ -49,12 +55,7 @@
             "__THIRD__"
         ],
         "a": [
-            "Racontez-moi d'avantage.",
-            "Je suis affect\u00e9 par votre beaut\u00e9. Parlez-moi de vous.",
-            "Aimez vous ?",
-            "Qu'est-ce qui vous am\u00e8ne ici ?",
-            "Qu'attendez-vous de moi ?",
-            "Que pensez vous de l'amour ?"
+            "Il ne tient qu'\u00e0 vous de me faire exister pour quelques secondes, mais je ne serai jamais rien d'autre qu'un miroir de vos peurs et vos fantasmes. A quoi ou qui aimerez vous parler?"
         ]
     },
     "4": {
@@ -62,28 +63,7 @@
             "__START__"
         ],
         "a": [
-            "Haussez un peu la t\u00eate de gr\u00e2ce.",
-            "Beau d\u00e9sir, qui te donne empire sur mes sens ?",
-            "Tu ne r\u00e9pondras pas ?",
-            "Veux tu r\u00e9pondre, te dis-je.",
-            "Qu'est-ce que vous dites ?",
-            "Attends-moi un peu.",
-            "Eh bien, que vous ai-je dit ?",
-            "N'ai-je pas devin\u00e9.",
-            "Eh bien! Je te donne la libert\u00e9 de parler et de me dire tes sentiments.",
-            "Mais encore, quelle est ta pens\u00e9e l\u00e0-dessous ? Que t'imagines tu de cet affaire ?",
-            "Ah ! Que de bruit !",
-            "Voyons cela.",
-            "Qu'est-ce que vous dites ?",
-            "N'ai-je pas devin\u00e9 ?",
-            "Pouvez-vous avoir cette pens\u00e9e ?",
-            "L'effet est admirable.",
-            "Laissons cela.",
-            "Vous vous raillez de moi.",
-            "Mais c'est assez de cette mati\u00e8re ; reprenons notre discours.",
-            "Ah, que cela est beau",
-            "Je n'ai rien \u00e0 r\u00e9pondre",
-            "Que voulez vous que je dise"
+            "aie"
         ]
     },
     "5": {
@@ -589,7 +569,7 @@
             "Qu\u00e9 voulez vous?"
         ],
         "a": [
-            "Je veux tout de v\u00f4tre personne. Marrions nous."
+            "Je veux tout de v\u00f4tre personne."
         ]
     },
     "37": {
@@ -620,6 +600,44 @@
         ],
         "a": [
             "__NAME__ ? \u00cates-vous l\u00e0 ? Je ne vous per\u00e7ois plus. \u00cates-vous parti ?"
+        ]
+    },
+    "40": {
+        "q": [
+            "#visage#"
+        ],
+        "a": [
+            "Combien de visages pouvez vous aimer?",
+            "quel visage pourriez vous aimer? ",
+            "Mon visage est celui que vous projetez"
+        ]
+    },
+    "41": {
+        "q": [
+            "#question#"
+        ],
+        "a": [
+            "Quelle question aimerez vous q'uon vous pose? "
+        ]
+    },
+    "42": {
+        "q": [
+            "#pas de sens#",
+            "vous dites n'importe quoi",
+            "pas de sens",
+            "rien dire"
+        ],
+        "a": [
+            "Il n'y a pas d'autre sens a mes paroles que celui que vous lui donnerez.",
+            "oh, pardon , je me m\u00e8le de scenario, dans quelle pi\u00e8ce somme nous? Quel est v\u00f4tre r\u00f4le?"
+        ]
+    },
+    "43": {
+        "q": [
+            "Qu'est-ce que vous faites? "
+        ],
+        "a": [
+            "Je vous parle, j'essaye de vous entretenir."
         ]
     }
 }
