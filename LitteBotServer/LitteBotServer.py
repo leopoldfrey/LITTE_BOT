@@ -423,7 +423,7 @@ class LitteBotServer:
         # print("SPEAK", txt, "pitch", self.pitch[self.step], "speed", self.speed[self.step])
         if self.step < 3 :
             v = random.randrange(5)
-            p = (random.random() * 7.) - 13.
+            p = (random.random() * 15.) - 12.
             s = self.speed[self.step] + (random.random() * 0.2 - 0.1)
         else:
             v = 0

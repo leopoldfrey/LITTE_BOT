@@ -325,17 +325,17 @@ class LitteBot:
     def postProcess(self, msg):
         if(msg == " « " or msg == " » " or msg == " Ah " or msg == "Oh!  " or msg == "Oh!" or msg == " Eh " or msg == " Eh bien " or msg == " Oh! " or msg == "Ah! " or msg == "Ah, ah, ah!"):
             msg = "__START__"
-        if(msg.__contains__("__NAME__")):
-            if(self.username != ""):
-                msg = msg.replace("__NAME__", self.username)
-            else:
-                msg = msg.replace("__NAME__", "")
         if(msg.__contains__("__START__")):
             if(len(self.currentStart) == 0):
                 self.currentStart = self.start[self.botmode].copy()
             idx = random.randrange(len(self.currentStart))
             start = self.currentStart.pop(idx).strip()
             msg = msg.replace("__START__", start)
+        if(msg.__contains__("__NAME__")):
+            if(self.username != ""):
+                msg = msg.replace("__NAME__", self.username)
+            else:
+                msg = msg.replace("__NAME__", "")
         if(msg.__contains__("%u0153")):
             msg = msg.replace("%u0153", "oe")
         if(msg.__contains__("%u2019")):
