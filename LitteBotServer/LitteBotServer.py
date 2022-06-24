@@ -333,6 +333,7 @@ class LitteBotServer:
     def phoneOn(self):
         if self.on or self.phone :
             return
+        self.reset()
         # self.phoneCtrl.stop()
         self.sound_client.send("/phone", "stop")
         print("[Server] PHONE ON")
