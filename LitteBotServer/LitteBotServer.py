@@ -216,7 +216,7 @@ class LitteBotServer:
         self.tg.start()
 
         print("[Server] ___STARTING OSC___")
-        self.osc_server = Server('127.0.0.1', 14000, self.oscIn)
+        self.osc_server = Server('0.0.0.0', 14000, self.oscIn)
         self.osc_client = Client('127.0.0.1', 14001)
         self.video_server = Server('127.0.0.1', 14002, self.video_oscIn)
         self.video_client = Client('127.0.0.1', 14003)
@@ -423,7 +423,7 @@ class LitteBotServer:
         # print("SPEAK", txt, "pitch", self.pitch[self.step], "speed", self.speed[self.step])
         if self.step < 3 :
             v = random.randrange(5)
-            p = (random.random() * 15.) - 12.
+            p = (random.random() * 15.) - 9.
             s = self.speed[self.step] + (random.random() * 0.2 - 0.1)
         else:
             v = 0
