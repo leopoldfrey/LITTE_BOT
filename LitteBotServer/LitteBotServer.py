@@ -294,7 +294,7 @@ class LitteBotServer:
                 # self.led_client.send("/on", 0)
                 self.sound_client.send("/stop", 0)
                 self.reset()
-                time.sleep(3)
+                time.sleep(2)
                 if self.phone :
                     self.phoneHang()
         elif(address == '/led'):
