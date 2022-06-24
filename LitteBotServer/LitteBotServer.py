@@ -254,7 +254,8 @@ class LitteBotServer:
         self.http_server.run(host='localhost', port=self.http_server_port, quiet=True)
 
     def video_oscIn(self, address, *args):
-        print("[Server] VIDEO OSC IN ", address, args[0])
+        # print("[Server] VIDEO OSC IN ", address, args[0])
+        # print("VIDEO OSC IN ", address, args[0])
         if(address == '/facedetect'):
             if self.on :
                 if self.flagWaitEnd :
@@ -307,7 +308,7 @@ class LitteBotServer:
         #         print("     " + str(args[x]))
 
     def oscIn(self, address, *args):
-        print("[Server] OSC IN ", address, args[0])
+        #print("[Server] OSC IN ", address, args[0])
         if(address == '/lastresponse'):
             self.receiveResponse(args[0])
         elif(address == '/curEpilogue'):
@@ -344,7 +345,7 @@ class LitteBotServer:
         self.wsServer.broadcast({"command":"on","value":self.on})
         self.wsServer.broadcast({'command':'silent','value':self.silent})
 
-        time.sleep(1)
+        time.sleep(3)
         self.first()
 
     def phoneOff(self):
