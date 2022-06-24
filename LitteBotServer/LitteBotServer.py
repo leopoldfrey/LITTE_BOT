@@ -221,6 +221,7 @@ class LitteBotServer:
         self.video_server = Server('127.0.0.1', 14002, self.video_oscIn)
         self.video_client = Client('127.0.0.1', 14003)
         self.sound_client = Client('127.0.0.1', 14004)
+        self.led_client = Client('127.0.0.1', 14005)
 
         print("[Server] ___INIT BOT___")
         self.osc_client.send('/newConversation',1)
@@ -289,11 +290,17 @@ class LitteBotServer:
             if int(args[0]) == 1 : #fin vidéo finale
                 self.flagWaitEnd = False
                 print("[Server] END > RESTART")
+                # self.led_client.send("/on", 0)
                 self.sound_client.send("/stop", 0)
                 self.reset()
                 time.sleep(3)
                 if self.phone :
                     self.phoneHang()
+        elif(address == '/led'):
+            self.led_client.send("/on", int(args[0]))
+        elif(address == '/brightness'):
+            self.led_client.send("/brightness", int(args[0]))
+
         # else:
         #     print("VIDEO OSC IN : "+str(address))
         #     for x in range(0,len(args)):

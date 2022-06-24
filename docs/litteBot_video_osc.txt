@@ -7,7 +7,8 @@ LA VIDEO RECOIT SUR LE PORT 14003
 /interactions   int           (nombres d'interactions)
 /stop           1             (fin de session)
 /stop           0             (L'utilisateur n'a pas répondu à la dernière question après /facedetect 0)
-
+/led            0/1           (Led Off/On)
+/brightness     [0-255]       (brightness des leds)
 
 #/nlpScore       float [0..1]  (score de similarité)
 #/botspeak       0/1           (1 quand le bot parle 0 quand il a terminé)
