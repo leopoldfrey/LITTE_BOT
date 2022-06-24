@@ -6,6 +6,9 @@ model
 LitteBotServer/gtts_api_key.json
 sounds/*.aif
 sounds/*.wav
+LitteBotLed/node_modules/*
+LitteBotLed/package-lock.json
+LitteBotLed/examples/*
 
 
 # Byte-compiled / optimized / DLL files
