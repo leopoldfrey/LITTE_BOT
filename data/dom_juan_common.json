@@ -55,7 +55,7 @@
             "__THIRD__"
         ],
         "a": [
-            "Il ne tient qu'\u00e0 vous de me faire exister pour quelques secondes, mais je ne serai jamais rien d'autre qu'un miroir de vos peurs et vos fantasmes. A quoi ou qui aimerez vous parler?"
+            "Il ne tient qu'\u00e0 vous de me faire exister pour quelques minutes, mais je ne serai jamais rien d'autre qu'un miroir de vos peurs et vos fantasmes. De quoi aimerez vous parler?"
         ]
     },
     "4": {
@@ -63,7 +63,7 @@
             "__START__"
         ],
         "a": [
-            "a\u00efe"
+            "\u00eates-vous confortablement install\u00e9 ?"
         ]
     },
     "5": {
@@ -617,7 +617,7 @@
             "#question#"
         ],
         "a": [
-            "Quelle question aimerez vous q'uon vous pose? "
+            "Quelle question aimeriez-vous qu'on vous pose ? "
         ]
     },
     "42": {

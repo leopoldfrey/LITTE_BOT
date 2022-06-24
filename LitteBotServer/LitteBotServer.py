@@ -349,6 +349,8 @@ class LitteBotServer:
         self.first()
 
     def phoneOff(self):
+        if self.phone == False:
+            return
         print("[Server] PHONE OFF")
         if self.flagWaitEnd :
             self.phone = False
