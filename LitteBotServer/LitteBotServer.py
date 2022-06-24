@@ -254,7 +254,7 @@ class LitteBotServer:
         self.http_server.run(host='localhost', port=self.http_server_port, quiet=True)
 
     def video_oscIn(self, address, *args):
-        # print("VIDEO OSC IN ", address, args[0])
+        print("[Server] VIDEO OSC IN ", address, args[0])
         if(address == '/facedetect'):
             if self.on :
                 if self.flagWaitEnd :
@@ -307,7 +307,7 @@ class LitteBotServer:
         #         print("     " + str(args[x]))
 
     def oscIn(self, address, *args):
-        # print("OSC IN ", address, args[0])
+        print("[Server] OSC IN ", address, args[0])
         if(address == '/lastresponse'):
             self.receiveResponse(args[0])
         elif(address == '/curEpilogue'):
@@ -331,12 +331,12 @@ class LitteBotServer:
                 print("     " + str(args[x]))
 
     def phoneOn(self):
+        print("[Server] PHONE ON")
         if self.on or self.phone :
             return
         self.reset()
         # self.phoneCtrl.stop()
         self.sound_client.send("/phone", "stop")
-        print("[Server] PHONE ON")
         self.on = True
         self.phone = True
         self.video_client.send("/phone", 1)
@@ -431,7 +431,7 @@ class LitteBotServer:
         # print("SPEAK", txt, "pitch", self.pitch[self.step], "speed", self.speed[self.step])
         if self.step < 3 :
             v = random.randrange(5)
-            p = (random.random() * 15.) - 9.
+            p = (random.random() * 8.) - 4.
             s = self.speed[self.step] + (random.random() * 0.2 - 0.1)
         else:
             v = 0
@@ -558,24 +558,28 @@ class LitteBotServer:
             self.osc_client.send("/relance", 1)
 
     def first(self):
+        print("[Server] FIRST")
         self.silent = True
         self.wsServer.broadcast({'command':'silent','value':self.silent})
         self.lastInteractionTime = time.time()
         self.osc_client.send("/first", 1)
 
     def second(self, mess):
+        print("[Server] SECOND")
         self.silent = True
         self.wsServer.broadcast({'command':'silent','value':self.silent})
         self.lastInteractionTime = time.time()
         self.osc_client.send("/second", mess)
 
     def third(self, mess):
+        print("[Server] THIRD")
         self.silent = True
         self.wsServer.broadcast({'command':'silent','value':self.silent})
         self.lastInteractionTime = time.time()
         self.osc_client.send("/third", mess)
 
     def reset(self):
+        print("[Server] RESET")
         self.on = False
         self.step = 0
         self.name("")

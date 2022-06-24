@@ -45,7 +45,7 @@ def list_voices():
 class TextToSpeech(Thread):
     def __init__(self, text, pitch=0.0, speed=1.08, voice=0, silent=False):
         Thread.__init__(self)
-        print("[Server] [TextToSpeech]", pitch, speed, voice, text)
+        print("[Server] [TextToSpeech]", pitch, speed, VOICE[voice], text)
         self.language_code = "-".join(VOICE[0].split("-")[:2])
         if(len(text) > 500):
             self.textA = re.split("[.!?;:]", text)
