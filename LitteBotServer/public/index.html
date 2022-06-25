@@ -19,7 +19,11 @@
     <label class="switch">
       <input type="checkbox" name="on" id="on">
       <span class="slider round"></span>
-    </label> On<br />
+    </label> On
+    <label class="switch">
+      <input type="checkbox" name="facedetect" id="facedetect">
+      <span class="slider round"></span>
+    </label> FaceDetect<br />
     <input type="text" id="cant_speak" name="cant_speak" onkeypress="onTextChange();" size="100"><button onclick="sendText();">Send</button>
   </div>
   <div id='speech'>
@@ -63,6 +67,9 @@
       } else if (data.command == "phone") {
         console.log("PHONE", data.value);
         $("#phone").prop("checked", data.value);
+      } else if (data.command == "facedetect") {
+        console.log("FACEDETECT", data.value);
+        $("#facedetect").prop("checked", data.value);
       } else if (data.command == "message") {
         console.log("[ws]", data);
       } else if (data.command == "bot" || data.command == "_bot") {
@@ -321,6 +328,13 @@
       socket.send(JSON.stringify({
         'command': 'phone',
         'phone': $("#phone").prop('checked') ? 1 : 0
+      }));
+    });
+
+    $("#facedetect").change(function() {
+      socket.send(JSON.stringify({
+        'command': 'facedetect',
+        'facedetect': $("#facedetect").prop('checked') ? 1 : 0
       }));
     });
 
