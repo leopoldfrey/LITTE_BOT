@@ -199,15 +199,21 @@ input#cant_speak {
     color: lightblue;
 }
 
+#end {
+    top: -2px;
+    position: relative;
+}
 button {
   border: none;
   background: #2196F3;
   color: white;
-  font-size: 1rem;
   border-radius: 5px;
   padding: 4px 10px;
   margin: 0px 5px;
   cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  text-transform: uppercase;
 }
 
 button:hover {
