@@ -469,7 +469,8 @@ function saveConfig() {
       'speed_fuite':        $("#speed_fuite").val(),
       'speed_epilogue':     $("#speed_epilogue").val(),
       'max_silence':        $("#max_silence").val(),
-      'max_inter_relance':  $("#max_inter_relance").val()
+      'max_inter_relance':  $("#max_inter_relance").val(),
+      'max_relance_quit':   $("#max_relance_quit").val()
       // 'max_interactions': $("#max_interactions").val(),
       // 'max_section':      $("#max_section").val()
     }));
@@ -522,6 +523,7 @@ function connectToWS()
       $("#max_fuite_s").val(data.max_fuite_s);
       $("#max_silence").val(data.max_silence);
       $("#max_inter_relance").val(data.max_inter_relance);
+      $("#max_relance_quit").val(data.max_relance_quit);
       $("#pitch_intro").val(data.pitch_intro);
       $("#pitch_seduction").val(data.pitch_seduction);
       $("#pitch_provocation").val(data.pitch_provocation);

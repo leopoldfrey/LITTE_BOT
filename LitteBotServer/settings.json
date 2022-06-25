@@ -3,6 +3,7 @@
     "max_silence": 12,
     "max_section": 200,
     "max_inter_relance": 30,
+    "max_relance_quit": 4,
     "max_intro": 4,
     "max_intro_s": 273,
     "pitch_intro": -13.5,

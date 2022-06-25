@@ -90,10 +90,10 @@
                 <button type="button" id='Close' class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <label class="switch">
+                <!--label class="switch">
                     <input type="checkbox" name="phone" id="phone">
                     <span class="slider round"></span>
-                  </label><label style="display: inline; margin-left: 10px">Phone</label>
+                  </label><label style="display: inline; margin-left: 10px">Phone</label-->
                   <h6>Introduction</h6>
                   <input type="number" id="max_intro" name="max_intro" min="1" max="100">
                   <label class="label-inline" for="max_intro">Nombre maximum d'interactions</label><br/>
@@ -140,6 +140,8 @@
                   <label class="label-inline" for="max_silence">Silence maximum avant relance (en secondes)</label><br/>
                   <input type="number" id="max_inter_relance" name="max_inter_relance" min="3" max="360">
                   <label class="label-inline" for="max_inter_relance">Nombres d'interactions avant relance</label><br/>
+                  <input type="number" id="max_relance_quit" name="max_relance_quit" min="1" max="10">
+                  <label class="label-inline" for="max_relance_quit">Nombres de relances avant de considérer que l'utilisateur est parti</label><br/>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-secondary" id="save_params" onclick='saveConfig()'>Sauvegarder les parametres</button>

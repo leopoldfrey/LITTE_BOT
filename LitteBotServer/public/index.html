@@ -23,7 +23,8 @@
     <label class="switch">
       <input type="checkbox" name="facedetect" id="facedetect">
       <span class="slider round"></span>
-    </label> FaceDetect<br />
+    </label> FaceDetect
+    <button tname="end" id="end">Fin de l'animation finale</button>
     <input type="text" id="cant_speak" name="cant_speak" onkeypress="onTextChange();" size="100"><button onclick="sendText();">Send</button>
   </div>
   <div id='speech'>
@@ -337,6 +338,12 @@
         'facedetect': $("#facedetect").prop('checked') ? 1 : 0
       }));
     });
+
+    $("#end").click(function() {
+      socket.send(JSON.stringify({
+        'command': 'end'
+      }));
+    })
 
     function onTextChange() {
       if (window.event.keyCode === 13) {
