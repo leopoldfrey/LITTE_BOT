@@ -48,8 +48,8 @@ class ThreadGroup(Thread):
                         self.parent.wsServer.broadcast({'command':'silent','value':False})
                     elif(self.parent.step == 3):
                         self.parent.nextInter()
-                    #elif(self.parent.step == 6):
-                    #    self.parent.nextEpilogue()
+                    elif(self.parent.step == 6):
+                        self.parent.nextEpilogue()
                     else:
                         # print("DO RELANCE ?", self.parent.interactions % self.parent.config["max_inter_relance"])
                         if(self.parent.interactions % self.parent.config["max_inter_relance"] == self.parent.config["max_inter_relance"] - 1):
