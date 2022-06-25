@@ -358,7 +358,7 @@ class LitteBotServer:
         elif self.waitHangPhone :
             self.phone = False
             self.waitHangPhone = False
-            self.video_client.send("/phone", 0)
+            # self.video_client.send("/phone", 0)
             # self.phoneCtrl.ring()
             self.sound_client.send("/phone", "ring")
         elif self.on :

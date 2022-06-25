@@ -33,6 +33,13 @@ $job5 = Start-Job -Name LitteBotServer  -WorkingDirectory $PWD/LitteBotServer -S
     python3 ./LitteBotServer.py
 }
 
+$host.UI.RawUI.ForegroundColor = "Green"
+echo "Starting Unreal"
+$job6 = Start-Job -Name LitteBotUnreal  -WorkingDirectory $PWD/LitteBotServer -ScriptBlock {
+  Start-Sleep -Seconds 80;
+   C:\PLASTIC\LITTLEBOT_EXPORT\WindowsNoEditor\FaceARSample.exe
+}
+
 While (Get-Job -State "Running")
 {
   $host.UI.RawUI.ForegroundColor = "Yellow"
