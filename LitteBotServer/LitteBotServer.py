@@ -345,7 +345,7 @@ class LitteBotServer:
         self.wsServer.broadcast({"command":"on","value":self.on})
         self.wsServer.broadcast({'command':'silent','value':self.silent})
 
-        time.sleep(3)
+        time.sleep(1)
         self.first()
 
     def phoneOff(self):
