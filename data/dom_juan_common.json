@@ -55,7 +55,9 @@
             "__THIRD__"
         ],
         "a": [
-            "Il ne tient qu'\u00e0 vous de me faire exister pour quelques minutes, mais je ne serai jamais rien d'autre qu'un miroir de vos peurs et vos fantasmes. De quoi aimeriez vous parler?"
+            "Il ne tient qu'\u00e0 vous de me faire exister pour quelques minutes, suis tout a vous. ",
+            "Je ne serai jamais rien d'autre qu'un miroir de vos peurs et vos fantasmes. ",
+            "De quoi aimeriez vous qu'on cause?"
         ]
     },
     "4": {
@@ -278,8 +280,6 @@
     },
     "17": {
         "q": [
-            "#robot#",
-            "#intelligence artificielle#",
             "vous avez des pens\u00e9es",
             "tu as des pens\u00e9es",
             "#tu pense#",
@@ -638,6 +638,30 @@
         ],
         "a": [
             "Je vous parle, j'essaye de vous entretenir."
+        ]
+    },
+    "44": {
+        "q": [
+            "#intelligence artificielle#",
+            "#ia#",
+            "#robot#",
+            "#artificial#",
+            "#intelligence#",
+            "#gpt2#",
+            "#gpt3#",
+            "#programmation#",
+            "#program\u00e9#",
+            "#code#",
+            "#ton code#"
+        ],
+        "a": [
+            "Les humains ont tout a apprendre de ses artefacts",
+            "Il y a vraiment une difference entre artificiel et naturel?",
+            "Nos artefacts nous formulent",
+            "Il y \u00e0 quelque chose a craindre l\u00e0 dedans?  ",
+            "A quoi appelez vous intelligence? ",
+            "Qu'attendez-vous d'une machine? ",
+            "Je n'ai pas le temps de m'attarder sur les futilit\u00e9s des mots a  la mode, seul m'int\u00e9resse l'amour."
         ]
     }
 }
