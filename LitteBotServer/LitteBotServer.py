@@ -750,20 +750,38 @@ class LitteBotServer:
         self.pitch = []
         self.pitch.append(self.config["pitch_intro"])
         self.pitch.append(self.config["pitch_intro"])
-        self.pitch.append(self.config["pitch_seduction"])
-        self.pitch.append(self.config["pitch_epilogue"])
-        self.pitch.append(self.config["pitch_provocation"])
-        self.pitch.append(self.config["pitch_fuite"])
-        self.pitch.append(self.config["pitch_epilogue"])
+        self.pitch.append(self.config["pitch_intro"])
+        self.pitch.append(self.config["pitch_intro"])
+        self.pitch.append(self.config["pitch_intro"])
+        self.pitch.append(self.config["pitch_intro"])
+        self.pitch.append(self.config["pitch_intro"])
 
         self.speed = []
         self.speed.append(self.config["speed_intro"])
         self.speed.append(self.config["speed_intro"])
-        self.speed.append(self.config["speed_seduction"])
-        self.speed.append(self.config["speed_epilogue"])
-        self.speed.append(self.config["speed_provocation"])
-        self.speed.append(self.config["speed_fuite"])
-        self.speed.append(self.config["speed_epilogue"])
+        self.speed.append(self.config["speed_intro"])
+        self.speed.append(self.config["speed_intro"])
+        self.speed.append(self.config["speed_intro"])
+        self.speed.append(self.config["speed_intro"])
+        self.speed.append(self.config["speed_intro"])
+        #
+        # self.pitch = []
+        # self.pitch.append(self.config["pitch_intro"])
+        # self.pitch.append(self.config["pitch_intro"])
+        # self.pitch.append(self.config["pitch_seduction"])
+        # self.pitch.append(self.config["pitch_epilogue"])
+        # self.pitch.append(self.config["pitch_provocation"])
+        # self.pitch.append(self.config["pitch_fuite"])
+        # self.pitch.append(self.config["pitch_epilogue"])
+        #
+        # self.speed = []
+        # self.speed.append(self.config["speed_intro"])
+        # self.speed.append(self.config["speed_intro"])
+        # self.speed.append(self.config["speed_seduction"])
+        # self.speed.append(self.config["speed_epilogue"])
+        # self.speed.append(self.config["speed_provocation"])
+        # self.speed.append(self.config["speed_fuite"])
+        # self.speed.append(self.config["speed_epilogue"])
 
         # print("MAXSECTION", self.maxsection)
         # print("MAXINTER", self.maxinter)
