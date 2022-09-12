@@ -465,15 +465,15 @@ class LitteBotServer:
 
     def speak(self, txt):
         # print("SPEAK", txt, "pitch", self.pitch[self.step], "speed", self.speed[self.step])
+        #if self.step < 3 :
+        #    v = random.randrange(5)
+        #    p = (random.random() * 8.) - 4.
+        #    s = self.speed[self.step] + (random.random() * 0.2 - 0.1)
+        #else:
+        #    v = 0
         v = 0
-        if self.step < 3 :
-            #v = random.randrange(5)
-            p = (random.random() * 8.) - 4.
-            s = self.speed[self.step] + (random.random() * 0.2 - 0.1)
-        else:
-            #v = 0
-            p = self.pitch[self.step]
-            s = self.speed[self.step]
+        p = self.pitch[self.step]
+        s = self.speed[self.step]
         tts = TextToSpeech(txt, pitch=p, speed=s, voice=v)
         tts.start()
         self.tg.addThread(tts)
