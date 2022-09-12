@@ -1,9 +1,9 @@
 {
   "ring": 1,
   "hang": 0.1,
-  "botthink": 0.62,
-  "ambiant": 0.186,
-  "final": 0.434,
+  "botthink": 0.87,
+  "ambiant": 0.263,
+  "final": 0.613,
   "fadeInMs": 3000,
   "fadeOutMs": 10000,
   "botthinkFadeOut": 1200,
