@@ -12,6 +12,8 @@ from pyosc import Client, Server
 import functools
 print = functools.partial(print, flush=True)
 
+MAXRING = 30
+
 class ThreadGroup(Thread):
     def __init__(self, parent):
         Thread.__init__(self)
@@ -169,6 +171,7 @@ class LitteBotServer:
         self.globalTime = 0
         self.sectionTime = 0
         self.currentTime = 0
+        self.ringTime = 0
         self.interactions = 0
         self.interactions_section = 0
         self.is_restart_needed = True
@@ -346,6 +349,8 @@ class LitteBotServer:
                     self.phoneHang()
                 else:
                     # self.phoneCtrl.ring()
+                    # TODO COUNT PHONE RING
+                    self.ringTime = time.time()
                     self.sound_client.send("/phone", "ring")
             else:
                 self.userDetected = False
@@ -391,6 +396,8 @@ class LitteBotServer:
             self.waitHangPhone = False
             # self.video_client.send("/phone", 0)
             # self.phoneCtrl.ring()
+            # TODO COUNT PHONE RING
+            self.ringTime = time.time()
             self.sound_client.send("/phone", "ring")
         elif self.on :
             # self.phoneCtrl.stop()
@@ -655,6 +662,16 @@ class LitteBotServer:
         self.wsServer.broadcast({'command':'username','value':self.username})
 
     def updateTimers(self):
+        if(self.phone == False and self.waitHangPhone == False and self.on == False and self.userDetected == True):
+            #print("RING TIME",time.time() - self.ringTime)
+            if(time.time() - self.ringTime > MAXRING):
+                print("[Server] USER REALLY LOST > RESET")
+                self.video_client.send("/stop", 0)
+                self.sound_client.send("/stop", 0)
+                self.userDetected = False
+                self.phoneHang()
+                self.reset()
+
         if(self.step != 0):
             self.globalTime = time.time() - self.startTime
             self.sectionTime = time.time() - self.startSectionTime
