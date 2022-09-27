@@ -664,7 +664,7 @@ class LitteBotServer:
     def updateTimers(self):
         if(self.phone == False and self.waitHangPhone == False and self.on == False and self.userDetected == True):
             #print("RING TIME",time.time() - self.ringTime)
-            if(time.time() - self.ringTime > MAXRING):
+            if(time.time() - self.ringTime > MAXRING and time.time() - self.ringTime < 6 * MAXRING):
                 print("[Server] USER REALLY LOST > RESET")
                 self.video_client.send("/stop", 0)
                 self.sound_client.send("/stop", 0)
