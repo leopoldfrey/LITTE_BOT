@@ -1,0 +1,8 @@
+{
+    "max_inter": 30,
+    "max_inter_s": 300,
+    "max_silence": 30,
+    "max_relance_quit": 4,
+    "pitch": 0,
+    "speed": 1
+}
