@@ -3,7 +3,6 @@ from pyosc import Client, Server
 import os, signal, functools, socket
 print = functools.partial(print, end='\n',flush=True)
 
-import tkinter as tk
 import openai
 # Apply the API Key
 openai.api_key = "YOUR_API_KEY_HERE" #https://platform.openai.com/account/api-keys
