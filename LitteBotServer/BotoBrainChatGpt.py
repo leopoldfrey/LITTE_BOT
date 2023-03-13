@@ -6,7 +6,7 @@ print = functools.partial(print, end='\n',flush=True)
 import tkinter as tk
 import openai
 # Apply the API Key
-openai.api_key = "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"
+openai.api_key = "YOUR_API_KEY_HERE" #https://platform.openai.com/account/api-keys
 
 botophoneIP = "192.168.1.66"
 
