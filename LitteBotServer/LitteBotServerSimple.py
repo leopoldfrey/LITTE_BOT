@@ -410,21 +410,24 @@ class LitteBotServer:
         self.tg.addThread(tts)
 
     def receiveResponse(self, r):
-        self.tmp_response = r
-        if(self.flagUserLost):
-            self.flagUserLost = False
-            self.flagWaitUser = True
-        # print("SERVER receiveResponse", self.tmp_response)
-        self.video_client.send("/phase", 2)
-        self.sound_client.send("/phase", 2)
-        self.video_client.send("/bot", self.tmp_response)
-        self.interactions += 1
-        self.video_client.send("/interactions", self.interactions)
-        self.lastInteractionTime = time.time()
-        self.wsServer.broadcast({'command':'_bot','value':self.tmp_response})
-        # print("INTERACTIONS", self.interactions % self.config["max_interactions"])
-        self.speak(self.tmp_response)
-
+        if self.on and not self.flagWaitEnd:
+            self.tmp_response = r
+            if(self.flagUserLost):
+                self.flagUserLost = False
+                self.flagWaitUser = True
+            # print("SERVER receiveResponse", self.tmp_response)
+            self.video_client.send("/phase", 2)
+            self.sound_client.send("/phase", 2)
+            self.video_client.send("/bot", self.tmp_response)
+            self.interactions += 1
+            self.video_client.send("/interactions", self.interactions)
+            self.lastInteractionTime = time.time()
+            self.wsServer.broadcast({'command':'_bot','value':self.tmp_response})
+            # print("INTERACTIONS", self.interactions % self.config["max_interactions"])
+            self.speak(self.tmp_response)
+        else:
+            print("SERVER receiveResponse OFF", r)
+            
     def areYouThere(self):
         self.osc_client.send("/areYouThere", 1)
 
