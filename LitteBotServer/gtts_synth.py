@@ -12,7 +12,7 @@ import re
 import functools
 print = functools.partial(print, end='\n',flush=True)
 
-VOICE = ["fr-FR-Wavenet-C", "fr-FR-Wavenet-E", "fr-FR-Wavenet-A", "fr-FR-Wavenet-B", "fr-FR-Wavenet-D"]
+VOICE = ["fr-FR-Wavenet-C", "fr-FR-Wavenet-E", "fr-FR-Wavenet-A", "fr-FR-Wavenet-B", "fr-FR-Wavenet-D", "fr-FR-Neural2-C"]
 
 '''
 fr-FR-Wavenet-E
@@ -25,6 +25,24 @@ fr-FR-Standard-B
 fr-FR-Standard-C
 fr-FR-Standard-D
 fr-FR-Standard-E
+
+fr-FR-Neural2-A
+fr-FR-Neural2-B
+fr-FR-Neural2-C
+fr-FR-Neural2-D
+fr-FR-Neural2-E
+
+es-ES-Wavenet-C
+es-ES-Wavenet-D
+es-ES-Wavenet-B
+
+es-ES-Neural2-A
+es-ES-Neural2-B
+es-ES-Neural2-C
+es-ES-Neural2-D
+es-ES-Neural2-E
+es-ES-Neural2-F
+es-ES-Polyglot-1
 '''
 
 API_KEY_PATH = "../model/gtts_api_key.json"
@@ -40,6 +58,8 @@ def list_voices():
 
     for voice in voices.voices:
         if"fr-FR" in voice.language_codes:
+            print(f"{voice.name}")
+        if"es-ES" in voice.language_codes:
             print(f"{voice.name}")
 
 class TextToSpeech(Thread):
@@ -164,7 +184,7 @@ class TextToSpeechNoThread():
 
 
 if __name__ == '__main__':
-    # list_voices()
+    #list_voices()
     if len(sys.argv) == 2:
         thd = TextToSpeech(sys.argv[1])
         thd.start()

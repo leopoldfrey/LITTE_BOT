@@ -212,6 +212,7 @@
       recognition.interimResults = true;
       recognition.maxAlternatives = 1;
       recognition.lang = "fr-FR";
+      //recognition.lang = "es-ES";
       recognition.onresult = detect;
       recognition.onend = function(event) {
         console.log('recognition: end, restart');

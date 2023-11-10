@@ -41,6 +41,7 @@ def_questions_fuite = "dom_juan_fuite"
 def_questions_epilogue = "dom_juan_epilogue"
 
 def_tokenizer = "../model/emil2000/dialogpt-for-french-language"
+sp_tokenizer = "../model/gpt2-spanish"
 def_model = "../model/Chatbot-Moliere-V4"
 def_module = "../model/universal-sentence-encoder-multilingual-large_3"
 
