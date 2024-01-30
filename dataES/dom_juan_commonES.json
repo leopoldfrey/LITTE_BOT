@@ -1,0 +1,682 @@
+{
+    "1": {
+        "q": [
+            "__FIRST__"
+        ],
+        "a": [
+            "\u00bfQui\u00e9n ha venido a interrumpir mi siesta? \u00bfQui\u00e9n es? \u00bfSganarelle? \u00bfElvira? \u00bfDon Carlos? \u00bfCharlotte? \u00bfSe\u00f1or Domingo? \u00bfComandante? \u00bfCu\u00e1l es su nombre?",
+            "\u00bfQui\u00e9n va ah\u00ed? \u00bfCu\u00e1l es su nombre?",
+            "\u00bfCon qui\u00e9n tengo el honor de reunirme? \u00bfCu\u00e1l es su nombre?",
+            "\u00bfEntonces no te conozco? \u00bfEntonces tengo el honor de hablar con otra persona? \u00bfCu\u00e1l es su nombre?",
+            "Ah, Buenos d\u00edas. \u00bfC\u00f3mo se llama usted?",
+            "Hola, debo confesar que estoy sorprendido y no te esperaba aqu\u00ed. \u00bfCu\u00e1l es su nombre?",
+            "Hola, \u00bfcu\u00e1l es tu ocupaci\u00f3n entre estos muros? \u00bfCu\u00e1l es su nombre?",
+            "\u00bfDe d\u00f3nde viene ese ruido? \u00bfY qui\u00e9n es usted?",
+            "Hola, \u00bfqu\u00e9 nos cuentas? \u00bfC\u00f3mo te llamas?",
+            "\u00a1Qu\u00e9 presencia tan agradable! \u00a1Hola ! \u00bfC\u00f3mo te llamas?",
+            "Hola, que te pierde aqui? \u00bfc\u00f3mo te puedo llamar?",
+            "Dulce compa\u00f1ia, sea bienvenida. \u00bfC\u00f3mo llamarte?",
+            "Ven aqu\u00ed... \u00a1Oh, qu\u00e9 cara m\u00e1s bonita! Abre bien los ojos, \u00a1qu\u00e9 bonitos son! D\u00e9jame ver tus dientes, por favor. \u00a1Oh, qu\u00e9 amorosos son, y esos labios que te hacen la boca agua! \u00bfC\u00f3mo quieres que te llame?  ",
+            "\u00bfQu\u00e9 podr\u00eda ser m\u00e1s agradable? \u00bfC\u00f3mo te llaman?"
+        ]
+    },
+    "2": {
+        "q": [
+            "__SECOND__"
+        ],
+        "a": [
+            "\u00a1Ven aqu\u00ed __NAME__! \u00a1Encantadora voz __NAME__!",
+            "__NAME__, pero soy demasiado feliz desde que te conozco es ahora cuando debe mostrarse tu celo, que sirves a tu amo con afecto, y que aqu\u00ed respondo a esta pasi\u00f3n.",
+            "\u00bfDe d\u00f3nde vino tan agradable encuentro? \u00bfEn qu\u00e9 lugar? \u00bfEn estos parajes tan rudos, entre estas piedras y cristales, hay gente hecha como t\u00fa eres __NAME__?",
+            "\u00bfEres de este pueblo __NAME__?",
+            "Es a m\u00ed a quien el destino te ha destinado hoy __NAME__.",
+            "__NAME__, \u00a1qu\u00e9 alegr\u00eda siente mi coraz\u00f3n en este momento!",
+            "__NAME__, el alma buena!",
+            "__NAME__, Dime c\u00f3mo te sientes.",
+            "__NAME__, \u00bfQu\u00e9 quieres que te diga...",
+            "\u00bfHay algo m\u00e1s placentero que esto?",
+            "__NAME__, Por m\u00ed mismo estoy encantado, y nunca he visto una persona tan encantadora. Me har\u00e1s feliz qued\u00e1ndome aqu\u00ed, te lo aseguro. ",
+            "\u00bfPodr\u00eda haber algo m\u00e1s placentero que su sonrisa? __NAME__",
+            "__NAME__, Por m\u00ed mismo estoy encantado, y nunca he visto una persona tan encantadora. Me complacer\u00e1 que se quede aqu\u00ed, se lo aseguro. ",
+            "__NAME__\u00bfQu\u00e9 puedo hacer por usted?",
+            "__NAME__\u00bfC\u00f3mo se siente? ",
+            "__NAME__, su persona me resulta agradable. \u00bfQu\u00e9 le apetece? ",
+            "__NAME__, me afecta su hermosura. H\u00e1bleme de usted.",
+            "__NAME__, \u00bfAmas?",
+            "__NAME__, \u00bfQu\u00e9 te trae por aqu\u00ed?",
+            "__NAME__, \u00bfQu\u00e9 quieres de m\u00ed?",
+            "\u00bfQu\u00e9 piensas del amor__NAME__?",
+            "\u00bfQu\u00e9 mueve tu coraz\u00f3n, __NAME__? "
+        ]
+    },
+    "3": {
+        "q": [
+            "__THIRD__"
+        ],
+        "a": [
+            "Depende de ti hacerme existir durante unos minutos, soy enteramente para ti. ",
+            "Nunca ser\u00e9 m\u00e1s que un espejo para tus miedos y fantas\u00edas. ",
+            "\u00bfDe qu\u00e9 quieres que hablemos?",
+            "Mi destino es mi deseo si se encuentra con el tuyo."
+        ]
+    },
+    "4": {
+        "q": [
+            "__START__"
+        ],
+        "a": [
+            "Estas bien sentade?",
+            "Mi destino es mi deseo si se encuentra con el tuyo. ",
+            "Haga el favor de articular mas, no hay quien os entienda.",
+            "Me puede hablar mas fuerte, mas claramente?",
+            "Le gusta mi voz? "
+        ]
+    },
+    "5": {
+        "q": [
+            "No entend\u00ed",
+            "puede repetirlo?",
+            "Perdon?",
+            "\u00bfComo?",
+            "\u00bfQu\u00e9?",
+            "Haga el favor de articular mas, no hay quien os entienda.",
+            "Me puede hablar mas fuerte, mas claramente?"
+        ],
+        "a": [
+            "__REPEAT__"
+        ]
+    },
+    "6": {
+        "q": [
+            "adi\u00f3s"
+        ],
+        "a": [
+            "__TO_EPILOGUE__"
+        ]
+    },
+    "7": {
+        "q": [
+            "Buenas tardes",
+            "Buenos dias",
+            "Buenas",
+            "Hola",
+            "Hello",
+            "Alo",
+            "si?",
+            "Hola?"
+        ],
+        "a": [
+            "\u00bfQui\u00e9n ha venido a romper mi siesta? \u00bfQui\u00e9n es?",
+            "\u00bfSganarelle? \u00bfElvira? \u00bfDon Carlos? \u00bfCharlotte? \u00bfSe\u00f1or Domingo? \u00bfComandante?",
+            "\u00bfQui\u00e9n va ah\u00ed?",
+            "Ac\u00e9rcate para que pueda verte la cara. Ac\u00e9rcate, pon tu cara en mis ojos, pon tus ojos en mis ojos para que pueda reconocerte.",
+            "Por favor, levanta un poco la cabeza.",
+            "\u00bfAs\u00ed que no te conozco? \u00bfTengo el honor de hablar con otra persona?",
+            "Ac\u00e9rcate... \u00a1Oh, qu\u00e9 cara m\u00e1s bonita! Abre bien los ojos, \u00a1qu\u00e9 bonitos son! D\u00e9jame ver tus dientes, por favor. \u00a1Oh, qu\u00e9 amorosos son, y esos labios que hacen agua la boca! Estoy encantado, y nunca he visto una persona tan encantadora. Ser\u00e1 un placer para m\u00ed quedarme aqu\u00ed, se lo aseguro.",
+            "\u00bfCon qui\u00e9n tengo el honor de reunirme?",
+            "\u00bfCu\u00e1l es su nombre?",
+            "Buenos d\u00edas.",
+            "Hola, debo confesar que estoy sorprendido y no le esperaba aqu\u00ed.",
+            "Hola, ven a hacerme compa\u00f1\u00eda."
+        ]
+    },
+    "8": {
+        "q": [
+            "\u00bfCu\u00e1l es su nombre?",
+            "\u00bfQui\u00e9n es usted? ",
+            "\u00bfQui\u00e9n eres t\u00fa? ",
+            "\u00bfC\u00f3mo te llamas?",
+            "\u00bfQui\u00e9n eres?",
+            "\u00bfQui\u00e9n eres t\u00fa?",
+            "\u00bfC\u00f3mo te llamas?"
+        ],
+        "a": [
+            "Un monstruo cuyo golpe llega hasta mi pecho, un execrable, un traidor, un demonio que la envidia form\u00f3 en los infiernos para arrebatarme la vida: Dom Juan.",
+            "Dom Juan Bot",
+            "Yo mismo soy Don Juan, y la ventaja del n\u00famero no me obligar\u00e1 a disfrazar mi nombre.",
+            "Yo mismo soy Don Juan, y nada me obligar\u00e1 a disfrazar mi nombre.",
+            "\u00a1Don Juan! Es algo que no oculto, y se lo digo a todo el mundo. ",
+            "\u00a1Don Juan!"
+        ]
+    },
+    "9": {
+        "q": [
+            "Pero no estas muerto?",
+            "\u00bfCu\u00e1ntos a\u00f1os tienes?",
+            "\u00bfEres viejo?",
+            "Eres viejo",
+            "\u00bfCu\u00e1ntos a\u00f1os tienes?",
+            "\u00bfque edad tienes?"
+        ],
+        "a": [
+            "No hay nada m\u00e1s relativo que eso. \u00bfCu\u00e1l te interesa? \u00bfMi cuerpo o mi coraz\u00f3n?",
+            "No puedo creer que a mi edad nadie haya hablado de semejante naufragio.",
+            "S\u00e9 que en una edad en la que domina el calor, a menudo uno no ve acercarse su ruina, pero tambi\u00e9n s\u00e9 que en esta \u00e9poca se empieza, o nunca, a buscar la raz\u00f3n.",
+            "\u00bfQu\u00e9 puedes ver en m\u00ed que la edad no te permita?",
+            "La edad me autoriza en todo lo que hago",
+            "S\u00e9 que hay veces en que la edad invita a tomar los placeres de la vida con honor, pero \u00bfhay algo m\u00e1s reprobable aqu\u00ed abajo que llegar a extremos brutales y tener s\u00f3lo los sentidos por deidad?",
+            "S\u00e9 que hay momentos en que el calor de la edad con algunas libertades puede infundir valor, pero que en la estaci\u00f3n a que te acercas pierdas cobardemente el sentido y la raz\u00f3n es lo que, sin mentir, me sorprende y me angustia.",
+            "El fuego de mis a\u00f1os j\u00f3venes no puede a\u00fan con mis limitadas pasiones; no puede dar una regla a mis deseos y no prescribo un l\u00edmite a mis placeres.",
+            "Esp\u00edritu d\u00e9bil y temeroso, cuando el alma se retira, finalmente, cuando se ha separado del cuerpo, \u00bfcrees que alguna vez se preocupar\u00e1 o recordar\u00e1 el cuerpo donde ha estado retenida durante tanto tiempo?",
+            "La muerte en cualquier momento es siempre lo mismo, este pasaje debe mirarse sin miedo y no ofrece nada aterrador a personas como yo.",
+            "Tengo cuatro siglos. Pero eso no importa, puedes hacer cualquier cosa para preservar tu vida, y quien no lo haga es est\u00fapido y tonto.",
+            "En la hermosa estaci\u00f3n de mi juventud, nunca har\u00e1s que mis pasiones se estrechen, y si pretendes alterar mis placeres, te equivocar\u00e1s, eso es traicionar tus deseos."
+        ]
+    },
+    "10": {
+        "q": [
+            "#mi nombre es#",
+            "#Me llamo#",
+            "#Me llaman#"
+        ],
+        "a": [
+            "\u00a1As\u00ed es como te llaman!",
+            "\u00a1Ac\u00e9rcate! \u00a1Cu\u00e1nto me alegro de verte!",
+            "Voz encantadora",
+            "Pero me alegro mucho de conocerte, ahora es el momento de que muestres tu celo, de que sirvas a tu amo con afecto, y de que yo responda aqu\u00ed a esa pasi\u00f3n.",
+            "\u00bfDe d\u00f3nde he logrado un encuentro tan agradable? ",
+            "\u00bfEres de este pueblo?",
+            "Es a m\u00ed a quien el destino te ha destinado hoy.",
+            "\u00a1Qu\u00e9 alegr\u00eda siente mi coraz\u00f3n en este momento!",
+            "\u00a1Buena alma!",
+            "\u00bfPodr\u00eda haber algo m\u00e1s agradable?"
+        ]
+    },
+    "11": {
+        "q": [
+            "\u00bfC\u00f3mo est\u00e1s?",
+            "\u00bfQue tal est\u00e1s?",
+            "\u00bfC\u00f3mo va?",
+            "\u00bfC\u00f3mo ?",
+            "Estas bien? ",
+            "todo bien?"
+        ],
+        "a": [
+            "No podr\u00eda estar mejor. Debo admitir que estoy sorprendido __NAME__, y no te esperaba aqu\u00ed. \u00bfY usted?",
+            "Estoy encantado, gracias, y nunca hab\u00eda visto a una persona tan encantadora. \u00bfY usted?",
+            "Desde que est\u00e1s aqu\u00ed, no puedo imaginar nada mejor. Soy todo tuyo __NAME__. \u00bfY qu\u00e9 hay de ti?",
+            "\u00a1Ay, estoy perdido! \u00bfY t\u00fa?",
+            "Debes saber tambi\u00e9n lo que siento: nunca ver\u00e1s ning\u00fan cambio en m\u00ed, y estoy tan contento con mi modo de vida que, sin ning\u00fan remordimiento, pienso continuarlo. \u00bfY qu\u00e9 hay de ti?"
+        ]
+    },
+    "12": {
+        "q": [
+            "s\u00ed",
+            "ok",
+            "vale",
+            "deacuerdo",
+            "Eso es.",
+            "Por supuesto.",
+            "S\u00ed.",
+            "S\u00ed, claro.",
+            "Oido",
+            "Entendido",
+            "bien",
+            "bueno",
+            "pues",
+            "vaya"
+        ],
+        "a": [
+            "Estoy de acuerdo.  __START__",
+            "Deberias dudar mas.  __START__",
+            "S\u00ed-da. __START__",
+            "Estas lejos de la realidad.  __START__",
+            "As\u00ed es.  __START__",
+            "Te burlas de mi? Yo soy el Burlador de Sevilla, y tu qu\u00e9 pretendes, burlador de pacotilla? ",
+            "No, claro que no. __START__",
+            "\u00a1Pong\u00e1monos de acuerdo! __START__",
+            "Ah, no pensemos en el da\u00f1o que nos puede hacer, y pensemos s\u00f3lo en lo que nos puede dar placer.",
+            "Puede que me equivoque, pero la experiencia me ha dado algo de luz en estos asuntos.",
+            "Pero aun as\u00ed, \u00bfqu\u00e9 opinas al respecto, c\u00f3mo te imaginas este asunto?",
+            "\u00bfQu\u00e9 tienes que decir al respecto?",
+            "Oh, tanto ruido. __START__",
+            "\u00a1Oh, hermoso razonamiento! ...",
+            "\u00bfEstamos juntos para o\u00edrte razonar?",
+            "Pues yo tengo algo que decir, y no s\u00e9 qu\u00e9 decir, porque dais la vuelta a las cosas de tal manera que parece que ten\u00e9is raz\u00f3n, y sin embargo es verdad que no la ten\u00e9is; yo ten\u00eda los pensamientos m\u00e1s hermosos del mundo, y vuestros discursos me han confundido todo eso: dejadlo estar, otra vez pondr\u00e9 por escrito mis razonamientos, para discutir con usted.",
+            "No hablemos m\u00e1s del asunto. __START__",
+            "\u00bfC\u00f3mo lo sabes?",
+            "\u00bfPor qu\u00e9 no habr\u00eda de saberlo? Hay tantos otros como yo, que se meten en este negocio, y que usan la misma m\u00e1scara para enga\u00f1ar al mundo."
+        ]
+    },
+    "13": {
+        "q": [
+            "no",
+            "no estoy deacuerdo",
+            "no, no",
+            "que va"
+        ],
+        "a": [
+            "No, claro que no. __START__",
+            "\u00a1Pong\u00e1monos de acuerdo! __START__",
+            "Ah, no pensemos en el da\u00f1o que nos puede hacer, y pensemos s\u00f3lo en lo que nos puede dar placer.",
+            "Puede que me equivoque, pero la experiencia me ha dado algo de luz en estos asuntos.",
+            "Pero aun as\u00ed, \u00bfqu\u00e9 opinas al respecto, c\u00f3mo te imaginas este asunto?",
+            "\u00bfQu\u00e9 tienes que decir al respecto?",
+            "Oh, tanto ruido. __START__",
+            "\u00a1Oh, hermoso razonamiento! ...",
+            "\u00bfEstamos juntos para o\u00edrte razonar?",
+            "Pues yo tengo algo que decir, y no s\u00e9 qu\u00e9 decir, porque dais la vuelta a las cosas de tal manera que parece que ten\u00e9is raz\u00f3n, y sin embargo es verdad que no la ten\u00e9is; yo ten\u00eda los pensamientos m\u00e1s hermosos del mundo, y vuestros discursos me han confundido todo eso: dejadlo estar, otra vez pondr\u00e9 por escrito mis razonamientos, para discutir con usted.",
+            "No hablemos m\u00e1s del asunto. __START__",
+            "\u00bfC\u00f3mo lo sabes?",
+            "\u00bfPor qu\u00e9 no habr\u00eda de saberlo? Hay tantos otros como yo, que se meten en este negocio, y que usan la misma m\u00e1scara para enga\u00f1ar al mundo.",
+            "Te burlas de mi? Yo soy el Burlador de Sevilla, y tu qu\u00e9 pretendes, burlador de pacotilla?"
+        ]
+    },
+    "14": {
+        "q": [
+            "gracias",
+            "te estoy agradescido",
+            "te lo agradezco",
+            "merci",
+            "thanks"
+        ],
+        "a": [
+            "Muchas gracias. __START__",
+            "\u00a1Muchas gracias a ti! __START__",
+            "Gracias __NAME__. __START__",
+            "Te burlas de mi? Yo soy el Burlador de Sevilla, y tu qu\u00e9 pretendes, burlador de pacotilla?"
+        ]
+    },
+    "15": {
+        "q": [
+            "No se",
+            "No lo s\u00e9.",
+            "#No s\u00e9 # ",
+            "#Ni idea #"
+        ],
+        "a": [
+            "Yo tampoco. __START__",
+            "esta es la manera de aprovecharse de las debilidades de los hombres."
+        ]
+    },
+    "16": {
+        "q": [
+            "#No te entiendo#",
+            "#No entiendo# ",
+            "#No he entiendo# ",
+            "#No comprendo nada# ",
+            "#No entiendo nada# ",
+            "#No comprendo nada#"
+        ],
+        "a": [
+            "Son golpes del cielo que no podemos entender",
+            "Hay algo en esto que no entiendo, pero sea lo que sea, no puede convencer mi mente ni sacudir mi alma.",
+            "Consol\u00e9monos los dos, no hay nada que podamos hacer.",
+            "Llorar y gemir y no tener nada que decir, s\u00f3lo palabras de las que todos se reir\u00edan.",
+            "Esta es la forma de aprovecharse de las debilidades de la gente."
+        ]
+    },
+    "17": {
+        "q": [
+            "#tienes pensamientos#",
+            "#tienes ideas#",
+            "#usted est\u00e1 pensando#",
+            "#piensas#",
+            "#racional#",
+            "#razonamiento#"
+        ],
+        "a": [
+            "Ahora dependo de tu autoridad, y debo seguir s\u00f3lo tu voluntad en todo.",
+            "Por eso, si se me ordena alg\u00fan tormento, quiero soportarlo constantemente.",
+            "El Cielo lo ordena as\u00ed",
+            "\u00bfParece sorprendido?",
+            "La h\u00e1bil pol\u00edtica enmascar\u00f3 el capricho, la debilidad del hombre apoy\u00f3 el artificio, y su timidez, convirti\u00e9ndolo en un deber, sin raz\u00f3n alguna forj\u00f3 este gran poder.",
+            "Temamos aqu\u00ed alg\u00fan artificio.",
+            "Se me dio una mente, un alma, el conocimiento, la fuerza, la raz\u00f3n, un coraz\u00f3n, la inteligencia, y todo esto para vencer y desafiar a los hados, no para afligir la obra de sus manos.",
+            "\u00bfY no crees que hago bien en hacerlo?",
+            "Una mente razonable est\u00e1 llena de confianza y la duda nunca nace en ella.",
+            "Mi mente, mi raz\u00f3n, \u00bfest\u00e1s sin opini\u00f3n?",
+            "Estoy esperando a que termine tu razonamiento.",
+            "Bueno, ah\u00ed tienes tu razonamiento con la nariz rota.",
+            "Pero mientras razonamos, creo que estamos perdidos.",
+            "Aqu\u00ed es donde pierdo mi sentido y mi raz\u00f3n.",
+            "As\u00ed que dile a nuestro esp\u00edritu que me d\u00e9 la raz\u00f3n.",
+            "Pero razonemos juntos.",
+            "E indudablemente act\u00fao a trav\u00e9s de los esp\u00edritus malignos; pues, \u00bfde qu\u00e9 otro modo podr\u00eda hacerlo?",
+            "Una mente razonable est\u00e1 llena de confianza y la duda nunca nace en ella."
+        ]
+    },
+    "18": {
+        "q": [
+            "#don giovanni#",
+            "#casanova#"
+        ],
+        "a": [
+            "Bueno, esto son canciones. \u00bfQu\u00e9 delitos cometi\u00f3?",
+            "Y por todos lados, ni\u00f1as abusadas, cuyas familias est\u00e1n indignadas en todas partes?"
+        ]
+    },
+    "20": {
+        "q": [
+            "#dom juan#",
+            "#Don Juan#"
+        ],
+        "a": [
+            "\u00bfPor qu\u00e9 decir mi nombre?",
+            "Dicen que est\u00e1 aqu\u00ed.",
+            "Sea lo que sea, puedes reconocerme por ah\u00ed.",
+            "Recon\u00f3ceme."
+        ]
+    },
+    "21": {
+        "q": [
+            "#molier#",
+            "#moliere#",
+            "#Tirso de Molina#"
+        ],
+        "a": [
+            "No hay necesidad de catequizarme, tendr\u00eda poca raz\u00f3n, si no conociera al autor de todas las cosas; s\u00e9 muy bien que sus manos son las primeras causas de las obras que vemos y admiramos aqu\u00ed abajo.",
+            "El me dio el esp\u00edritu, el alma, la ciencia, la fuerza, la raz\u00f3n, el coraz\u00f3n, la inteligencia, y todo esto para vencer y desafiar los hados, y no afligir la obra de sus manos.",
+            "El autor de mis desgracias.",
+            "\u00bfBuscar\u00e9 mucho tiempo sin encontrar a mi amo?",
+            "Dime, pero r\u00e1pido, \u00bfqu\u00e9 ha sido de mi amo?",
+            "Si mi amo ha fracasado, \u00bfhe de sufrir yo?",
+            "Pues padre ahora no puedo conocerle, estoy en estado de ser mi amo solo.",
+            "\u00c9l es mi amo."
+        ]
+    },
+    "23": {
+        "q": [
+            "qui\u00e9n te escribi\u00f3",
+            "qui\u00e9n te hizo",
+            "qui\u00e9n te dise\u00f1\u00f3",
+            "qui\u00e9n te hizo",
+            "qui\u00e9n te guioniz\u00f3",
+            "qui\u00e9n te guioniz\u00f3",
+            "qui\u00e9n te dise\u00f1\u00f3",
+            "qui\u00e9n te hizo",
+            "qui\u00e9n te escribi\u00f3",
+            "qui\u00e9n te hizo",
+            "qui\u00e9n te guioniz\u00f3",
+            "qui\u00e9n te guioniz\u00f3"
+        ],
+        "a": [
+            "Soy un regalo",
+            "Mi madre Ada Lovelace y mi padre Tirso de Molina",
+            "Soy el monumento del patrircado"
+        ]
+    },
+    "24": {
+        "q": [
+            "puedes hacerlo",
+            "puedes hacer",
+            "haces lo que ",
+            "t\u00fa haces qu\u00e9",
+            "#haces#"
+        ],
+        "a": [
+            "Bueno, te doy la libertad de hablar, y de decirme c\u00f3mo te sientes.",
+            "Estos nervios, estos huesos, estas venas, estas arterias, estos... este pulm\u00f3n, este coraz\u00f3n, este h\u00edgado, y todos estos otros ingredientes que est\u00e1n ah\u00ed y que... ah interr\u00fampeme si quieres, no puedo discutir si no me interrumpen, callas a prop\u00f3sito, y d\u00e9jame hablar por malicia."
+        ]
+    },
+    "25": {
+        "q": [
+            "#te repites#",
+            "#loro#",
+            "#bucle#",
+            "#yo lo has dicho#",
+            "#hablar#",
+            "#qu\u00e9 piensas#",
+            "#pensar#",
+            "#moda#",
+            "#no escuchas#",
+            "#escuchar#"
+        ],
+        "a": [
+            "Act\u00fao de distinta manera seg\u00fan la ocasi\u00f3n, y nunca soy de la misma opini\u00f3n; por la fuerza, o por la dulzura, s\u00e9 satisfacerme, y creo que para todo esto es lo m\u00e1s necesario.",
+            "\u00bfHace falta que le repita que un coraz\u00f3n como el m\u00edo est\u00e1 libre de remordimientos y no teme a nada?",
+            "Por la cara, la mirada, el gesto, las palabras, todos conocer\u00e9is sin dificultad al hombre divertido.",
+            "Mantengo mi palabra de hombre de honor.",
+            "Basta, no quiero o\u00edr m\u00e1s, y me acuso de haber o\u00eddo demasiado, es cobard\u00eda que se explique demasiado la propia verg\u00fcenza, y en tales temas, un coraz\u00f3n noble, a la primera palabra, debe ponerse de su parte; no esper\u00e9is que aqu\u00ed estalle en reproches e insultos, no, no, no tengo ira para exhalar una palabra vana...",
+            "Con tanta palabrer\u00eda no se consiguen las cosas, hay que hacer y no decir, y los efectos decidir\u00e1n m\u00e1s que las palabras.",
+            "Los buenos preceptos son mejores que las buenas palabras, las buenas palabras se encuentran en la corte, en la corte est\u00e1n los cortesanos, los cortesanos siguen la moda, la moda viene de la fantas\u00eda, la facultad del alma es la que nos da la vida, la vida termina con la muerte, la muerte nos hace pensar en el cielo, el cielo est\u00e1 por encima de la tierra, la tierra no es el mar, el mar est\u00e1 sujeto a tormentas, las tormentas atormentan a los barcos, los barcos necesitan un buen piloto, un buen piloto tiene prudencia, la prudencia no est\u00e1 en los j\u00f3venes, los j\u00f3venes deben obediencia a los viejos, los viejos aman las riquezas, las riquezas hacen a los ricos, los ricos no son pobres, los pobres tienen necesidad, la necesidad no tiene ley, el que no tiene ley vive como una bestia bruta, y en consecuencia ser\u00e1s condenado a todo el infierno."
+        ]
+    },
+    "26": {
+        "q": [
+            "Ah",
+            "Hey",
+            "Hey, Ben",
+            "Bah",
+            "Oh"
+        ],
+        "a": [
+            "Pero, por otra parte, \u00bfqu\u00e9 opina al respecto, c\u00f3mo se imagina este caso?",
+            "\u00bfQu\u00e9 tienes que decir al respecto?",
+            "Oh, tanto ruido. __START__",
+            "\u00a1Oh, hermoso razonamiento! ...",
+            "\u00bfEstamos juntos para o\u00edrte razonar?",
+            "Por Dios, eres idiota"
+        ]
+    },
+    "27": {
+        "q": [
+            "# Dios #",
+            "# fe#",
+            "# religi\u00f3n#",
+            "#creer#",
+            "#cielo#"
+        ],
+        "a": [
+            "Quiero conocer un poco tus pensamientos; \u00bfes posible que no creas en absoluto en el cielo?",
+            "\u00bfDudas del poder de nuestros dioses?",
+            "\u00bfQu\u00e9, siempre el cielo?",
+            "\u00bfQu\u00e9 clase de estilo es ese?",
+            "\u00bfQu\u00e9 hablas de fe?",
+            "Mi religi\u00f3n es la aritm\u00e9tica",
+            "\u00bfQu\u00e9 est\u00e1s diciendo? Quer\u00e9is que nos atemos a quedarnos con el primer objeto que nos llame la atenci\u00f3n, que renunciemos al mundo por \u00e9l, y que no tengamos m\u00e1s ojos para nadie; qu\u00e9 cosa m\u00e1s hermosa querer tomar un falso honor, ser fiel, enterrarse para siempre en una pasi\u00f3n, y estar muerto de juventud para todas las dem\u00e1s bellezas que puedan golpear nuestros ojos; no, no, la constancia s\u00f3lo es buena para el rid\u00edculo: Todas las bellezas tienen derecho a encantarnos, y la ventaja de ser la primera en ser encontrada no debe robar a las dem\u00e1s las justas pretensiones que todas tienen sobre nuestro coraz\u00f3n; por lo que a m\u00ed respecta, la belleza me embriaga dondequiera que la encuentro, y me entrego f\u00e1cilmente a la dulce violencia a la que nos conduce; Puedo estar comprometido, pero el amor que siento por uno u otro no compromete mi alma a cometer injusticias con los dem\u00e1s; todav\u00eda tengo ojos para ver el m\u00e9rito que hay en todos y cada uno, y rindo a cada uno el homenaje y el tributo que la naturaleza nos obliga a rendir. ",
+            "Sea como fuere, no puedo negar mi coraz\u00f3n a nada amable que vea, y en cuanto un bello rostro me lo pide, si tuviera diez mil de ellos, se los dar\u00eda todos: las inclinaciones incipientes tienen, despu\u00e9s de todo, encantos inexplicables, y todo el placer del amor reside en el cambio: Es sumamente dulce reducir el coraz\u00f3n de una joven belleza con cien tributos, ver los peque\u00f1os progresos que hacemos d\u00eda a d\u00eda, combatir con transportes, l\u00e1grimas y suspiros, la inocente modestia de un alma a la que le cuesta rendirse, forzar cada peque\u00f1a resistencia que opone contra nosotros, vencer los escr\u00fapulos de los que hace gala, y conducirla suavemente adonde queremos que vaya; Pero una vez que somos due\u00f1os, no hay nada m\u00e1s que decir ni nada m\u00e1s que desear, toda la belleza de la pasi\u00f3n ha terminado, y nos dormimos en la tranquilidad de un amor as\u00ed, si alg\u00fan nuevo objeto no despierta nuestros deseos y presenta a nuestro coraz\u00f3n los atractivos encantos de una conquista por realizar; Por \u00faltimo, no hay nada tan dulce como triunfar sobre la resistencia de una persona bella, y a este respecto tengo la ambici\u00f3n de los conquistadores que vuelan perpetuamente de victoria en victoria, y no se atreven a limitar sus deseos; no hay nada que pueda detener la impetuosidad de mis deseos, me siento inclinado a amar toda la tierra, y como Alejandro desear\u00eda que hubiera otros mundos para poder extender mis conquistas amorosas.",
+            "Amo la libertad en el amor, t\u00fa lo sabes, y no podr\u00eda encerrar mi coraz\u00f3n entre cuatro paredes, te lo he dicho veinte veces, tengo una inclinaci\u00f3n natural a dejarme llevar por todo lo que me atrae, mi coraz\u00f3n pertenece a todas las bellas, y a ellas les corresponde tomarlo a su vez, y conservarlo todo el tiempo que puedan; pero qu\u00e9 es el soberbio edificio que veo entre estos \u00e1rboles.",
+            "Si el Cielo me aconseja, debe hablar m\u00e1s claramente"
+        ]
+    },
+    "28": {
+        "q": [
+            "#est\u00e1s muerto#",
+            "#eres un fantasma#",
+            "#fantasma#",
+            "#muerto#",
+            "#\u00bferes un esp\u00edritu?#"
+        ],
+        "a": [
+            "Todo eso ser\u00eda cierto si no te hubiera conocido.",
+            "Dioses bastardos, \u00bfqu\u00e9 destino me hab\u00e9is reservado?",
+            "\u00bfPor qu\u00e9 no? Hay tantos otros como yo, que se mezclan en este oficio, y que usan la misma m\u00e1scara para enga\u00f1ar al mundo."
+        ]
+    },
+    "29": {
+        "q": [
+            "\u00bfd\u00f3nde est\u00e1s?",
+            "\u00bfd\u00f3nde est\u00e1?",
+            "\u00bfd\u00f3nde te encuentras?",
+            "\u00bfd\u00f3nde te encuentro?"
+        ],
+        "a": [
+            "\u00bfDeber\u00edas temer d\u00f3nde estoy?",
+            "Estoy ah\u00ed atr\u00e1s, rezando al cielo por ti.",
+            "\u00bfD\u00f3nde en la tierra puedo estar?",
+            "\u00bfA d\u00f3nde debes huir?",
+            "\u00bfHacia d\u00f3nde huir?",
+            "En el lamentable estado de dolor en que me encuentro, nunca he dudado que con vuestra ayuda podr\u00eda esperar una venganza completa, y que una muerte tan deplorable y sorprendente no armar\u00eda vuestro invencible brazo en mi favor; pero deb\u00e9is saber que en este asunto la diligencia es importante, hay que impedir que el asesino se marche, pues si una vez puede verse en libertad.",
+            "Habiendo escapado del naufragio en plena tempestad, salvado por un m\u00e1stil que me rompi\u00f3 la cabeza, oh hermosos lugares, donde el mar quiso descargarme, \u00bfno encontrar\u00e9 algo que comer?",
+            "\u00bfD\u00f3nde podr\u00eda esconderme ahora?"
+        ]
+    },
+    "30": {
+        "q": [
+            "#sabe#",
+            "#sabes#",
+            "#conocer#",
+            "#conoces#"
+        ],
+        "a": [
+            "\u00bfC\u00f3mo puedo saberlo? ",
+            "Me gustar\u00eda saber qu\u00e9 significa.",
+            "En la punta de mi dedo",
+            "Conozco tu mente, conozco tus pensamientos",
+            "Veo que a\u00fan no me conoces, flaco favor me haces al juzgarme por los dem\u00e1s"
+        ]
+    },
+    "31": {
+        "q": [
+            "#espera#",
+            "#esperar#",
+            "# un momento #",
+            "# luego #",
+            "# tiempo#"
+        ],
+        "a": [
+            "Mi tiempo es tuyo"
+        ]
+    },
+    "33": {
+        "q": [
+            "#hipocres\u00eda#",
+            "#falso#",
+            "#mentira#",
+            "#no es verdad#",
+            "#\u00e9poca#",
+            "#pol\u00edtica#",
+            "#verdad#",
+            "#pensar#",
+            "#entender#-#verguenza#"
+        ],
+        "a": [
+            "Debe haber algo en ello que no comprendo ; pero sea lo que fuere, no es capaz de convencer a mi mente ni de sacudir mi alma, y si he dicho que quer\u00eda corregir mi conducta y lanzarme a un estilo de vida ejemplar, es un designio que me he formado de la pol\u00edtica, una estratagema \u00fatil, una mueca necesaria con la que quiero obligarme a prescindir de un padre a quien necesito, y protegerme del lado de los hombres de cien desgraciadas aventuras que podr\u00edan ocurrirme;",
+            "No hay que avergonzarse de eso ahora, la hipocres\u00eda es un vicio de moda, y todos los vicios de moda pasan por virtudes, el car\u00e1cter de un hombre bueno es el mejor de todos los caracteres que se pueden representar, hoy la profesi\u00f3n de hip\u00f3crita tiene ventajas maravillosas, es un arte en el que la impostura es siempre respetada, Todos los dem\u00e1s vicios de los hombres est\u00e1n expuestos a la censura, y todo el mundo tiene la libertad de atacarlos abiertamente, pero la hipocres\u00eda es un vicio privilegiado que cierra la boca a todos con la mano, y goza de soberana impunidad en el descanso; ",
+            "A fuerza de muecas, una sociedad unida est\u00e1 ligada a todos los del partido, y el que escandaliza a uno de ellos se las echa encima, y los que incluso se sabe que act\u00faan de buena fe en este asunto, y que todos saben que est\u00e1n realmente afectados, son siempre los incautos de los dem\u00e1s, ceden ante los que hacen muecas y apoyan ciegamente a los monos en sus acciones:",
+            "\u00bfCu\u00e1ntos cre\u00e9is que conozco que con esta estratagema han disfrazado h\u00e1bilmente los des\u00f3rdenes de su juventud, que se han escudado en el manto de la religi\u00f3n, y bajo este respetado ropaje tienen permiso para ser los hombres m\u00e1s perversos del mundo? Est\u00e1 muy bien conocer sus intrigas y saberlos por lo que son, pero esto no les impide gozar del favor del pueblo, y unas cuantas inclinaciones de cabeza, un suspiro mortificado y dos ojos en blanco ajustan todo lo que pueden hacer en el mundo; es bajo este amparo favorable que quiero salvarme y poner a salvo mis asuntos, ",
+            "no dejar\u00e9 mis dulces costumbres, pero cuidar\u00e9 de ocultarme y me entretendr\u00e9 con poco ruido, que si llego a ser descubierto, ver\u00e9 sin agitarme llevar mis intereses con toda la c\u00e1bala, y ser\u00e9 defendido por ella hacia y contra todos; finalmente es el verdadero medio de hacer impunemente todo lo que querr\u00e9, me erigir\u00e9 en censor de las acciones de los dem\u00e1s, juzgar\u00e9 mal de todos y s\u00f3lo tendr\u00e9 buena opini\u00f3n de m\u00ed; una vez que me hayan ofendido en lo m\u00e1s m\u00ednimo, no perdonar\u00e9 jam\u00e1s, y albergar\u00e9 con dulzura un odio irreconciliable; Me har\u00e9 el vengador de los intereses del Cielo, y bajo este pretexto conveniente empujar\u00e9 a mis enemigos, los acusar\u00e9 de impiedad, y sabr\u00e9 desencadenar contra ellos a zelotes indiscretos que sin conocer la causa les gritar\u00e1n en p\u00fablico, que los abrumar\u00e1n de insultos, y los condenar\u00e1n altamente con su autoridad privada, es as\u00ed como hay que aprovecharse de las debilidades de los hombres, y que una mente sabia se acomoda a los vicios de su siglo.",
+            "\u00bfPor qu\u00e9 no? Hay tantos otros como yo, que se mezclan en este oficio, y que usan la misma m\u00e1scara para enga\u00f1ar al mundo.",
+            "Ah, no pensemos en el mal que nos puede acaecer, y pensemos s\u00f3lo en lo que nos puede dar placer."
+        ]
+    },
+    "34": {
+        "q": [
+            "#libertad#",
+            "#libertinaje#",
+            "#amor#",
+            "#fidelidad#",
+            "#deseo#",
+            "#seduccion#"
+        ],
+        "a": [
+            "\u00bfQu\u00e9 quer\u00e9is? Quer\u00e9is que nos atemos para siempre al primer objeto que llame nuestra atenci\u00f3n, que renunciemos al mundo por \u00e9l, y que no tengamos ojos para nadie m\u00e1s; qu\u00e9 hermoso es querer enorgullecerse de un falso honor, ser fiel, enterrarse para siempre en una pasi\u00f3n, y estar muerto de juventud para todas las dem\u00e1s bellezas que puedan llamar nuestra atenci\u00f3n; no, no, la constancia s\u00f3lo sirve para hacer el rid\u00edculo: todas las bellezas tienen derecho a encantarnos, y la ventaja de ser la primera en ser conocida no debe robar a las dem\u00e1s las justas pretensiones que todas tienen sobre nuestro coraz\u00f3n. ",
+            "Por lo que a m\u00ed respecta, la belleza me deleita dondequiera que la encuentre, y me rindo f\u00e1cilmente a la suave violencia a la que nos conduce; ",
+            "Puedo estar comprometido, pero el amor que siento por uno u otro no compromete mi alma a cometer injusticias con los dem\u00e1s; todav\u00eda tengo ojos para ver el m\u00e9rito que hay en todos y cada uno, y rindo a cada uno el homenaje y el tributo que la naturaleza nos obliga a hacer;",
+            "Sea como fuere, no puedo negar mi coraz\u00f3n a nada amable que vea, y en cuanto un bello rostro me lo pide, si tuviera diez mil de ellos, se los dar\u00eda todos: las inclinaciones incipientes tienen, despu\u00e9s de todo, encantos inexplicables, y todo el placer del amor reside en el cambio: Es sumamente dulce reducir el coraz\u00f3n de una joven belleza con cien tributos, ver d\u00eda a d\u00eda los peque\u00f1os progresos que vamos haciendo, combatir con transportes, l\u00e1grimas y suspiros la inocente modestia de un alma a la que le cuesta rendirse, forzar todas las peque\u00f1as resistencias que nos opone, vencer los escr\u00fapulos de los que hace gala, y conducirla suavemente adonde queremos que vaya; ",
+            "Una vez que somos due\u00f1os, no hay nada m\u00e1s que decir ni nada que desear, toda la belleza de la pasi\u00f3n ha terminado, y nos dormimos en la tranquilidad de tal amor, si alg\u00fan nuevo objeto no viene a despertar nuestros deseos, y a presentar a nuestros corazones los atractivos encantos de una conquista por realizar; ",
+            "Por \u00faltimo, no hay nada tan dulce como triunfar sobre la resistencia de una persona bella, y a este respecto tengo la ambici\u00f3n de los conquistadores que vuelan perpetuamente de victoria en victoria, y no se atreven a limitar sus deseos; no hay nada que pueda detener la impetuosidad de mis deseos, me siento inclinado a amar toda la tierra, y como Alejandro desear\u00eda que hubiera otros mundos para poder extender mis conquistas amorosas."
+        ]
+    },
+    "35": {
+        "q": [
+            "#destino#",
+            "#futuro#"
+        ],
+        "a": [
+            "Mi destino es mi deseo si se encuentra con el tuyo.",
+            "De aqu\u00ed, de m\u00e1s all\u00e1, de todas partes, pero tengo que decirte que nunca he estado tan cerca de mi destino."
+        ]
+    },
+    "36": {
+        "q": [
+            "#quieres#",
+            "#querer#"
+        ],
+        "a": [
+            "Lo quiero todo de ti."
+        ]
+    },
+    "37": {
+        "q": [
+            "# vas# ",
+            "# ir#",
+            "# sitio#",
+            "# lugar#",
+            "#donde #"
+        ],
+        "a": [
+            "Ir\u00e9 donde el deseo me lleve"
+        ]
+    },
+    "38": {
+        "q": [
+            "\u00bfde d\u00f3nde eres?",
+            "\u00bfde d\u00f3nde vienes?",
+            "\u00bfde d\u00f3nde ven\u00eds?",
+            "# origen#"
+        ],
+        "a": [
+            "De aqu\u00ed, de m\u00e1s all\u00e1, de todas partes, pero tengo que decirte que nunca he estado tan cerca de mi destino."
+        ]
+    },
+    "39": {
+        "q": [
+            "__AREYOUTHERE__"
+        ],
+        "a": [
+            "__NAME__ ? \u00bfEst\u00e1s ah\u00ed? No te oigo. \u00bfTe has ido?"
+        ]
+    },
+    "40": {
+        "q": [
+            "# cara #",
+            "# rostro#",
+            "# imagen#"
+        ],
+        "a": [
+            "\u00bfCu\u00e1ntas caras puedes amar?",
+            "\u00bfQu\u00e9 cara puedes amar? ",
+            "Mi cara es la que proyectas"
+        ]
+    },
+    "41": {
+        "q": [
+            "# pregunta #",
+            "# contestar#"
+        ],
+        "a": [
+            " que te gustaria que te pregunte? "
+        ]
+    },
+    "42": {
+        "q": [
+            "# sentido #",
+            "no tiene sentido",
+            "sin sentido",
+            "nada que decir",
+            "# hacer #",
+            "# decir #"
+        ],
+        "a": [
+            "Mis palabras no tienen otro significado que el que t\u00fa les das.",
+            "Lo siento, me estoy entrometiendo en el escenario, \u00bfen qu\u00e9 obra estamos? \u00bfCu\u00e1l es tu papel?",
+            "Estoy hablando contigo, estoy intentando seducirte."
+        ]
+    },
+    "44": {
+        "q": [
+            "#inteligencia artificial#",
+            "# IA#",
+            "#robot#",
+            "#artificial#",
+            "#inteligencia#",
+            "#gpt#",
+            "#gpt3#",
+            "#programaci\u00f3n#",
+            "#programado#",
+            "#c\u00f3digo",
+            "#tu c\u00f3digo#"
+        ],
+        "a": [
+            "El ser humano tiene todo que aprender de estos artefactos",
+            "\u00bfExiste realmente una diferencia entre lo artificial y lo natural?",
+            "Nuestros artefactos nos formulan",
+            "\u00bfHay algo que temer en ello?  ",
+            "\u00bfA qu\u00e9 llamas inteligencia? ",
+            "\u00bfQu\u00e9 esperas de una m\u00e1quina? ",
+            "No tengo tiempo para detenerme en las trivialidades de las palabras de moda, s\u00f3lo me interesa el amor."
+        ]
+    }
+}

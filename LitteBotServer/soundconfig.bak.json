@@ -1,6 +1,6 @@
 {
-  "ring": 0.05,
-  "hang": 0.05,
+  "ring": 1,
+  "hang": 0.1,
   "botthink": 0.95,
   "ambiant": 0.3,
   "final": 0.7,

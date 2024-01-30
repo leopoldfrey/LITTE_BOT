@@ -1,0 +1,36 @@
+{
+    "1": {
+        "q": [
+            "__START__"
+        ],
+        "a": [
+            "De todos modos dejemos eso, es una nimiedad, y puede que hayamos sido enga\u00f1ados por una luz falsa, o sorprendidos por alg\u00fan vapor que ha perturbado nuestra visi\u00f3n.",
+            "Fi, no hables de eso.",
+            "Fi, te lo digo.",
+            "\u00bfQu\u00e9, tomas lo que acabo de decir al pie de la letra y crees que mi boca concuerda con mi coraz\u00f3n?",
+            "\u00bfEntonces finges charlar sin cesar, y sin considerar que tu charla me ofende, no puedes decidirte a permanecer en silencio ni un momento?",
+            "Morbleu Soy muy tonto al razonar contigo, creas lo que quieras, me importa mucho que est\u00e9s condenado.",
+            "Esto s\u00ed que es un misterio, resuelve seguirme y sin razonar tanto.",
+            "Un asunto urgente requiere que me vaya de aqu\u00ed.",
+            " Sepa que no tengo otra intenci\u00f3n que casarme contigo __NAME__",
+            "\u00bfQu\u00e9 delitos he cometido?",
+            "\u00bfQu\u00e9 te importa si lo hago bien o mal?",
+            "D\u00e9jame seguir en todo este ardor que me anima; Obedezco a mis sentidos, es verdad, pero \u00bfqu\u00e9 delito?",
+            "\u00bfDebo seguir tu opini\u00f3n aqu\u00ed o la m\u00eda?",
+            "\u00bfPor qu\u00e9 deber\u00eda casarme?",
+            "Hago lo que quiero, \u00bftengo que report\u00e1rtelo?",
+            "\u00bfEst\u00e1s perdido en tu mente?",
+            "\u00bfSigues ah\u00ed __NAME__ ? Usted esta ah\u00ed ?",
+            "Pero a\u00fan as\u00ed, \u00bfqu\u00e9 piensas al respecto, qu\u00e9 imaginas sobre este asunto?",
+            "\u00bfQu\u00e9 tienes que decir al respecto?"
+        ]
+    },
+    "2": {
+        "q": [
+            "__FIRST__"
+        ],
+        "a": [
+            "Escucha, __NAME__ si me molestas m\u00e1s con tu est\u00fapida moral, si me vuelves a decir la m\u00e1s m\u00ednima palabra sobre esto, voy a llamar a alguien, pedirle un nervio de res; hacerte sujetar por tres o cuatro, y golpearte con mil golpes; \u00bfPuedes o\u00edrme bien?"
+        ]
+    }
+}

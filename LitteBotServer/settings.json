@@ -1,6 +1,6 @@
 {
     "max_interactions": 12,
-    "max_silence": 7,
+    "max_silence": 15,
     "max_section": 200,
     "max_inter_relance": 30,
     "max_relance_quit": 4,

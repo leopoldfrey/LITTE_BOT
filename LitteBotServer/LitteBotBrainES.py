@@ -1,0 +1,841 @@
+#!/usr/bin/env python3
+import json, pickle, random, logging, os, signal
+from typing import Union
+from pyosc import Client, Server
+from botLog import BotLog
+from sys import platform as _platform
+from gtrans_ES import translateFR, translateES
+
+import functools
+print = functools.partial(print, end='\n',flush=True)
+
+# import gradio as gr
+# print("Loading numpy...")
+import numpy as np
+
+DEBUG = 0
+
+# os.environ["CUDA_VISIBLE_DEVICES"]="1"
+if _platform == "win32" or _platform == "win64":
+    try:
+        os.add_dll_directory("C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.6/bin")
+    except :
+        print("[Brain] Error loading CUDA binaries")
+
+    try:
+        os.add_dll_directory("C:/tools/cuda/bin")
+    except :
+        print("[Brain] Error loading CUDNN binaries")
+
+
+print("[Brain] Loading Tensorflow...")
+import tensorflow as tf
+import tensorflow_hub as hub
+import tensorflow_text
+import torch
+import transformers
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+dialog_path = "../dataES/"
+def_questions_common = "dom_juan_commonES"
+def_questions_seduction = "dom_juan_seductionES"
+def_questions_provocation = "dom_juan_provocationES"
+def_questions_fuite = "dom_juan_fuiteES"
+def_questions_epilogue = "dom_juan_epilogueES"
+
+#def_tokenizer = "../model/emil2000/dialogpt-for-french-language"
+def_tokenizer = "../model/spanish-dialoGPT"
+def_model = "../model/Chatbot-Moliere-V4"
+def_module = "../model/universal-sentence-encoder-multilingual-large_3"
+
+OFF = 0
+INTRO = 1
+SEDUCTION = 2
+INTER = 3
+PROVOCATION = 4
+FUITE = 5
+
+COLOR_INTRO = 32
+COLOR_SEDUCTION = 33
+COLOR_PROVOCATION = 35
+COLOR_FUITE = 36
+COLOR_OFF = 37
+
+color = [COLOR_OFF, COLOR_INTRO, COLOR_SEDUCTION, COLOR_OFF, COLOR_PROVOCATION, COLOR_FUITE, COLOR_OFF ]
+
+# section = ["Off", "Introduction", "Séduction", "Provocation", "Fuite", "Epilogue"]
+
+MAX_HISTORY_SIZE = 15
+
+def print_formatColor_table():
+    """
+    prints table of formatColorted text formatColor options
+    """
+    for style in range(8):
+        for fg in range(30,38):
+            s1 = ''
+            for bg in range(40,48):
+                formatColor = ';'.join([str(style), str(fg), str(bg)])
+                s1 += '\x1b[%sm %s \x1b[0m' % (formatColor, formatColor.replace(";",","))
+            print(s1)
+        print('\n')
+
+def formatColor(style, fg, bg, s):
+    f = ';'.join([str(style), str(fg), str(bg)])
+    return '\x1b[%sm%s\x1b[0m' % (f, s)
+
+class LitteBot:
+    def __init__(self):
+        tf.compat.v1.logging.set_verbosity(40) # ERROR
+
+        self.botmode = 1
+        self.botmodeInter = 0
+        self.botresponses = []
+        self.filter = []
+        self.currentStart = []
+        self.start = []
+        self.currentFirst = []
+        self.first = []
+        self.currentSecond = []
+        self.second = []
+        self.currentThird = []
+        self.third = []
+        self.currentQuit = []
+        self.quit = []
+        self.epilogue = []
+        self.curEpilogue = 0
+        self.inter = []
+        self.curInter = 0
+        self.history = [[], []]
+        self.lastresponse = ""
+        self.username = ""
+
+        self.log = BotLog()
+
+        """Initializes the bot."""
+        print("[Brain] Loading module "+def_module)
+        self.module_url = ( def_module )
+        self.model_embeddings = hub.load(self.module_url)
+        self.model_url = def_model
+        self.tokenizer_url = def_tokenizer
+
+        self.loadQuestionsAndEmbeddings()
+        self.model, self.tokenizer = self.load_model()
+
+        self.css = """ .footer {display:none !important} """
+
+        self.osc_server = Server('127.0.0.1', 14001, self.oscIn)
+        self.osc_client = Client('127.0.0.1', 14000)
+
+        print("[Brain] Chatbot ready")
+
+    def kill(self):
+        self.osc_server.stop()
+        os._exit(0)
+
+    def loadQuestionsAndEmbeddings(self):
+        print("[Brain] Loading questions")# "+def_questions)
+        self.dom_juan = self.load_questions_from_json()
+        self.dom_juan_questions = self.load_questions_keys()
+        print("[Brain] Building embeddings")
+        self.dom_juan_questions_embeddings = self.build_embeddings()
+
+    def oscIn(self, address, *args):
+        # print("OSC IN ", address, args[0])
+        if(address == '/getresponse'):
+            self.getResponse(args[0])
+        elif(address == '/setbotmode'):
+            self.setBotMode(args[0])
+        elif(address == '/newConversation'):
+            self.newConversation()
+        elif(address == '/relance'):
+            self.relance()
+        elif(address == '/first'):
+            self.speakFirst("")
+        elif(address == '/second'):
+            self.speakSecond(args[0])
+        elif(address == '/third'):
+            self.speakThird(args[0])
+        elif(address == '/nextEpilogue'):
+            self.nextEpilogue()
+        elif(address == '/nextInter'):
+            self.nextInter()
+        elif(address == '/areYouThere'):
+            self.areYouThere()
+        elif(address == '/reload'):
+            self.loadQuestionsAndEmbeddings()
+        elif(address == '/logbot'):
+            print(formatColor(0,color[self.botmode],40, "[Brain] bot: "+args[0]))
+            self.log.logBot(str(self.botmode), args[0])
+        elif(address == '/logme'):
+            print("[Brain] user: "+args[0])
+            self.log.logMe(args[0])
+        else:
+            print("[Brain] OSC IN : "+str(address))
+            for x in range(0,len(args)):
+                print("     " + str(args[x]))
+
+    def setBotMode(self, mode):
+        # self.history = [[], []]
+        self.botmode = mode
+        self.botmodeInter = 0
+        if self.botmode != 1:
+            self.currentStart = self.start[self.botmode].copy()
+            if self.botmode < 5 :
+                self.currentFirst = self.first[self.botmode].copy()
+                self.currentSecond = self.second[self.botmode].copy()
+                self.currentThird = self.third[self.botmode].copy()
+        if self.botmode == 0:
+            print("[Brain]  - "+formatColor(1,color[OFF],40,"Bot Mode Passe-partout"))
+        elif self.botmode == 1:
+            print("[Brain]  - "+formatColor(1,color[INTRO],40,"Bot Mode Introduction"))
+        elif self.botmode == 2:
+            print("[Brain]  - "+formatColor(1,color[SEDUCTION],40,"Bot Mode Seduction"))
+        elif self.botmode == 3:
+            print("[Brain]  - "+formatColor(1,color[INTER],40,"Bot Mode Intermede"))
+        elif self.botmode == 4:
+            print("[Brain]  - "+formatColor(1,color[PROVOCATION],40,"Bot Mode Provocation"))
+        elif self.botmode == 5:
+            print("[Brain]  - "+formatColor(1,color[FUITE],40,"Bot Mode Fuite"))
+
+    def nextEpilogue(self):
+        if(self.curEpilogue < len(self.epilogue)):
+            # print("NEXT EPILOGUE", self.epilogue)
+            self.lastresponse = self.postProcess(self.epilogue[self.curEpilogue].strip())
+            print(formatColor(0,color[self.botmode],40, "[Brain] bot: "+self.lastresponse))
+            if DEBUG :
+                print(formatColor(0,color[self.botmode],40, "[Brain] [TRANS] "+translateFR(self.lastresponse)))
+            self.botresponses.append(self.lastresponse)
+            self.log.logBot(str(self.botmode), self.lastresponse)
+            self.osc_client.send('/curEpilogue',self.lastresponse)
+            self.curEpilogue += 1
+        else:
+            self.osc_client.send('/endEpilogue',1)
+
+    def nextInter(self):
+        if(self.curInter < len(self.inter)):
+            # print("NEXT EPILOGUE", self.epilogue)
+            self.lastresponse = self.postProcess(self.inter[self.curInter].strip())
+            print(formatColor(0,color[self.botmode],40, "[Brain] bot: "+self.lastresponse))
+            if DEBUG :
+                print(formatColor(0,color[self.botmode],40, "[Brain] [TRANS] "+translateFR(self.lastresponse)))
+            self.botresponses.append(self.lastresponse)
+            self.log.logBot(str(self.botmode), self.lastresponse)
+            self.osc_client.send('/curInter',self.lastresponse)
+            self.curInter += 1
+        else:
+            self.osc_client.send('/endInter',1)
+
+    def areYouThere(self):
+        idx = random.randrange(len(self.areyou))
+        self.lastresponse = self.areyou[idx].strip()
+        self.lastresponse = self.postProcess(self.lastresponse)
+        print(formatColor(0,color[self.botmode],40, "[Brain] bot: "+self.lastresponse))
+        if DEBUG :
+            print(formatColor(0,color[self.botmode],40, "[Brain] [TRANS] "+translateFR(self.lastresponse)))
+        self.botresponses.append(self.lastresponse)
+        self.log.logBot(str(self.botmode), self.lastresponse)
+        self.osc_client.send('/lastresponse',self.lastresponse)
+
+    def getResponse(self, q):
+        if self.botmode < 5 and self.botmodeInter == 0 and len(self.currentFirst) != 0 :
+            self.speakFirst(q)
+        elif self.botmode < 5 and self.botmodeInter == 1 and len(self.currentSecond) != 0  :
+            self.speakSecond(q)
+        elif self.botmode < 5 and self.botmodeInter == 2 and len(self.currentThird) != 0 :
+            self.speakThird(q)
+        else:
+            print("Brain",self.botmode,self.botmodeInter,q)
+            # translate to ES
+            print("[Brain] user: "+q)
+            if DEBUG :
+                q = translateES(q)
+                print("[Brain] [TRANS] : "+q)
+            self.log.logMe(q)
+            response = self.predict(q, self.history)
+            # i = 0
+            # while self.lastresponse in self.botresponses and i < 10:
+            #     self.predict(q, self.history)
+            #     # print("\t"+formatColor(0,color[self.botmode],40,"(repetitive response, new : "+ response+")"))
+            #     i = i + 1
+            print(formatColor(0,color[self.botmode],40, "[Brain] bot: "+self.lastresponse))
+            if DEBUG :
+                print(formatColor(0,color[self.botmode],40, "[Brain] [TRANS] "+translateFR(self.lastresponse)))
+            self.botresponses.append(self.lastresponse)
+            self.log.logBot(str(self.botmode), self.lastresponse)
+            self.osc_client.send('/lastresponse',self.lastresponse)
+            self.botmodeInter += 1
+            # return self.lastresponse
+
+    def getAllResponses(self):
+        return self.botresponses
+
+    def newConversation(self):
+        self.username = ""
+        self.setBotMode(1)
+        self.currentStart = self.start[self.botmode].copy()
+        self.currentFirst = self.first[self.botmode].copy()
+        self.currentSecond = self.second[self.botmode].copy()
+        self.currentThird = self.third[self.botmode].copy()
+        self.curEpilogue = 0
+        self.curInter = 0
+        self.history = [[], []]
+        self.log.start()
+        self.botresponses.clear()
+
+    def relance(self):
+        # print("Brain RELANCE")
+        if(len(self.currentStart) == 0):
+            self.currentStart = self.start[self.botmode].copy()
+        idx = random.randrange(len(self.currentStart))
+        self.lastresponse = self.currentStart.pop(idx).strip()
+        self.lastresponse = self.postProcess(self.lastresponse)
+        print(formatColor(0,color[self.botmode],40, "[Brain] bot: "+self.lastresponse))
+        if DEBUG :
+            print(formatColor(0,color[self.botmode],40, "[Brain] [TRANS] "+translateFR(self.lastresponse)))
+        self.botresponses.append(self.lastresponse)
+        self.log.logBot(str(self.botmode), self.lastresponse)
+        self.osc_client.send('/lastresponse',self.lastresponse)
+
+    def speakFirst(self, mess):
+        print("Brain FIRST",self.botmode,self.botmodeInter,mess)
+        self.log.logMe(mess)
+        self.botmodeInter += 1
+        if(len(self.currentFirst) == 0):
+            self.currentFirst = self.first.copy()
+        idx = random.randrange(len(self.currentFirst))
+        self.lastresponse = self.currentFirst.pop(idx).strip()
+        self.lastresponse = self.postProcess(self.lastresponse)
+        print(formatColor(0,color[self.botmode],40, "[Brain] bot: "+self.lastresponse))
+        if DEBUG :
+            print(formatColor(0,color[self.botmode],40, "[Brain] [TRANS] "+translateFR(self.lastresponse)))
+        self.botresponses.append(self.lastresponse)
+        self.log.logBot(str(self.botmode), self.lastresponse)
+        self.osc_client.send('/lastresponse',self.lastresponse)
+
+    def speakSecond(self, mess):
+        print("Brain SECOND",self.botmode,self.botmodeInter,mess)
+        self.log.logMe(mess)
+        self.botmodeInter += 1
+        tmp = ""
+        if self.username == "" :
+            '''if(mess.__contains__("moi c'est ")):
+                self.username = mess.split("moi c'est ")[-1].split(" ")[0]
+            elif(mess.__contains__("c'est moi ")):
+                self.username = mess.split("c'est moi ")[-1].split(" ")[0]
+            elif(mess.__contains__("m'appelle ")):
+                self.username = mess.split("m'appelle ")[-1].split(" ")[0]
+            elif(mess.__contains__("appeller")):
+                self.username = mess.split("appeller ")[-1].split(" ")[0]
+            elif(mess.__contains__("suis")):
+                self.username = mess.split("suis ")[-1].split(" ")[0]
+            elif(mess.__contains__("nomme")):
+                self.username = mess.split("nomme ")[-1].split(" ")[0]
+            elif(mess.__contains__("est")):
+                self.username = mess.split("nom est ")[-1].split(" ")[0]
+            else:
+                self.username = mess.split(" ")[0]'''
+            if(mess.__contains__("soy ")):
+                self.username = mess.split("soy ")[-1].split(" ")[0]
+            elif(mess.__contains__("llamo ")):
+                self.username = mess.split("llamo ")[-1].split(" ")[0]
+            elif(mess.__contains__("llaman ")):
+                self.username = mess.split("llaman ")[-1].split(" ")[0]
+            elif(mess.__contains__("nombre es ")):
+                self.username = mess.split("nombre es ")[-1].split(" ")[0]
+            else:
+                self.username = mess.split(" ")[0]
+
+            print("[Brain] Username:", ">"+self.username+"<")
+            self.osc_client.send('/username',self.username)
+            
+            if mess.__contains__("et toi") or mess.__contains__("t'appelle") or mess.__contains__("vous appellez") or mess.__contains__("ton nom") or mess.__contains__("votre nom") :
+                tmp = "Je suis Don Juan moi-même. "
+
+        if(len(self.currentSecond) == 0):
+            self.currentSecond = self.second.copy()
+        idx = random.randrange(len(self.currentSecond))
+        self.lastresponse = tmp + self.currentSecond.pop(idx).strip()
+        self.lastresponse = self.postProcess(self.lastresponse)
+        print(formatColor(0,color[self.botmode],40, "[Brain] bot: "+self.lastresponse))
+        if DEBUG :
+            print(formatColor(0,color[self.botmode],40, "[Brain] [TRANS] "+translateFR(self.lastresponse)))
+        self.botresponses.append(self.lastresponse)
+        self.log.logBot(str(self.botmode), self.lastresponse)
+        self.osc_client.send('/lastresponse',self.lastresponse)
+
+    def speakThird(self, mess):
+        print("Brain THIRD",self.botmode,self.botmodeInter, mess)
+        self.log.logMe(mess)
+        self.botmodeInter += 1
+        if(len(self.currentThird) == 0):
+            self.currentThird = self.third.copy()
+        idx = random.randrange(len(self.currentThird))
+        self.lastresponse = self.currentThird.pop(idx).strip()
+        self.lastresponse = self.postProcess(self.lastresponse)
+        print(formatColor(0,color[self.botmode],40, "[Brain] bot: "+self.lastresponse))
+        if DEBUG :
+            print(formatColor(0,color[self.botmode],40, "[Brain] [TRANS] "+translateFR(self.lastresponse)))
+        self.botresponses.append(self.lastresponse)
+        self.log.logBot(str(self.botmode), self.lastresponse)
+        self.osc_client.send('/lastresponse',self.lastresponse)
+
+    def postProcess(self, msg):
+        if(msg == " « " or msg == " » " or msg == " Ah " or msg == "Oh!  " or msg == "Oh!" or msg == " Eh " or msg == " Eh bien " or msg == " Oh! " or msg == "Ah! " or msg == "Ah, ah, ah!"):
+            msg = "__START__"
+        if(msg.__contains__("__START__")):
+            if(len(self.currentStart) == 0):
+                self.currentStart = self.start[self.botmode].copy()
+            idx = random.randrange(len(self.currentStart))
+            start = self.currentStart.pop(idx).strip()
+            msg = msg.replace("__START__", start)
+        if(msg.__contains__("__FIRST__")):
+            if(len(self.currentFirst) == 0):
+                self.currentFirst = self.first[self.botmode].copy()
+            idx = random.randrange(len(self.currentFirst))
+            first = self.currentFirst.pop(idx).strip()
+            msg = msg.replace("__FIRST__", first)
+        if(msg.__contains__("__SECOND__")):
+            if(len(self.currentSecond) == 0):
+                self.currentSecond = self.second[self.botmode].copy()
+            idx = random.randrange(len(self.currentSecond))
+            second = self.currentSecond.pop(idx).strip()
+            msg = msg.replace("__SECOND__", second)
+        if(msg.__contains__("__THIRD__")):
+            if(len(self.currentThird) == 0):
+                self.currentThird = self.third[self.botmode].copy()
+            idx = random.randrange(len(self.currentThird))
+            third = self.currentThird.pop(idx).strip()
+            msg = msg.replace("__SECOND__", third)
+        if(msg.__contains__("__NAME__")):
+            if(self.username != ""):
+                msg = msg.replace("__NAME__", self.username)
+            else:
+                msg = msg.replace("__NAME__", "")
+        if(msg.__contains__("%u0153")):
+            msg = msg.replace("%u0153", "oe")
+        if(msg.__contains__("%u2019")):
+            msg = msg.replace("%u2019", "'")
+        if(msg.__contains__("_") and not msg.__contains__("__TO_EPILOGUE__") and not msg.__contains__("__REPEAT__")):
+            msg = msg.replace("_", " ")
+        if(self.username != ""):
+            if(msg.__contains__("Monsignor")):
+                msg = msg.replace("Monsignor", self.username)
+            elif(msg.__contains__("mon cher Monsieur")):
+                msg = msg.replace("mon cher Monsieur", "cher "+self.username)
+            elif(msg.__contains__("mon cher monsieur")):
+                msg = msg.replace("mon cher monsieur", "cher "+self.username)
+            elif(msg.__contains__("Monsieur le chevalier")):
+                msg = msg.replace("Monsieur le chevalier", self.username)
+            elif(msg.__contains__("Monsieur")):
+                msg = msg.replace("Monsieur", self.username)
+            elif(msg.__contains__("monsieur")):
+                msg = msg.replace("monsieur", self.username)
+            elif(msg.__contains__("Monsieu")):
+                msg = msg.replace("Monsieu", self.username)
+            elif(msg.__contains__("monsieu")):
+                msg = msg.replace("monsieu", self.username)
+            elif(msg.__contains__("Monsir")):
+                msg = msg.replace("Monsir", self.username)
+            elif(msg.__contains__("Monsi")):
+                msg = msg.replace("Monsi", self.username)
+            elif(msg.__contains__("Madame")):
+                msg = msg.replace("Madame", self.username)
+            elif(msg.__contains__("madame")):
+                msg = msg.replace("madame", self.username)
+            elif(msg.__contains__("Ma soeur")):
+                msg = msg.replace("Ma soeur", self.username)
+
+        return self.postProcessES(msg)
+    
+    def postProcessES(self, msg):
+        if(msg.__contains__("señor")):
+            msg = msg.replace("señor", self.username)
+        return msg
+
+    def embed(self, input: Union[str, list, dict]) -> tf.Tensor:
+        """Embed a string or list or dictionary of strings.
+
+        Args:
+            input (Union[str, list, dict]): input string
+
+        Returns:
+            tf.python.framework.ops.EagerTensor: Embedding of the input string
+        """
+        return self.model_embeddings(input)
+
+    def load_model(
+        self,
+    ) -> Union[
+        transformers.models.gpt2.modeling_gpt2.GPT2LMHeadModel,
+        transformers.models.gpt2.tokenization_gpt2_fast.GPT2TokenizerFast,
+    ]:
+        """Loads the model and tokenizer.
+
+        Returns:
+            Union[transformers.models.gpt2.modeling_gpt2.GPT2LMHeadModel,transformers.models.gpt2.tokenization_gpt2_fast.GPT2TokenizerFast]: Model and tokenizer
+        """
+        print("[Brain] Loading model "+self.model_url)
+        model = AutoModelForCausalLM.from_pretrained(self.model_url)
+        print("[Brain] Loading tokenizer "+self.tokenizer_url)
+        tokenizer = AutoTokenizer.from_pretrained(self.tokenizer_url, padding_side='right')
+        return model, tokenizer
+
+    def load_questions_from_json(self) -> dict:
+        """Loads the questions from a json file.
+
+        Returns:
+            dict: Dictionary of questions
+        """
+        self.filter = []
+        self.start = []
+        self.quit = []
+        self.first = []
+        self.second = []
+        self.third = []
+        self.areyou = []
+        self.epilogue = []
+        self.inter = []
+        dom_juan = []
+        print("[Brain] Loading ", dialog_path+def_questions_common+".json")
+        with open(dialog_path+def_questions_common+".json") as dj_common:
+            tmp = json.load(dj_common)
+            dom_juan_common = {}
+            start_common = []
+            filter_common = {}
+            first_common = []
+            second_common = []
+            third_common = []
+            for i in tmp:
+                for qq in tmp[i]['q']:
+                    # print(qq, tmp[i]['a'])
+                    qql = qq.lower()
+                    if qq.__contains__("__START__"):
+                        start_common = tmp[i]['a']
+                    elif qq.__contains__("__QUIT__"):
+                        self.quit = tmp[i]['a']
+                    elif qq.__contains__("__FIRST__"):
+                        first_common = tmp[i]['a']
+                    elif qq.__contains__("__SECOND__"):
+                        second_common = tmp[i]['a']
+                    elif qq.__contains__("__THIRD__"):
+                        third_common = tmp[i]['a']
+                    elif qq.__contains__("__AREYOUTHERE__"):
+                        self.areyou = tmp[i]['a']
+                    elif qql.__contains__('#'):
+                        #print("WILDCARD", qq, tmp[i]['a'])
+                        filter_common[qql] = tmp[i]['a']
+                    else:
+                        dom_juan_common[qql] = tmp[i]['a']
+            print("[Brain] Loading ", dialog_path+def_questions_seduction+".json")
+            with open(dialog_path+def_questions_seduction+".json") as dj:
+                tmp = json.load(dj)
+                tmp_seduction = {}
+                start_seduction = []
+                tmp_filter = {}
+                first_seduction = []
+                second_seduction = []
+                third_seduction = []
+                for i in tmp:
+                    for qq in tmp[i]['q']:
+                        # print(qq, tmp[i]['a'])
+                        qql = qq.lower()
+                        if qq.__contains__("__START__"):
+                            start_seduction = tmp[i]['a']
+                        elif qq.__contains__("__FIRST__"):
+                            first_seduction = tmp[i]['a']
+                        elif qq.__contains__("__SECOND__"):
+                            second_seduction = tmp[i]['a']
+                        elif qq.__contains__("__THIRD__"):
+                            third_seduction = tmp[i]['a']
+                        elif qql.__contains__('#'):
+                            #print("WILDCARD", qq, tmp[i]['a'])
+                            tmp_filter[qql] = tmp[i]['a']
+                        else:
+                            tmp_seduction[qql] = tmp[i]['a']
+                dom_juan_seduction = {**dom_juan_common, **tmp_seduction}
+                filter_seduction = {**filter_common, **tmp_filter}
+            print("[Brain] Loading ", dialog_path+def_questions_provocation+".json")
+            with open(dialog_path+def_questions_provocation+".json") as dj:
+                tmp = json.load(dj)
+                tmp_provocation = {}
+                tmp_filter = {}
+                start_provocation = []
+                first_provocation = []
+                second_provocation = []
+                third_provocation = []
+                for i in tmp:
+                    for qq in tmp[i]['q']:
+                        # print(qq, tmp[i]['a'])
+                        qql = qq.lower()
+                        if qq.__contains__("__START__"):
+                            start_provocation = tmp[i]['a']
+                        elif qq.__contains__("__FIRST__"):
+                            first_provocation = tmp[i]['a']
+                        elif qq.__contains__("__SECOND__"):
+                            second_provocation = tmp[i]['a']
+                        elif qq.__contains__("__THIRD__"):
+                            third_provocation = tmp[i]['a']
+                        elif qql.__contains__('#'):
+                            #print("WILDCARD", qq, tmp[i]['a'])
+                            tmp_filter[qql] = tmp[i]['a']
+                        else:
+                            tmp_provocation[qql] = tmp[i]['a']
+                dom_juan_provocation = {**tmp_provocation, **dom_juan_common}
+                filter_provocation = {**tmp_filter, **filter_common}
+            print("[Brain] Loading ", dialog_path+def_questions_fuite+".json")
+            with open(dialog_path+def_questions_fuite+".json") as dj:
+                tmp = json.load(dj)
+                tmp_fuite = {}
+                tmp_filter = {}
+                start_fuite = []
+                first_fuite = []
+                second_fuite = []
+                third_fuite = []
+                for i in tmp:
+                    for qq in tmp[i]['q']:
+                        # print(qq, tmp[i]['a'])
+                        qql = qq.lower()
+                        if qq.__contains__("__START__"):
+                            start_fuite = tmp[i]['a']
+                        elif qq.__contains__("__FIRST__"):
+                            first_fuite = tmp[i]['a']
+                        elif qq.__contains__("__SECOND__"):
+                            second_fuite = tmp[i]['a']
+                        elif qq.__contains__("__THIRD__"):
+                            third_fuite = tmp[i]['a']
+                        elif qql.__contains__('#'):
+                            #print("WILDCARD", qq, tmp[i]['a'])
+                            tmp_filter[qql] = tmp[i]['a']
+                        else:
+                            tmp_fuite[qql] = tmp[i]['a']
+                dom_juan_fuite = {**tmp_fuite, **dom_juan_common}
+                filter_fuite = {**tmp_filter, **filter_common}
+        dom_juan.append(dom_juan_common)
+        dom_juan.append(dom_juan_common)
+        dom_juan.append(dom_juan_seduction)
+        dom_juan.append(dom_juan_seduction)
+        dom_juan.append(dom_juan_provocation)
+        dom_juan.append(dom_juan_fuite)
+        dom_juan.append(dom_juan_common)
+
+        self.filter.append(filter_common)
+        self.filter.append(filter_common)
+        self.filter.append(filter_seduction)
+        self.filter.append(filter_seduction)
+        self.filter.append(filter_provocation)
+        self.filter.append(filter_fuite)
+        self.filter.append(filter_common)
+
+        self.start.append(start_common)
+        self.start.append(start_common)
+        self.start.append(start_seduction)
+        self.start.append(start_seduction)
+        self.start.append(start_provocation)
+        self.start.append(start_fuite)
+        self.start.append(start_common)
+
+        self.first.append(first_common)
+        self.first.append(first_common)
+        self.first.append(first_seduction)
+        self.first.append(first_provocation)
+        self.first.append(first_fuite)
+        self.first.append(first_common)
+
+        self.second.append(second_common)
+        self.second.append(second_common)
+        self.second.append(second_seduction)
+        self.second.append(second_provocation)
+        self.second.append(second_fuite)
+        self.second.append(second_common)
+
+        self.third.append(third_common)
+        self.third.append(third_common)
+        self.third.append(third_seduction)
+        self.third.append(third_provocation)
+        self.third.append(third_fuite)
+        self.third.append(third_common)
+
+        self.currentStart = self.start[self.botmode].copy()
+        self.currentFirst = self.first[self.botmode].copy()
+        self.currentSecond = self.second[self.botmode].copy()
+        self.currentThird = self.third[self.botmode].copy()
+        self.currentQuit = self.quit.copy()
+        
+        print("[Brain] Loading ", dialog_path+def_questions_epilogue+".json")
+        with open(dialog_path+def_questions_epilogue+".json") as dj:
+            tmp = json.load(dj)
+            for i in tmp:
+                for qq in tmp[i]['q']:
+                    if qq.__contains__("__EPILOGUE__"):
+                        #print("__EPILOGUE__", qq, tmp[i]['a'])
+                        self.epilogue = tmp[i]['a']
+                    if qq.__contains__("__INTER__"):
+                        #print("__EPILOGUE__", qq, tmp[i]['a'])
+                        self.inter = tmp[i]['a']
+
+        # print("EPILOGUE", len(self.epilogue), self.epilogue)
+        # print("INTER", len(self.inter), self.inter)
+        # print("START", len(self.start), self.start)
+        # print("FIRST", len(self.first), self.first)
+        # print("SECOND", len(self.second), self.second)
+        # print("__AREYOUTHERE__", len(self.areyou), self.areyou)
+
+        return dom_juan
+
+    def load_questions_keys(self):
+        dom_juan_questions = []
+        dom_juan_questions.append(list(self.dom_juan[0].keys()))
+        dom_juan_questions.append(list(self.dom_juan[1].keys()))
+        dom_juan_questions.append(list(self.dom_juan[2].keys()))
+        dom_juan_questions.append(list(self.dom_juan[3].keys()))
+        dom_juan_questions.append(list(self.dom_juan[4].keys()))
+        dom_juan_questions.append(list(self.dom_juan[5].keys()))
+        dom_juan_questions.append(list(self.dom_juan[6].keys()))
+        return dom_juan_questions
+
+    def build_embeddings(self):
+        embeddings = []
+        embeddings.append(self.embed(self.dom_juan_questions[0]))
+        embeddings.append(self.embed(self.dom_juan_questions[1]))
+        embeddings.append(self.embed(self.dom_juan_questions[2]))
+        embeddings.append(self.embed(self.dom_juan_questions[3]))
+        embeddings.append(self.embed(self.dom_juan_questions[4]))
+        embeddings.append(self.embed(self.dom_juan_questions[5]))
+        embeddings.append(self.embed(self.dom_juan_questions[6]))
+        return embeddings
+
+    def predict(self, user_input: str, history: list) -> list:
+        """Predict the next message.
+
+        Args:
+            user_input (str): User input
+            history (list): History of the conversation
+
+        Returns:
+            list: Answer and history of the conversation
+        """
+        history = history or [[], []]
+
+        mode_filter = self.filter[self.botmode]
+        mode_response = self.dom_juan[self.botmode]
+        mode_questions = self.dom_juan_questions[self.botmode]
+        mode_embeddings = self.dom_juan_questions_embeddings[self.botmode]
+        # mode_start = self.start[self.botmode]
+
+        new_question = user_input.lower()
+        new_question_embedding = self.embed(new_question)
+
+        self.prevResponse = self.lastresponse
+
+        found = False
+        for filt in mode_filter.keys():
+            f = filt.replace("#","")
+            if new_question.__contains__(f):
+                #print("FILTER OK", filt, mode_filter[filt])
+                res = mode_filter[filt]
+                tmp = ""
+                if type(res) == list:
+                    tmp_response = random.choice(res)
+                else:
+                    tmp_response = res
+                found = True
+
+        if not found:
+            all_questions_embedding = np.concatenate(
+                (new_question_embedding, mode_embeddings), axis=0
+            )
+            corr = np.inner(all_questions_embedding, all_questions_embedding)[0][1:]
+            max_score = max(corr)
+
+            if max_score >= 0.6:
+                index = np.where(corr == max_score)[0][0]
+                res = mode_response[mode_questions[index]]
+                if type(res) == list:
+                    tmp_response = random.choice(res)
+                else:
+                    tmp_response = res
+            else:
+                # ES translate to french here
+                newQ_FR = translateFR(new_question)
+                response, history[1] = self.predict_nlp(newQ_FR, history[1])
+                tmp_response = list(response[-1])[-1]
+                # ES translate to spanish here
+                tmp_response = translateES(tmp_response)
+                
+
+        tmp_response = self.postProcess(tmp_response)
+        if tmp_response.__contains__("__TO_EPILOGUE__"):
+            self.lastresponse = tmp_response
+        elif tmp_response.__contains__("__REPEAT__"):
+            self.lastresponse = self.prevResponse
+        else:
+            self.lastresponse = tmp_response
+
+        # ES translate to french here for history
+        last_R_FR = translateFR(self.lastresponse)
+        history[0].append(tuple([user_input,last_R_FR]))
+
+        # print ("history[0]", len(history[0]))#, history[0])
+        if(len(history[0]) > MAX_HISTORY_SIZE):
+            history = [[], []]
+        #     history[1].pop(0)
+            # print (">> pop", len(history[0]), history[0])
+
+        self.history = history
+        # print("RESPONSE", self.lastresponse)
+
+
+        return history[0], history
+
+    def predict_nlp(self, user_input: str, history: list = None) -> list:
+        """Predict the next message using NLP.
+
+        Args:
+            user_input (str): User input
+            history (list, optional): History of the conversation. Defaults to None.
+
+        Returns:
+            list: Answer and history of the conversation
+        """
+        print(formatColor(0,color[self.botmode],40, "[Brain] ...(bot think)..."))
+        if history is None:
+            history = []
+        new_user_input_ids = self.tokenizer.encode(
+            user_input + self.tokenizer.eos_token, return_tensors="pt"
+        )
+
+        bot_input_ids = torch.cat(
+            [torch.LongTensor(history), new_user_input_ids], dim=-1
+        )
+
+        history = self.model.generate(
+            bot_input_ids,
+            max_length=4096,
+            pad_token_id=self.tokenizer.eos_token_id,
+            no_repeat_ngram_size=3,
+            do_sample=False,
+            top_k=10,
+            top_p=1,
+            temperature=0,
+        )
+
+        response = self.tokenizer.decode(history[0]).split("<|endoftext|>")
+        if "" in response:
+            response.remove("")
+        res=[]
+        for i, msg in enumerate(response):
+            if i%2==0:
+                res.append((response[i],response[i+1]))
+            else:
+                continue
+
+        return res, history
+
+def handler(signum, frame):
+    litte_bot.kill()
+
+signal.signal(signal.SIGINT, handler)
+
+if __name__ == "__main__":
+    litte_bot = LitteBot()
