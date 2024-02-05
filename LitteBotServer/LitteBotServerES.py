@@ -382,7 +382,8 @@ class LitteBotServer:
             self.wsServer.broadcast({"command":"facedetect","value":self.userDetected})
 
             time.sleep(1)
-            self.first()
+            #self.first()
+            self.osc_client.send('/getresponse', "")
 
     def phoneOff(self):
         if self.phone == False:
@@ -453,13 +454,14 @@ class LitteBotServer:
             self.relanceCount = 0
             self.wsServer.broadcast({'command':'silent','value':self.silent})
             # print("INTER", self.interactions)
-            if self.interactions == 1:
+            '''if self.interactions == 1:
                 self.osc_client.send('/logme', mess)
                 self.second(mess)
             elif self.interactions == 2:
                 self.osc_client.send('/logme', mess)
                 self.third(mess)
-            elif self.step == 3:
+            el'''
+            if self.step == 3:
                 self.osc_client.send('/logme', mess)
                 self.nextInter()
             elif self.step < 6 :
@@ -612,7 +614,7 @@ class LitteBotServer:
                 self.osc_client.send("/relance", 1)
                 self.relanceCount += 1
 
-    def first(self):
+    '''def first(self):
         print("[Server] FIRST")
         self.silent = True
         self.wsServer.broadcast({'command':'silent','value':self.silent})
@@ -631,7 +633,7 @@ class LitteBotServer:
         self.silent = True
         self.wsServer.broadcast({'command':'silent','value':self.silent})
         self.lastInteractionTime = time.time()
-        self.osc_client.send("/third", mess)
+        self.osc_client.send("/third", mess)'''
 
     def reset(self):
         print("[Server] RESET")

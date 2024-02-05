@@ -150,12 +150,6 @@ class LitteBot:
             self.newConversation()
         elif(address == '/relance'):
             self.relance()
-        elif(address == '/first'):
-            self.speakFirst("")
-        elif(address == '/second'):
-            self.speakSecond(args[0])
-        elif(address == '/third'):
-            self.speakThird(args[0])
         elif(address == '/nextEpilogue'):
             self.nextEpilogue()
         elif(address == '/nextInter'):
@@ -174,6 +168,12 @@ class LitteBot:
             print("[Brain] OSC IN : "+str(address))
             for x in range(0,len(args)):
                 print("     " + str(args[x]))
+        '''elif(address == '/first'):
+            self.speakFirst("")
+        elif(address == '/second'):
+            self.speakSecond(args[0])
+        elif(address == '/third'):
+            self.speakThird(args[0])'''
 
     def setBotMode(self, mode):
         # self.history = [[], []]

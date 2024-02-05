@@ -49,17 +49,6 @@
             "\u00bfQu\u00e9 mueve tu coraz\u00f3n, __NAME__? "
         ]
     },
-    "3": {
-        "q": [
-            "__THIRD__"
-        ],
-        "a": [
-            "Depende de ti hacerme existir durante unos minutos, soy enteramente para ti. ",
-            "Nunca ser\u00e9 m\u00e1s que un espejo para tus miedos y fantas\u00edas. ",
-            "\u00bfDe qu\u00e9 quieres que hablemos?",
-            "Mi destino es mi deseo si se encuentra con el tuyo."
-        ]
-    },
     "4": {
         "q": [
             "__START__"
@@ -69,7 +58,11 @@
             "Mi destino es mi deseo si se encuentra con el tuyo. ",
             "Haga el favor de articular mas, no hay quien os entienda.",
             "Me puede hablar mas fuerte, mas claramente?",
-            "Le gusta mi voz? "
+            "Le gusta mi voz?",
+            "Depende de ti hacerme existir durante unos minutos, soy enteramente para ti. ",
+            "Nunca ser\u00e9 m\u00e1s que un espejo para tus miedos y fantas\u00edas. ",
+            "\u00bfDe qu\u00e9 quieres que hablemos?",
+            "Mi destino es mi deseo si se encuentra con el tuyo."
         ]
     },
     "5": {
@@ -122,13 +115,13 @@
     },
     "8": {
         "q": [
-            "\u00bfCu\u00e1l es su nombre?",
             "\u00bfCu\u00e1l es tu nombre?",
             "\u00bfQui\u00e9n es usted? ",
             "\u00bfQui\u00e9n eres t\u00fa? ",
             "\u00bfC\u00f3mo te llamas?",
             "\u00bfQui\u00e9n eres?",
-            "\u00bfQui\u00e9n eres t\u00fa?"
+            "\u00bfQui\u00e9n eres t\u00fa?",
+            "\u00bfC\u00f3mo te llamas?"
         ],
         "a": [
             "Un monstruo cuyo golpe llega hasta mi pecho, un execrable, un traidor, un demonio que la envidia form\u00f3 en los infiernos para arrebatarme la vida: Dom Juan.",
