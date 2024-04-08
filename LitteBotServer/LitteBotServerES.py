@@ -480,7 +480,7 @@ class LitteBotServer:
         #    s = self.speed[self.step] + (random.random() * 0.2 - 0.1)
         #else:
         #    v = 0
-        v = 2
+        v = 8
         p = self.pitch[self.step]
         s = self.speed[self.step]
         tts = TextToSpeech(txt, pitch=p, speed=s, voice=v)

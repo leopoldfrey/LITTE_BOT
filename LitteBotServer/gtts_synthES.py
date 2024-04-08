@@ -48,7 +48,7 @@ API_KEY_PATH = "../model/gtts_api_key.json"
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = API_KEY_PATH
 
 # Make a Pedalboard object, containing multiple plugins:
-board = Pedalboard([Gain(4),PitchShift(semitones=-2),Reverb(room_size=0.02,damping=0.1,wet_level=0.5,dry_level=1.,width=0.9,freeze_mode=0)])
+board = Pedalboard([Gain(4),PitchShift(semitones=-3),Reverb(room_size=0.02,damping=0.1,wet_level=0.2,dry_level=1.,width=0.9,freeze_mode=0)])
 
 #PitchShift(semitones=+3),
 def list_voices():
@@ -194,7 +194,7 @@ if __name__ == '__main__':
         thd = TextToSpeech(sys.argv[1], float(sys.argv[2]), float(sys.argv[3]))
         thd.start()
     elif len(sys.argv) == 5:
-        thd = TextToSpeech(sys.argv[1], float(sys.argv[2]), float(sys.argv[3]), int(sys.argv[4]))
+        thd = TextToSpeech(sys.argv[1], pitch=float(sys.argv[2]), speed=float(sys.argv[3]), voice=int(sys.argv[4]))
         thd.start()
         # print(thd.is_alive())
         # tts = TextToSpeechNoThread()
