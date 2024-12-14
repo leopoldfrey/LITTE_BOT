@@ -48,7 +48,7 @@ API_KEY_PATH = "../model/gtts_api_key.json"
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = API_KEY_PATH
 
 # Make a Pedalboard object, containing multiple plugins:
-board = Pedalboard([Gain(4),PitchShift(semitones=-3),Reverb(room_size=0.02,damping=0.1,wet_level=0.2,dry_level=1.,width=0.9,freeze_mode=0)])
+board = Pedalboard([Gain(4),PitchShift(semitones=-3),Reverb(room_size=0.02,damping=0.1,wet_level=0.1,dry_level=0.3,width=0.9,freeze_mode=0)])
 
 #PitchShift(semitones=+3),
 def list_voices():
